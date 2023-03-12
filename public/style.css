@@ -1,0 +1,38 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
+header {
+    /* width: 100vw; */
+    height: 8vh;
+    border-bottom: 1px solid black;
+}
+
+ul {
+    left: 50px;
+    list-style: none;
+    float: left;
+}
+
+ul li {
+    float: left;
+    margin-left: 10px;
+    font-size: 50px;
+}
+
+#membmer {
+    position: relative;
+    top: 60px;
+    left: 60%;
+}
+
+.gmnoprint .gm-style-cc {
+    display: none;
+}
+
+table {
+    border: 1;
+    border-collapse: collapse;
+}
