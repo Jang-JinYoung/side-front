@@ -1,7 +1,7 @@
 import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import "@public/style.css";
-import { Header, GoogleMap, Counter } from "@components";
+import { Header, GoogleMap, Counter } from "@components/";
 
 const queryClient = new QueryClient();
 

@@ -24,7 +24,6 @@ const options = {
   // gestureHandling: 'greedy',
 };
 
-<<<<<<< Updated upstream
 
 async function fetchUser(): Promise<conutryInfo> {
   const response = await fetch(`http://localhost:8081/`);
@@ -38,18 +37,6 @@ const GOOGLE_MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 
 const Map = () => {
   const { isLoading, data, error } = useQuery<conutryInfo>(['user'], () => fetchUser());
-=======
-// async function fetchUser(): Promise<conutryInfo> {
-//   const response = await fetch(`http://localhost:8081/`);
-//   if (!response.ok) {
-//     throw new Error("Network response was not ok");
-//   }
-//   return response.json();
-// }
-
-const Map = () => {
-  // const { isLoading, data, error } = useQuery<conutryInfo>(['user'], () => fetchUser());
->>>>>>> Stashed changes
 
   const [center, setCenter] = useState({
     lat: 36.507757,
