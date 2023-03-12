@@ -6,18 +6,23 @@ type ConutryInfo = {
   latitude: string;
   longitude: string;
   country_kr: string;
+  country_eng: string;
+  capital: string;
+  language: string;
 };
 
 const MainPage = () => {
-  const { data, isLoading, error } = useQuery('countryInfo', async (): Promise<ConutryInfo> => {
-    const response = await fetch('http://localhost:8081');
-    if (!response.ok) {
-      throw new Error('Failed to fetch country info');
+  const { data, isLoading, error } = useQuery(
+    "countryInfo",
+    async (): Promise<ConutryInfo> => {
+      const response = await fetch("http://localhost:8081");
+      if (!response.ok) {
+        throw new Error("Failed to fetch country info");
+      }
+      const data = await response.json();
+      return data;
     }
-    const data = await response.json();
-    return data;
-  });
-
+  );
 
   if (isLoading) {
     return <>Loading...</>;
@@ -32,23 +37,31 @@ const MainPage = () => {
   }
 
   return (
-    <>
-      <GoogleMap data={data} />
-      <table border={1}>
+    <div className="wrap">
+      <div className="main_map">
+        <GoogleMap data={data} />
+      </div>
+      <table className="countryInfo">
         <tbody>
           <tr>
-            <td>{data.country_kr}</td>
-            <td>2</td>
-            <td>3</td>
+            <td>나라</td>
+            <td>
+              {data.country_kr} ({data.country_eng})
+            </td>
           </tr>
           <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
+            <td>수도</td>
+            <td>{data.capital}</td>
+          </tr>
+          <tr>
+            <td>언어</td>
+            <td>{data.language}</td>
           </tr>
         </tbody>
       </table>
-    </>
+      <div>지금 {data.country_kr} 로 여행가볼까요 ?</div>
+      <img src="/images/ntower.jpeg" />
+    </div>
   );
 };
 

@@ -39,6 +39,19 @@ module.exports = (env, argv) => {
           test: /\.css$/i,
           use: ["style-loader", "css-loader"],
         },
+        {
+          test: /\.(png|jpg|gif)$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[name].[ext]',
+                outputPath: 'images/',
+                publicPath: '/images/'
+              }
+            }
+          ]
+        },
       ],
     },
     plugins: [

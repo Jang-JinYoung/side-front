@@ -32,7 +32,36 @@ ul li {
     display: none;
 }
 
-table {
-    border: 1;
+.wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.main_map {
+    position: relative;
+    margin: 0;
+}
+
+.countryInfo {
+    margin-top: 3vh;
+    text-align: center;
+    width: 30%;
+    height: 20%;
+}
+
+.countryInfo,
+/* .countryInfo>tbody>tr, */
+.countryInfo>tbody>tr>td {
+    border: 1px solid black;
     border-collapse: collapse;
+}
+
+.countryInfo>tbody>tr:nth-child(1) {
+    width: 20px;
+}
+
+.countryInfo>tbody>tr:nth-child(2) {
+    width: 40px;
 }
