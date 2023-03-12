@@ -1,12 +1,5 @@
-import React, { useCallback, useEffect, useState} from "react";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
-import { useQuery } from "react-query";
-
-console.log(process.env);
-type conutryInfo = {
-  latitude: string;
-  longitude: string;
-};
+import React, { useCallback, useEffect, useState } from "react";
+import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
 
 const containerStyle = {
   width: "400px",
@@ -24,35 +17,30 @@ const options = {
   // gestureHandling: 'greedy',
 };
 
+const GOOGLE_MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY as string;
 
-async function fetchUser(): Promise<conutryInfo> {
-  const response = await fetch(`http://localhost:8081/`);
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return response.json();
-}
-
-const GOOGLE_MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
-
-const Map = () => {
-  const { isLoading, data, error } = useQuery<conutryInfo>(['user'], () => fetchUser());
+const Map = (props: any) => {
 
   const [center, setCenter] = useState({
     lat: 36.507757,
     lng: 127.766922,
   });
 
-  // useEffect(() => {
-  //   if(data) {
-  //     console.log(data);
-  //     setCenter({lat: parseFloat(data.latitude), lng: parseFloat(data.longitude)});
-  //   }
-  // }, [data])
+  const { data } = props;
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+      setCenter({
+        lat: parseFloat(data.latitude),
+        lng: parseFloat(data.longitude),
+      });
+    }
+  }, []);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: GOOGLE_MAP_API_KEY ?? "temp",
+    googleMapsApiKey: GOOGLE_MAP_API_KEY,
   });
 
   const [map, setMap] = useState(null);
@@ -70,14 +58,6 @@ const Map = () => {
     setMap(null);
   }, []);
 
-  // if (isLoading) {
-  //   return <>Loading...</>;
-  // }
-
-  // if (error) {
-  //   return <>Error: {error}</>;
-  // }
-
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}
@@ -87,8 +67,6 @@ const Map = () => {
       onUnmount={onUnmount}
       options={options}
     >
-      {/* Child components, such as markers, info windows, etc. */}
-      <></>
     </GoogleMap>
   ) : (
     <></>
