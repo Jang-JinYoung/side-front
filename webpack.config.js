@@ -26,6 +26,7 @@ module.exports = (env, argv) => {
       alias: {
         "@public": path.resolve(__dirname, "public"),
         "@components": path.resolve(__dirname, "src/components/"),
+        "@pages": path.resolve(__dirname, "src/pages/"),
         "@store": path.resolve(__dirname, "src/store"),
       },
     },
@@ -43,16 +44,26 @@ module.exports = (env, argv) => {
           test: /\.(png|jpg|gif)$/,
           use: [
             {
-              loader: 'file-loader',
+              loader: "file-loader",
               options: {
-                name: '[name].[ext]',
-                outputPath: 'images/',
-                publicPath: '/images/'
-              }
-            }
-          ]
+                name: "[name].[ext]",
+                outputPath: "images/",
+                publicPath: "/images/",
+              },
+            },
+          ],
         },
       ],
+    },
+    devServer: {
+      static: {
+        directory: path.resolve(__dirname, "public"),
+      },
+      compress: true,
+      port: 3000,
+      hot: true,
+      open: true,
+      historyApiFallback: true,
     },
     plugins: [
       new webpack.ProvidePlugin({

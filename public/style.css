@@ -97,3 +97,25 @@ figure>img {
 .mt_40 {
   margin-top: 40px;
 }
+
+.board, .board tr, .board td, .board th {
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.board td {
+  width: 100px;
+}
+
+table td:nth-child(1) {
+  width: 50px;
+}
+
+table td:nth-child(2) {
+  width: 200px;
+}
+
+table td:nth-child(3) {
+  width: 200px;
+}

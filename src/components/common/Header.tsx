@@ -1,20 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 interface HeaderProps {
   name: string;
 }
 
 const Header = (props: HeaderProps) => {
+  const navigate = useNavigate();
+
   return (
     <header>
       <nav>
         <ul>
-          <li
-            onClick={() => {
-              console.log("AAA");
-            }}
-          >
-            1
-          </li>
+          <li onClick={() => navigate("/board")}>1</li>
           <li>2</li>
           <li>3</li>
         </ul>
