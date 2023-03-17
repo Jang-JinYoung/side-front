@@ -11,8 +11,8 @@ const Header = (props: HeaderProps) => {
     <header>
       <nav>
         <ul>
-          <li onClick={() => navigate("/board")}>1</li>
-          <li>2</li>
+          <li onClick={() => navigate("/board")}>게시판</li>
+          <li onClick={() => navigate("/skeleton")}>스켈레톤</li>
           <li>3</li>
         </ul>
         <div id="membmer">

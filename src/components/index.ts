@@ -1,1 +1,1 @@
-export { Counter, GoogleMap, Header } from "./common";
+export { Counter, GoogleMap, Header, Popup } from "./common";

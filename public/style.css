@@ -1,6 +1,8 @@
 body {
   margin: 0;
   padding: 0;
+  position: relative;
+  background-color: ;
 }
 
 header {
@@ -31,23 +33,30 @@ ul li {
   display: none;
 }
 
-.wrap {
-  display: flex;
+.main_wrap {
+  /* position: relative; */
+  /* display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  align-items: center; */
+  /* text-align: center; */
+}
+
+.main_wrap table {
+  /* position: absolute; */
+  left: 50%;
+  /* transform: translateX(-50%); */
 }
 
 .main_map {
-  position: relative;
-  margin: 0;
+  /* position: relative; */
+  /* margin: 0; */
 }
 
 .countryInfo {
   margin-top: 3vh;
-  text-align: center;
-  width: 30%;
-  height: 20%;
+  /* text-align: center; */
+  /* width: 30%; */
+  /* height: 20%; */
 }
 
 .countryInfo,
@@ -65,11 +74,9 @@ ul li {
   width: 40px;
 }
 
-.test {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
+.info figure {
+  display: inline-block;
+  margin-right: 30px;
 }
 
 figcaption {
@@ -81,7 +88,8 @@ figcaption {
 }
 
 .info {
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  text-align: center;
 }
 
 figure > img {
@@ -115,6 +123,8 @@ figure > img {
 
 .board td {
   width: 100px;
+  /* top: 50%; */
+  /* transform: translate(-50%, -50%); */
 }
 
 table.board th {
@@ -122,8 +132,8 @@ table.board th {
 }
 
 table.board td:nth-child(1) {
-  width: 85px;
-  height: 50px;
+  width: 50px;
+  /* height: 50px; */
   text-align: center;
   margin-top: 50px;
 }
@@ -141,7 +151,7 @@ table.board td:nth-child(2):hover {
 
 table.board td:nth-child(3) {
   width: 125px;
-  text-align: left;
+  text-align: center;
   /* padding-left: 15px; */
 }
 
@@ -173,4 +183,73 @@ table.board td:nth-child(4) {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.skeleton {
+  background: #ddd;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+
+.skeleton.text {
+  width: 100%;
+  height: 12px;
+}
+
+.skeleton.title {
+  width: 50%;
+  height: 20px;
+  margin-bottom: 15px;
+}
+
+.skeleton.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.skeleton.thumbnail {
+  width: 100px;
+  height: 100px;
+}
+
+.shimmer-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: loading 2.5s infinite;
+}
+
+.shimmer {
+  width: 50%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: skewX(-20deg);
+  box-shadow: 0 0 30px 30px rgba(255, 255, 255, 0.05);
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-150%);
+  }
+  50% {
+    transform: translateX(-60%);
+  }
+  100% {
+    transform: translate(150%);
+  }
+}
+
+.popup_wrap {
+  position: absolute;
+  border: 1px solid black;
+  /* width: 100%; */
+  /* height: 100%; */
+  /* background-color: rgba(255, 255, 255, 0.2); */
+  width: 50%;
+  height: 50%;
+  z-index: 999;
+  /* transform: translate(-50%, -50%); */
 }

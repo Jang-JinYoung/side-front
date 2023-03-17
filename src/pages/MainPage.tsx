@@ -39,7 +39,7 @@ const MainPage = () => {
   return (
     <>
       <Header name={""} />
-      <div className="wrap">
+      <div className="main_wrap">
         <div className="main_map">{/* <GoogleMap data={data} /> */}</div>
         <table className="countryInfo">
           <tbody>
@@ -58,8 +58,8 @@ const MainPage = () => {
           </tbody>
         </table>
         <div className="info mt_40">
-          <div className="test1">지금 한국으로 여행가볼까요 ?</div>
-          <div className="test">
+          <div>지금 한국으로 여행가볼까요 ?</div>
+          <div>
             <figure
               onClick={(e) => {
                 console.log("AAA", e);
