@@ -4,10 +4,12 @@ import _ from "lodash";
 import { Header } from "@components/";
 import data from "./data.json";
 import Table from "react-bootstrap/Table";
+import usePopupStroe from "@store/popup";
 
 const pagination = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const BoardPage = () => {
+  const { isOpen, toggle } = usePopupStroe();
   const navigate = useNavigate();
   const page = new URLSearchParams(useLocation().search).get("page") ?? 1;
 
@@ -31,8 +33,13 @@ const BoardPage = () => {
 
   return (
     <>
-      <Header name="jjy" />
+      <Header name="" />
       <div className="board_wrap">
+        <select>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
         <Table striped bordered hover className="board">
           <thead>
             <tr>
@@ -44,7 +51,8 @@ const BoardPage = () => {
           </thead>
           <tbody>
             {data.products.map((v, i) => (
-              <tr key={v.id} onClick={() => navigate(`/board/${v.id}`)}>
+              // <tr key={v.id} onClick={() => navigate(`/board/${v.id}`)}>
+              <tr key={v.id} onClick={() => toggle()}>
                 <td>{v.id}</td>
                 <td>{v.description}</td>
                 <td>{v.name}</td>
@@ -58,8 +66,8 @@ const BoardPage = () => {
             ))}
           </tbody>
         </Table>
-        <div>
-          <ul className="pagination">
+        <div className="pagination">
+          <ul>
             {pagination.map((v) => (
               <li
                 key={v}
@@ -73,7 +81,7 @@ const BoardPage = () => {
           </ul>
         </div>
         <div className="search">
-          <label htmlFor="username">검색 </label>
+          <label htmlFor="username">검색</label>
           <input
             type="text"
             name="search"

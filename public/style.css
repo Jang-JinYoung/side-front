@@ -2,10 +2,12 @@ body {
   margin: 0;
   padding: 0;
   position: relative;
-  background-color: ;
+  overflow-x: hidden;
+  /* background-color: ; */
 }
 
 header {
+  /* position: relative; */
   /* width: 100vw; */
   height: 8vh;
   border-bottom: 1px solid black;
@@ -20,7 +22,7 @@ ul {
 ul li {
   float: left;
   margin-left: 10px;
-  font-size: 50px;
+  /* font-size: 50px; */
 }
 
 #membmer {
@@ -106,10 +108,9 @@ figure > img {
 }
 
 .board_wrap {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  width: 80vw;
+  margin: 0 auto;
+  margin-top: 7vh;
 }
 
 .board,
@@ -118,24 +119,16 @@ figure > img {
 .board th {
   border: 1px solid black;
   border-collapse: collapse;
-  padding: 0 auto;
-}
-
-.board td {
-  width: 100px;
-  /* top: 50%; */
-  /* transform: translate(-50%, -50%); */
 }
 
 table.board th {
   text-align: center;
 }
 
-table.board td:nth-child(1) {
-  width: 50px;
-  /* height: 50px; */
+table.board td:nth-child(1),
+table.board th:nth-child(1) {
+  width: 10px;
   text-align: center;
-  margin-top: 50px;
 }
 
 table.board td:nth-child(2) {
@@ -156,33 +149,20 @@ table.board td:nth-child(3) {
 }
 
 table.board td:nth-child(4) {
-  width: 250px;
+  width: 70px;
   text-align: center;
   /* padding-left: 15px; */
 }
 
 .pagination {
-  /* text-align: center; */
-  margin: 0 auto;
+  text-align: center;
   padding: 0;
-  font-size: 17px;
-
-  /* display: flex; */
-  /* justify-content: center; */
-}
-.pagination li {
-  font-size: 17px;
+  font-size: 20px;
+  margin-left: 42vw;
 }
 
 .on {
   font-weight: bold;
-}
-
-.board_wrap {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .skeleton {
@@ -244,12 +224,50 @@ table.board td:nth-child(4) {
 
 .popup_wrap {
   position: absolute;
-  border: 1px solid black;
-  /* width: 100%; */
-  /* height: 100%; */
-  /* background-color: rgba(255, 255, 255, 0.2); */
-  width: 50%;
-  height: 50%;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.5); /* 투명도 50%인 검정색 */
+}
+
+.popup {
+  position: relative;
+  background-color: aliceblue;
+  border: 3px solid black;
+  /* background-color: white; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+  height: 25%;
+  top: 20%;
+  left: 40%;
   z-index: 999;
+  padding-left: 20px;
+  padding-right: 20px;
   /* transform: translate(-50%, -50%); */
+}
+
+.btn_group {
+  position: relative;
+}
+
+.btn_group button {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+/* .btn_group > button:first-of-type {
+  position: absolute;
+  left: 50%;
+} */
+
+/* .btn_group > button:last-of-type {
+  position: absolute;
+  right: 0;
+} */
+
+.dsp_n {
+  display: none;
 }

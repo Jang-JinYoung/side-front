@@ -25,6 +25,7 @@ module.exports = (env, argv) => {
       extensions: [".js", ".jsx", ".ts", ".tsx"],
       alias: {
         "@public": path.resolve(__dirname, "public"),
+        "@atoms": path.resolve(__dirname, "src/atoms/"),
         "@components": path.resolve(__dirname, "src/components/"),
         "@pages": path.resolve(__dirname, "src/pages/"),
         "@store": path.resolve(__dirname, "src/store"),
