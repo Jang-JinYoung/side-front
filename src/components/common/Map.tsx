@@ -20,7 +20,6 @@ const options = {
 const GOOGLE_MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY as string;
 
 const Map = (props: any) => {
-
   const [center, setCenter] = useState({
     lat: 36.507757,
     lng: 127.766922,
@@ -66,8 +65,7 @@ const Map = (props: any) => {
       onLoad={onLoad}
       onUnmount={onUnmount}
       options={options}
-    >
-    </GoogleMap>
+    ></GoogleMap>
   ) : (
     <></>
   );

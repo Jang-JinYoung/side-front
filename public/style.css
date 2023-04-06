@@ -14,7 +14,7 @@ header {
 }
 
 ul {
-  left: 50px;
+  /* left: 50px; */
   list-style: none;
   float: left;
 }
@@ -22,7 +22,6 @@ ul {
 ul li {
   float: left;
   margin-left: 10px;
-  /* font-size: 50px; */
 }
 
 #membmer {
@@ -155,10 +154,15 @@ table.board td:nth-child(4) {
 }
 
 .pagination {
-  text-align: center;
-  padding: 0;
-  font-size: 20px;
-  margin-left: 42vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination li:hover {
+  /* background-color: gray; */
+  /* color: white; */
+  cursor: pointer;
 }
 
 .on {

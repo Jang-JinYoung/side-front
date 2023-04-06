@@ -12,17 +12,16 @@ type ConutryInfo = {
 };
 
 const MainPage = () => {
-  // const { data, isLoading, error } =
-  // useQuery();
+  // const { data, isLoading, error } = useQuery();
   // "countryInfo",
-  // async (): Promise<ConutryInfo> => {
-  //   const response = await fetch("http://localhost:8081");
-  //   if (!response.ok) {
-  //     throw new Error("Failed to fetch country info");
-  //   }
-  //   const data = await response.json();
-  //   return data;
-  // }
+  //   async (): Promise<ConutryInfo> => {
+  //     const response = await fetch("http://localhost:8081");
+  //     if (!response.ok) {
+  //       throw new Error("Failed to fetch country info");
+  //     }
+  //     const data = await response.json();
+  //     return data;
+  //   };
 
   // if (isLoading) {
   //   return <>Loading...</>;

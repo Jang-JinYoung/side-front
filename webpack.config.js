@@ -28,7 +28,10 @@ module.exports = (env, argv) => {
         "@atoms": path.resolve(__dirname, "src/atoms/"),
         "@components": path.resolve(__dirname, "src/components/"),
         "@pages": path.resolve(__dirname, "src/pages/"),
-        "@store": path.resolve(__dirname, "src/store"),
+        "@store": path.resolve(__dirname, "src/store/"),
+        "@service": path.resolve(__dirname, "src/service/"),
+        "@lib": path.resolve(__dirname, "src/lib/"),
+        "@interface": path.resolve(__dirname, "src/interface/"),
       },
     },
     module: {
