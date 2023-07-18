@@ -32,6 +32,7 @@ module.exports = (env, argv) => {
         "@service": path.resolve(__dirname, "src/service/"),
         "@lib": path.resolve(__dirname, "src/lib/"),
         "@interface": path.resolve(__dirname, "src/interface/"),
+        "@api": path.resolve(__dirname, "src/service/api/"),
       },
     },
     module: {

@@ -37,7 +37,7 @@ const MainPage = () => {
 
   return (
     <>
-      <Header name={""} />
+      <Header />
       <div className="main_wrap">
         <div className="main_map">{/* <GoogleMap data={data} /> */}</div>
         <table className="countryInfo">
