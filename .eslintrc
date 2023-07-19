@@ -1,0 +1,53 @@
+{
+  "extends": [
+    // "airbnb",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "prettier"
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2021": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    // "semi": ["error", "always"],
+    // "quotes": ["error", "single"],
+    "prettier/prettier": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "react/jsx-filename-extension": "off",
+    "react/function-component-definition": "off",
+    "import/no-unresolved": "off",
+    "react/no-children-prop": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off",
+    "no-param-reassign": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "react/jsx-no-useless-fragment": "off",
+    "no-unneeded-ternary": "off",
+    "no-else-return": "off",
+    "no-underscore-dangle": "off",
+    "react/jsx-props-no-spreading": "off"
+  },
+  "overrides": [
+    {
+      "files": [
+        "src/**/*.ts",
+        "src/**/*.tsx"
+      ],
+      "excludedFiles": "node_modules/*",
+      "rules": {}
+    }
+  ]
+}
