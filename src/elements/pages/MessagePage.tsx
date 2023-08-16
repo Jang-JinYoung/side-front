@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '@components/Header';
 import receiveMsgData from '../../data/receiveMessage.json';
 import sendMsgData from '../../data/sendMessage.json';
@@ -13,6 +13,8 @@ interface IMsg {
 const MessagePage = () => {
   const { result: receiveMsg } = receiveMsgData;
   const { result: sendMsg } = sendMsgData;
+
+  const [dsp, setDsp] = useState('receive');
 
   return (
     <>
@@ -30,8 +32,18 @@ const MessagePage = () => {
           }}
         >
           <ul className="pt-15">
-            <li>받은메시지</li>
-            <li>보낸메시지</li>
+            <li
+              className={dsp === 'receive' ? 'fw-b' : ''}
+              onClick={() => setDsp('receive')}
+            >
+              받은메시지
+            </li>
+            <li
+              className={dsp === 'send' ? 'fw-b' : ''}
+              onClick={() => setDsp('send')}
+            >
+              보낸메시지
+            </li>
           </ul>
         </div>
         <div style={{ marginLeft: '300px' }}>
@@ -46,16 +58,30 @@ const MessagePage = () => {
                 <th style={{ width: '150px' }}>날짜</th>
               </tr>
             </thead>
-            <tbody>
-              {receiveMsg.map((item: IMsg) => (
-                <tr key={item.msgSrno}>
-                  <td>{item.msgSrno}</td>
-                  <td>{item.userNm}</td>
-                  <td>{item.msg}</td>
-                  <td>{item.writeTm}</td>
-                </tr>
-              ))}
-            </tbody>
+
+            {dsp === 'receive' ? (
+              <tbody>
+                {receiveMsg.map((item: IMsg) => (
+                  <tr key={item.msgSrno}>
+                    <td>{item.msgSrno}</td>
+                    <td>{item.userNm}</td>
+                    <td>{item.msg}</td>
+                    <td>{item.writeTm}</td>
+                  </tr>
+                ))}
+              </tbody>
+            ) : (
+              <tbody>
+                {sendMsg.map((item: IMsg) => (
+                  <tr key={item.msgSrno}>
+                    <td>{item.msgSrno}</td>
+                    <td>{item.userNm}</td>
+                    <td>{item.msg}</td>
+                    <td>{item.writeTm}</td>
+                  </tr>
+                ))}
+              </tbody>
+            )}
           </table>
         </div>
       </div>

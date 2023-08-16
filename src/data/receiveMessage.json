@@ -2,14 +2,14 @@
   "result": [
     {
       "msgSrno": 1,
-      "userNm": "sender1",
-      "msg": "안녕하세요",
+      "userNm": "receiver1",
+      "msg": "안녕하세요 receiver1",
       "writeTm": "2022-03-03"
     },
     {
       "msgSrno": 2,
       "userNm": "sender2",
-      "msg": "안녕하세요",
+      "msg": "안녕하세요 receiver1",
       "writeTm": "2022-03-03"
     }
   ]
