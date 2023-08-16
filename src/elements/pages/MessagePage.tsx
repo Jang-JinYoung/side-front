@@ -4,10 +4,10 @@ import data from '../../data/receiveMessage.json';
 
 interface IMsg {
   msgSrno: number;
+  userNm: string;
   msg: string;
+  writeTm: string;
 }
-
-interface IReceiveMsg extends IMsg {}
 
 const MessagePage = () => {
   const { result } = data;
@@ -48,9 +48,9 @@ const MessagePage = () => {
               {result.map((item: IMsg) => (
                 <tr key={item.msgSrno}>
                   <td>{item.msgSrno}</td>
-                  <td>{item.sender}</td>
+                  <td>{item.userNm}</td>
                   <td>{item.msg}</td>
-                  <td>{item.receiveTm}</td>
+                  <td>{item.writeTm}</td>
                 </tr>
               ))}
             </tbody>

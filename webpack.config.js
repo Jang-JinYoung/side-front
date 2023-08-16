@@ -1,59 +1,60 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const path = require("path");
-const dotenv = require("dotenv");
-const webpack = require("webpack");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const path = require('path');
+const dotenv = require('dotenv');
+const webpack = require('webpack');
 
 dotenv.config();
 
 module.exports = (env, argv) => {
-  const prod = argv.mode === "production";
+  const prod = argv.mode === 'production';
 
   return {
-    mode: prod ? "production" : "development",
-    devtool: prod ? "hidden-source-map" : "eval",
-    entry: "./src/index.tsx",
+    mode: prod ? 'production' : 'development',
+    devtool: prod ? 'hidden-source-map' : 'eval',
+    entry: './src/index.tsx',
     output: {
-      path: path.join(__dirname, "/dist"),
-      filename: "[name].js",
+      path: path.join(__dirname, '/dist'),
+      filename: '[name].js',
     },
     devServer: {
       port: 3000,
       hot: true,
     },
     resolve: {
-      extensions: [".js", ".jsx", ".ts", ".tsx"],
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
       alias: {
-        "@public": path.resolve(__dirname, "public"),
-        "@atoms": path.resolve(__dirname, "src/atoms/"),
-        "@components": path.resolve(__dirname, "src/components/"),
-        "@pages": path.resolve(__dirname, "src/pages/"),
-        "@store": path.resolve(__dirname, "src/store/"),
-        "@service": path.resolve(__dirname, "src/service/"),
-        "@lib": path.resolve(__dirname, "src/lib/"),
-        "@interface": path.resolve(__dirname, "src/interface/"),
-        "@api": path.resolve(__dirname, "src/service/api/"),
+        '@public': path.resolve(__dirname, 'public'),
+        '@atoms': path.resolve(__dirname, 'src/elements/atoms/'),
+        '@components': path.resolve(__dirname, 'src/elements/components/'),
+        '@pages': path.resolve(__dirname, 'src/elements/pages/'),
+        '@store': path.resolve(__dirname, 'src/store/'),
+        '@service': path.resolve(__dirname, 'src/service/'),
+        '@lib': path.resolve(__dirname, 'src/lib/'),
+        '@interface': path.resolve(__dirname, 'src/interface/'),
+        '@api': path.resolve(__dirname, 'src/service/api/'),
       },
     },
     module: {
       rules: [
         {
           test: /\.tsx?$/,
-          use: ["babel-loader", "ts-loader"],
+          exclude: /node_modules/,
+          use: ['babel-loader', 'ts-loader'],
         },
         {
           test: /\.css$/i,
-          use: ["style-loader", "css-loader"],
+          use: ['style-loader', 'css-loader'],
         },
         {
           test: /\.(png|jpg|gif)$/,
           use: [
             {
-              loader: "file-loader",
+              loader: 'file-loader',
               options: {
-                name: "[name].[ext]",
-                outputPath: "images/",
-                publicPath: "/images/",
+                name: '[name].[ext]',
+                outputPath: 'images/',
+                publicPath: '/images/',
               },
             },
           ],
@@ -62,7 +63,7 @@ module.exports = (env, argv) => {
     },
     devServer: {
       static: {
-        directory: path.resolve(__dirname, "public"),
+        directory: path.resolve(__dirname, 'public'),
       },
       compress: true,
       port: 3000,
@@ -72,13 +73,13 @@ module.exports = (env, argv) => {
     },
     plugins: [
       new webpack.ProvidePlugin({
-        React: "react",
+        React: 'react',
       }),
       // new Dotenv(),
       new HtmlWebpackPlugin({
-        template: "./public/index.html",
+        template: './public/index.html',
         minify:
-          process.env.NODE_ENV === "production"
+          process.env.NODE_ENV === 'production'
             ? {
                 collapseWhitespace: true, // 빈칸 제거
                 removeComments: true, // 주석 제거
@@ -86,7 +87,7 @@ module.exports = (env, argv) => {
             : false,
       }),
       new webpack.DefinePlugin({
-        "process.env": JSON.stringify(process.env),
+        'process.env': JSON.stringify(process.env),
       }),
       new CleanWebpackPlugin(),
     ],

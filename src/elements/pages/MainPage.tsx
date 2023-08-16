@@ -1,15 +1,16 @@
-import React from "react";
-import { useQuery } from "react-query";
-import { GoogleMap, Header } from "@components/";
+import React from 'react';
+// import { useQuery } from "react-query";
+// import { GoogleMap, Header } from "@components/";
+import Header from '@components/Header';
 
-type ConutryInfo = {
-  latitude: string;
-  longitude: string;
-  country_kr: string;
-  country_eng: string;
-  capital: string;
-  language: string;
-};
+// type ConutryInfo = {
+//   latitude: string;
+//   longitude: string;
+//   country_kr: string;
+//   country_eng: string;
+//   capital: string;
+//   language: string;
+// };
 
 const MainPage = () => {
   // const { data, isLoading, error } = useQuery();
@@ -61,7 +62,7 @@ const MainPage = () => {
           <div>
             <figure
               onClick={(e) => {
-                console.log("AAA", e);
+                console.log('AAA', e);
               }}
             >
               <img src="/images/ntower.jpeg" />
