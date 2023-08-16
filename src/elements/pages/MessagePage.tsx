@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Header from '@components/Header';
+import Input from '@atoms/Input';
 import receiveMsgData from '../../data/receiveMessage.json';
 import sendMsgData from '../../data/sendMessage.json';
 
@@ -15,6 +16,32 @@ const MessagePage = () => {
   const { result: sendMsg } = sendMsgData;
 
   const [dsp, setDsp] = useState('receive');
+
+  console.log(Object.keys(sendMsg[0]))
+
+  const [chekced, setChecked] = useState<number[]>([]);
+  const [allChecked, setAllChecked] = useState<boolean>(false);
+
+  const onAllChangeAction = () => {
+    setAllChecked(!allChecked);
+    if(allChecked) { // true -> false
+        setChecked([])
+    } else { // false -> true
+      if(dsp === 'receive') {
+        setChecked(receiveMsg.map((msg) => msg.msgSrno))
+      } else {
+        setChecked(sendMsg.map((msg) => msg.msgSrno));
+      }
+    }
+  };
+
+  const onChangeAction = (msgSrno: number) => {
+    if(chekced.includes(msgSrno)) {
+      setChecked(chekced.filter((item) => item !== msgSrno));
+    } else {
+      setChecked([...chekced, msgSrno]);
+    }
+  };
 
   return (
     <>
@@ -51,7 +78,12 @@ const MessagePage = () => {
             <thead>
               <tr className="ta-c">
                 <th style={{ width: '50px' }}>
-                  <input type="checkbox"></input>
+                  <Input.CheckBox
+                    onChange={onAllChangeAction}
+                    name="all"
+                    value={0}
+                    checked={allChecked && chekced.length === receiveMsg.length}
+                  />
                 </th>
                 <th style={{ width: '75px' }}>보낸사람</th>
                 <th style={{ width: '200px' }}>내용</th>
@@ -61,23 +93,37 @@ const MessagePage = () => {
 
             {dsp === 'receive' ? (
               <tbody>
-                {receiveMsg.map((item: IMsg) => (
-                  <tr key={item.msgSrno}>
-                    <td>{item.msgSrno}</td>
-                    <td>{item.userNm}</td>
-                    <td>{item.msg}</td>
-                    <td>{item.writeTm}</td>
+                {receiveMsg.map((msg: IMsg) => (
+                  <tr key={msg.msgSrno}>
+                    <td>
+                      <Input.CheckBox
+                        onChange={() => onChangeAction(msg.msgSrno)}
+                        name="all"
+                        value={msg.msgSrno}
+                        checked={chekced.includes(msg.msgSrno)}
+                      />
+                    </td>
+                    <td>{msg.userNm}</td>
+                    <td>{msg.msg}</td>
+                    <td>{msg.writeTm}</td>
                   </tr>
                 ))}
               </tbody>
             ) : (
               <tbody>
-                {sendMsg.map((item: IMsg) => (
-                  <tr key={item.msgSrno}>
-                    <td>{item.msgSrno}</td>
-                    <td>{item.userNm}</td>
-                    <td>{item.msg}</td>
-                    <td>{item.writeTm}</td>
+                {sendMsg.map((msg: IMsg) => (
+                  <tr key={msg.msgSrno}>
+                    <td>
+                    <Input.CheckBox
+                        onChange={() => onChangeAction(msg.msgSrno)}
+                        name="all"
+                        value={msg.msgSrno}
+                        checked={chekced.includes(msg.msgSrno)}
+                      />
+                    </td>
+                    <td>{msg.userNm}</td>
+                    <td>{msg.msg}</td>
+                    <td>{msg.writeTm}</td>
                   </tr>
                 ))}
               </tbody>
