@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '@components/Header';
-import data from '../../data/receiveMessage.json';
+import receiveMsgData from '../../data/receiveMessage.json';
+import sendMsgData from '../../data/sendMessage.json';
 
 interface IMsg {
   msgSrno: number;
@@ -10,7 +11,8 @@ interface IMsg {
 }
 
 const MessagePage = () => {
-  const { result } = data;
+  const { result: receiveMsg } = receiveMsgData;
+  const { result: sendMsg } = sendMsgData;
 
   return (
     <>
@@ -45,7 +47,7 @@ const MessagePage = () => {
               </tr>
             </thead>
             <tbody>
-              {result.map((item: IMsg) => (
+              {receiveMsg.map((item: IMsg) => (
                 <tr key={item.msgSrno}>
                   <td>{item.msgSrno}</td>
                   <td>{item.userNm}</td>
