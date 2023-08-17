@@ -1,9 +1,7 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainPage from '@pages/MainPage';
-import LoginPage from '@pages/LoginPage';
-import MessagePage from '@pages/MessagePage';
+import RouteFactory from './elements/RouteFactory';
+import { BrowserRouter } from 'react-router-dom';
 
 /*
 staleTime은 데이터가 최신 상태인지 확인하기 위해 캐시된 데이터를 얼마나 오래 사용할 수 있는지를 나타내는 시간(밀리초)입니다.
@@ -31,14 +29,16 @@ const queryClient = new QueryClient({
 const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <Popup /> */}
-      <BrowserRouter>
+      {/* <BrowserRouter>
         <Routes>
-          {/* <Header name="jjy" /> */}
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/message" element={<MessagePage />} />
+          <Route path="/css" element={<CssPage />} />
         </Routes>
+      </BrowserRouter> */}
+      <BrowserRouter>
+        <RouteFactory />
       </BrowserRouter>
     </QueryClientProvider>
   );

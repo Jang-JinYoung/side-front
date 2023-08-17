@@ -1,24 +1,42 @@
 body {
-  margin: 0;
-  padding: 0;
-  position: relative;
+  /* margin: 0;
+  padding: 0; */
+  /* position: relative; */
   overflow-x: hidden;
   /* background-color: ; */
 }
-:root {
-  --header-height: 8vh;
+
+.flex {
+  display: flex;
 }
 
-header {
-  /* position: relative; */
-  /* width: 100vw; */
+/* 헤더영역 */
+
+/* header {
+  display: flex;
+  width: 100vw;
   height: var(--header-height);
   border-bottom: 1px solid black;
+} */
+
+.logo {
+  /* margin: 0 auto; */
+  width: 200px;
+  /* width: 100px; */
 }
 
-.login {
+.logo > div {
   position: relative;
-  left: 80vw;
+  text-align: center;
+
+  border-right: 1px solid black;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.nav {
 }
 
 .center {
@@ -29,16 +47,18 @@ header {
   height: 100vh; /* 배치하려는 DIV를 감싸는 부모 요소의 높이를 설정 */
 }
 
-.input-login-wrap {
-}
-
 ul {
   list-style: none;
 }
 
-ul.header-links li {
+/* 세로 */
+ul.typ1 li {
   float: left;
   margin-left: 10px;
+}
+
+/* 가로 */
+ul.typ2 {
 }
 
 #membmer {
@@ -618,6 +638,9 @@ table.board td:nth-child(4) {
   padding-left: 5px;
 }
 
+.pl-20 {
+  padding-left: 20px !important;
+}
 .wd-350 {
   width: 350px;
 }
@@ -685,4 +708,8 @@ table.board td:nth-child(4) {
 
 .fw-b {
   font-weight: bold;
+}
+
+.block {
+  display: block !important;
 }
