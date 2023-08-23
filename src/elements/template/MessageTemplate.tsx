@@ -44,85 +44,63 @@ const MessageTemplate = () => {
   };
 
   return (
-    <>
-      <Header />
-      <div className="flex mt-20" style={{ height: '100%' }}>
-        <div className="message-nav">
-          메시지
-          <ul className="typ2">
-            <li
-              className={dsp === 'receive' ? 'fw-b' : ''}
-              onClick={() => setDsp('receive')}
-            >
-              받은메시지
-            </li>
-            <li
-              className={dsp === 'send' ? 'fw-b' : ''}
-              onClick={() => setDsp('send')}
-            >
-              보낸메시지
-            </li>
-          </ul>
-        </div>
-        <div className="message">
-          <table className="ta-c pt-20" style={{}}>
-            <thead>
-              <tr className="ta-c">
-                <th style={{ width: '50px' }}>
-                  <Input.CheckBox
-                    onChange={onAllChangeAction}
-                    name="all"
-                    value={0}
-                    checked={allChecked && chekced.length === receiveMsg.length}
-                  />
-                </th>
-                <th style={{ width: '75px' }}>보낸사람</th>
-                <th style={{ width: '200px' }}>내용</th>
-                <th style={{ width: '150px' }}>날짜</th>
-              </tr>
-            </thead>
+      <div>
+        <table className="ta-c" style={{}}>
+          <thead>
+            <tr className="">
+              <th style={{ width: '50px' }}>
+                <Input.CheckBox
+                  onChange={onAllChangeAction}
+                  name="all"
+                  value={0}
+                  checked={allChecked && chekced.length === receiveMsg.length}
+                />
+              </th>
+              <th style={{ width: '75px' }}>보낸사람</th>
+              <th style={{ width: '200px' }}>내용</th>
+              <th style={{ width: '150px' }}>날짜</th>
+            </tr>
+          </thead>
 
-            {dsp === 'receive' ? (
-              <tbody>
-                {receiveMsg.map((msg: IMsg) => (
-                  <tr key={msg.msgSrno}>
-                    <td>
-                      <Input.CheckBox
-                        onChange={() => onChangeAction(msg.msgSrno)}
-                        name="all"
-                        value={msg.msgSrno}
-                        checked={chekced.includes(msg.msgSrno)}
-                      />
-                    </td>
-                    <td>{msg.userNm}</td>
-                    <td>{msg.msg}</td>
-                    <td>{msg.writeTm}</td>
-                  </tr>
-                ))}
-              </tbody>
-            ) : (
-              <tbody>
-                {sendMsg.map((msg: IMsg) => (
-                  <tr key={msg.msgSrno}>
-                    <td>
-                      <Input.CheckBox
-                        onChange={() => onChangeAction(msg.msgSrno)}
-                        name="all"
-                        value={msg.msgSrno}
-                        checked={chekced.includes(msg.msgSrno)}
-                      />
-                    </td>
-                    <td>{msg.userNm}</td>
-                    <td>{msg.msg}</td>
-                    <td>{msg.writeTm}</td>
-                  </tr>
-                ))}
-              </tbody>
-            )}
-          </table>
-        </div>
+          {dsp === 'receive' ? (
+            <tbody>
+              {receiveMsg.map((msg: IMsg) => (
+                <tr key={msg.msgSrno}>
+                  <td>
+                    <Input.CheckBox
+                      onChange={() => onChangeAction(msg.msgSrno)}
+                      name="all"
+                      value={msg.msgSrno}
+                      checked={chekced.includes(msg.msgSrno)}
+                    />
+                  </td>
+                  <td>{msg.userNm}</td>
+                  <td>{msg.msg}</td>
+                  <td>{msg.writeTm}</td>
+                </tr>
+              ))}
+            </tbody>
+          ) : (
+            <tbody>
+              {sendMsg.map((msg: IMsg) => (
+                <tr key={msg.msgSrno}>
+                  <td>
+                    <Input.CheckBox
+                      onChange={() => onChangeAction(msg.msgSrno)}
+                      name="all"
+                      value={msg.msgSrno}
+                      checked={chekced.includes(msg.msgSrno)}
+                    />
+                  </td>
+                  <td>{msg.userNm}</td>
+                  <td>{msg.msg}</td>
+                  <td>{msg.writeTm}</td>
+                </tr>
+              ))}
+            </tbody>
+          )}
+        </table>
       </div>
-    </>
   );
 };
 export default MessageTemplate;

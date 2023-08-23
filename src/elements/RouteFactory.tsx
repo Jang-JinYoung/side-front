@@ -3,6 +3,7 @@ import MainPage from '@pages/MainPage';
 import { useRoutes } from 'react-router-dom';
 import MessagePage from '@pages/MessagePage';
 import MessageTemplate from './template/MessageTemplate';
+import BasicPage from '@pages/BasicPage';
 
 interface IRoutes {
   path: string;
@@ -21,7 +22,7 @@ const RouteFactory = () => {
     },
     {
       path: '/message',
-      element: <MessagePage />,
+      element: <BasicPage />,
       children: [
         {
           path: '',

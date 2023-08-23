@@ -1,119 +1,32 @@
-:root {
-  --header-height: 8vh;
+.header {
+  height: 18vh;
 }
 
-/* 헤더영역 시작*/
-header {
-  height: var(--header-height);
-  border-bottom: 1px solid black;
+.logo {
+  flex: 1;
 }
 
-/* 로고 */
-.section1 {
-  position: relative;
-  width: 15%;
-  border-right: 1px solid black;
+.nav {
+  flex: 3;
 }
 
-.section1 > div {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.user {
+  flex: 1;
 }
 
-/* nav */
-.section2 {
-  position: relative;
-  width: 65%;
-  border-right: 1px solid black;
+.container {
+  /* width: 100vw; */
+  /* height: 100%; */
+  min-height: 100vh;
 }
 
-.section2 ul {
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.sub-nav {
+  /* ; */
+  /* width: 5%; */
+  flex: 1;
+  
 }
 
-/* 유저 */
-.section3 {
-  position: relative;
-  width: 20%;
-}
-
-.section3 > ul {
-  position: absolute;
-  top: 70%;
-  left: 40%;
-  transform: translate(-30%, -50%);
-}
-
-/* 헤더영역 끝 */
-
-.message tr,
-.message td,
-.message th {
-  border-collapse: collapse;
-  border: 1px solid black;
-}
-
-/* :root {
-  --header-height: 8vh;
-} */
-
-.message_wrap {
-  /* position: absolute; */
-  /* float: left;
-  display: block; */
-  /* position: absolute; */
-  height: calc(100vh - var(--header-height));
-  /* height: 92vh; */
-  width: 100%;
-  float: left;
-}
-
-.message {
-}
-
-.area {
-  display: flex;
-  height: 100vh;
-}
-
-.area1 {
-  position: relative;
-  width: 250px;
-  height: 100%;
-  border-right: 1px solid black;
-  /* justify-content: center; */
-  /*  */
-}
-
-.area1 > div:nth-child(1) {
-  position: absolute;
-  left: 35%;
-}
-
-/* .flex {
-  display: flex;
-  height: calc(100vh - var(--header-height));
-} */
-
-.message-nav {
-  position: relative;
-  width: 150px;
-  height: 100%;
-  border-right: 1px solid black;
-  /* left: 50%; */
-  /* margin: 0 auto; */
-  /* padding: 0 5px 5px 0; */
-  /* padding-left: 30px; */
-  /* padding-top: 5px; */
-}
-
-.message-nav > ul {
-  position: absolute;
-  /* margin: 0 auto; */
-  /* padding: 0 auto; */
+.contents {
+  flex: 9;
 }
