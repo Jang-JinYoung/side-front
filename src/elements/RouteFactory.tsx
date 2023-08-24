@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
 import MainPage from '@pages/MainPage';
 import { useRoutes } from 'react-router-dom';
-import MessagePage from '@pages/MessagePage';
-import MessageTemplate from './template/MessageTemplate';
 import BasicPage from '@pages/BasicPage';
+import MessageListTemplate from './template/message/MessageListTemplate';
+import MessageDetailTemplate from './template/message/MessageDetailTemplate';
 
 interface IRoutes {
   path: string;
@@ -26,7 +26,11 @@ const RouteFactory = () => {
       children: [
         {
           path: '',
-          element: <MessageTemplate />,
+          element: <MessageListTemplate />,
+        },
+        {
+          path: ':msgSrno',
+          element: <MessageDetailTemplate />,
         },
       ],
     },

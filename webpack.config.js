@@ -11,11 +11,14 @@ module.exports = (env, argv) => {
 
   return {
     mode: prod ? 'production' : 'development',
-    devtool: prod ? 'hidden-source-map' : 'eval',
+    devtool: false,
     entry: './src/index.tsx',
     output: {
-      path: path.join(__dirname, '/dist'),
-      filename: '[name].js',
+      publicPath: "/",
+
+      // 23.8.24 이게 뭘까요
+      // path: path.join(__dirname, '/dist'),
+      // filename: '[name].js',
     },
     devServer: {
       port: 3000,

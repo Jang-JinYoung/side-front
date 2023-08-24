@@ -34,6 +34,7 @@ interface IPopup {
 }
 
 export const Popup = ({ title, message, confirm }: IPopup) => {
+  // console.log("A")
   confirmAlert({
     closeOnClickOutside: false,
     overlayClassName: 'black_overlay dsp-b',
@@ -54,7 +55,7 @@ export const Popup = ({ title, message, confirm }: IPopup) => {
             >
               확인
             </button>
-            <button className="" onClick={() => onClose()}>
+            <button className="ml-10 mt-10" onClick={() => onClose()}>
               취소
             </button>
           </div>
@@ -70,7 +71,6 @@ export const _popup = (
   confirm?: () => void,
 ) => {
   Popup({ title, message, confirm });
-  // console.log('a');
 };
 
 // export default Popup;

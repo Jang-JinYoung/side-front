@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import navData from '../../data/subNav.json';
 
 interface INav {
@@ -8,10 +8,8 @@ interface INav {
 }
 
 const SubNav = () => {
-  const { search } = useLocation();
-  const params = new URLSearchParams(search);
+  const [params] = useSearchParams();
   const code = params.get('code');
-
   const navigate = useNavigate();
 
   const { mainNav, subNav } = navData.result;
@@ -19,12 +17,12 @@ const SubNav = () => {
   return (
     <div className="sub-nav pd-10 br-1">
       <span className="mr-20">{mainNav.name}</span>
-      <ul className="typ2">
+      <ul className="pl-10">
         {subNav.map((nav: INav) => (
           <li
             key={nav.code}
             className={code === nav.code ? 'fw-b' : ''}
-            onClick={() => navigate(`?code=${nav.code}`)}
+            onClick={() => navigate(`/message?code=${nav.code}`)}
           >
             {nav.name}
           </li>

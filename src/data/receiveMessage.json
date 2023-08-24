@@ -4,13 +4,57 @@
       "msgSrno": 3,
       "userNm": "receiver1",
       "msg": "안녕하세요 receiver1",
-      "writeTm": "2022-03-03"
+      "writeTm": "2022-03-03",
+      "readYn": true
     },
     {
       "msgSrno": 4,
       "userNm": "sender2",
       "msg": "안녕하세요 receiver1",
-      "writeTm": "2022-03-03"
+      "writeTm": "2022-03-03",
+      "readYn": false
+    },
+    {
+      "msgSrno": 5,
+      "userNm": "sender2",
+      "msg": "안녕하세요 receiver1",
+      "writeTm": "2022-03-03",
+      "readYn": false
+    },
+    {
+      "msgSrno": 6,
+      "userNm": "sender2",
+      "msg": "안녕하세요 receiver1",
+      "writeTm": "2022-03-03",
+      "readYn": false
+    },
+    {
+      "msgSrno": 7,
+      "userNm": "sender2",
+      "msg": "안녕하세요 receiver1",
+      "writeTm": "2022-03-03",
+      "readYn": false
+    },
+    {
+      "msgSrno": 8,
+      "userNm": "sender2",
+      "msg": "안녕하세요 receiver1",
+      "writeTm": "2022-03-03",
+      "readYn": false
+    },
+    {
+      "msgSrno": 9,
+      "userNm": "sender2",
+      "msg": "안녕하세요 receiver1",
+      "writeTm": "2022-03-03",
+      "readYn": false
+    },
+    {
+      "msgSrno": 10,
+      "userNm": "sender2",
+      "msg": "안녕하세요 receiver1",
+      "writeTm": "2022-03-03",
+      "readYn": false
     }
   ]
 }

@@ -1,5 +1,5 @@
 .header {
-  height: 18vh;
+  height: 11vh;
 }
 
 .logo {
@@ -15,18 +15,65 @@
 }
 
 .container {
-  /* width: 100vw; */
-  /* height: 100%; */
-  min-height: 100vh;
+  min-height: 86vh;
 }
 
 .sub-nav {
-  /* ; */
-  /* width: 5%; */
+  /* position: fixed; */
+  /* height: 100%; */
   flex: 1;
-  
 }
 
 .contents {
   flex: 9;
+  /* position: fix; */
 }
+
+/* modal */
+/* 모달 팝업 */
+.black_overlay {
+  display: none;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 1001;
+  -moz-opacity: 0.8;
+  opacity: 0.9;
+  filter: alpha(opacity=80);
+}
+.dsp-b {
+  display: block !important;
+}
+.popup_wrap {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background-color: white;
+  z-index: 1002;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.popup_wrap.comm {
+  width: 300px;
+  max-height: 90vh;
+  height: fit-content;
+  border-radius: 5px;
+  padding: 30px;
+  top: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  margin: auto;
+}
+/* ol.typ1 {
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+} */
+
+/* popup */

@@ -4,13 +4,15 @@
       "msgSrno": 1,
       "userNm": "sender1",
       "msg": "안녕하세요 send1",
-      "writeTm": "2022-03-03"
+      "writeTm": "2022-03-03",
+      "readYn": true
     },
     {
       "msgSrno": 2,
       "userNm": "sender2",
       "msg": "안녕하세요 send1",
-      "writeTm": "2022-03-03"
+      "writeTm": "2022-03-03",
+      "readYn": true
     }
   ]
 }
