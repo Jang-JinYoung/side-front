@@ -1,8 +1,20 @@
+/* position */
+.ps-r {
+  position: relative;
+}
+
+.ps-a {
+  position: absolute;
+}
 
 /* display */
 .flex {
-  display: flex;
+  display: flex !important;
 }
+
+.block {
+  /* display: ; */
+ }
 
 /* text */
 .ta-c {
@@ -25,12 +37,28 @@
 }
 
 /* margin */
+.mg-10 {
+  margin: 10px 10px;
+}
+
 .mt-10 {
   margin-top: 10px;
 }
 
 .ml-10 {
   margin-left: 10px;
+}
+
+.ml-50 {
+  margin-left: 50px;
+}
+
+.ml-100 {
+  margin-left: 100px;
+}
+
+.ml-250 {
+  margin-left: 250px;
 }
 
 /* border */
@@ -45,6 +73,15 @@
 /* ul */
 ul > li, ol > li {
   list-style: none;
+}
+
+ul.typ1 {
+  margin-top: 50px;
+}
+
+ul.typ1 > li {
+  float: left;
+  padding-left: 10px;
 }
 
 
@@ -74,4 +111,10 @@ td {
 
 .blue {
   color: #0459c1;
+}
+
+textarea {
+  resize: none;
+  width: 390px;
+  height: 300px;
 }

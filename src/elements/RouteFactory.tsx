@@ -4,6 +4,8 @@ import { useRoutes } from 'react-router-dom';
 import BasicPage from '@pages/BasicPage';
 import MessageListTemplate from './template/message/MessageListTemplate';
 import MessageDetailTemplate from './template/message/MessageDetailTemplate';
+import MessageWriteTemplate from './template/message/MessageWrtieTemplate';
+import BoardListTemplate from './template/board/BoardListTemplate';
 
 interface IRoutes {
   path: string;
@@ -15,6 +17,7 @@ interface IRoutes {
 }
 
 const RouteFactory = () => {
+
   const routes: IRoutes[] = [
     {
       path: '/',
@@ -32,9 +35,24 @@ const RouteFactory = () => {
           path: ':msgSrno',
           element: <MessageDetailTemplate />,
         },
+        {
+          path: 'write',
+          element: <MessageWriteTemplate />
+        }
+      ],
+    },
+    {
+      path: '/board',
+      element: <BasicPage />,
+      children: [
+        {
+          path: '',
+          element: <BoardListTemplate />,
+        },
       ],
     },
   ];
+
   // return useRoutes([...basicRoutes, ...authRoutes]);
   return useRoutes(routes);
 };

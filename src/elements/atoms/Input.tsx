@@ -1,10 +1,10 @@
 import React from 'react';
 
-interface IProps {
+export interface IInput {
+    className?: string;
     name: string;
     value: string | number;
-    onChange: () => void;
-    checked?: boolean;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input = () => {
@@ -12,12 +12,29 @@ const Input = () => {
 }
 
 
-const CheckBox = (props: IProps) => {
+export interface ICheckBox extends IInput {
+    checked?: boolean;
+}
+
+const CheckBox = (props: ICheckBox) => {
     return (
         <input type="checkbox" {...props}/>
     )
 };
 
 Input.CheckBox = CheckBox;
+
+export interface IInputText extends IInput {
+    placeholder?: string;
+}
+
+const Text = (props: IInput) => {
+    return (
+        <input type="text" {...props}/>
+    )
+}
+
+Input.Text = Text;
+
 
 export default Input;

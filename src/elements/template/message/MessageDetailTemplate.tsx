@@ -13,7 +13,7 @@ const MessageDetailTemplate = () => {
             {/* 버튼영역 */}
             <div>
                 <button onClick={() => _popup("메시지 삭제", "삭제하시겠습니까?")}>삭제</button>
-                <button className='ml-10'>답장</button>
+                <button className='ml-10' onClick={() => navigate("/message/write", { state : msg})}>답장</button>
                 <button className='ml-10' onClick={() => navigate(-1)}>목록</button>
             </div>
 
