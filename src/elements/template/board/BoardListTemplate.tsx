@@ -13,8 +13,6 @@ const BoardListTemplate = () => {
   const nowPage = searchParams.get('page');
   const code = searchParams.get('code') as string;
 
-  console.log(nowPage);
-
   const searchSelectProps = {
     name: 'search',
     onChange: (e: React.ChangeEvent<HTMLSelectElement>) => console.log(e),
@@ -72,7 +70,7 @@ const BoardListTemplate = () => {
       </div>
 
       <Pagination
-        nowPage={nowPage}
+        nowPage={Number(nowPage)}
         totalCount={50}
         onClick={(page: string) =>
           setSearchParams({code, page})
