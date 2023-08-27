@@ -15,7 +15,7 @@ const Header = () => {
       <div className="nav br-1 pd-10">
         <nav>
           <ul className="typ1">
-            <li onClick={() => navigate('/board?code=20000001')}>게시판</li>
+            <li onClick={() => navigate('/board?code=20000001&page=1')}>게시판</li>
             <li onClick={() => navigate('/skeleton')}>스켈레톤</li>
           </ul>
         </nav>

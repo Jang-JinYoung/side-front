@@ -70,10 +70,60 @@
   right: 0 !important;
   margin: auto;
 }
-/* ol.typ1 {
-  border-top: 1px solid black;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
-} */
 
-/* popup */
+/* pagination */
+.is-pagination {
+  margin: 30px;
+  display: flex !important;
+  justify-content: center;
+}
+
+.is-pagination-first, .is-pagination-last {
+  background: url('/images/ico_pg_first.svg');
+}
+
+.is-pagination-prev, .is-pagination-next {
+  background: url('/images/ico_pg_pre.svg');
+}
+
+.is-pagination-last,
+.is-pagination-next {
+  transform: rotateY(180deg);
+}
+
+.is-pagination span {
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center !important;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+  color: black;
+  font-size: 13px;
+  padding: 0;
+  font-weight: 400 !important;
+}
+.is-pagination-first,
+.is-pagination-prev,
+.is-pagination-next,
+.is-pagination-last {
+  background-position: center;
+  width: 25px !important;
+}
+
+.is-pagination-num {
+  border: 1px solid #ccc;
+}
+.is-pagination-num:hover,
+.is-pagination-num.is-current {
+  color: #fff;
+  background: blue;
+  border-color: #ccc;
+}
+.is-pagination-prev {
+  margin-right: 15px !important;
+}
+.is-pagination-next {
+  margin-left: 15px !important;
+}
