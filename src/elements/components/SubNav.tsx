@@ -16,26 +16,24 @@ interface IResult {
   };
 };
 
-
-
-
 const SubNav = () => {
   const [params] = useSearchParams();
   const code = params.get('code');
   const navigate = useNavigate();
 
-  const { pathname} =useLocation();
+  const { pathname} = useLocation();
 
   const { result }: IResult = navData;
 
-  const { mainNav, subNav }  = result[pathname];
+  // const { mainNav, subNav }  = result[pathname];
 
 
   return (
     <div className="sub-nav pd-10 br-1">
       <span style={{}}></span>
-      <span className="mr-20">{mainNav.name}</span>
+      {/* <span className="mr-20">{mainNav.name}</span> */}
       <ul className="pl-10">
+        {/* 
         {subNav.map((nav: INav) => (
           <li
             key={nav.code}
@@ -45,6 +43,7 @@ const SubNav = () => {
             {nav.name}
           </li>
         ))}
+        */}
       </ul>
         
     </div>

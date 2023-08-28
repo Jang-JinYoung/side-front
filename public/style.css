@@ -127,3 +127,24 @@
 .is-pagination-next {
   margin-left: 15px !important;
 }
+/* 
+.contents {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+} */
+
+
+/* 댓글영역 */
+
+.comment {
+  width: 80%;
+  min-height: 100px;
+  height: 100%;
+  /* border: 1px solid black; */
+}
+
+.comment > div > span:nth-child(2) {
+  font-size: 12px;
+}

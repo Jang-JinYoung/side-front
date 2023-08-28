@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode } from 'react';
+import _ from 'lodash';
 
 interface IPagination {
   style?: string; // className
-  totalCount: number; // 개수
-  nowPage: number; // 현재페이지
+  totalCount: number; // 총 개수
+  pageSize: number; // 몇개 쓸건지
+  currentPage: number; // 현재페이지
   onClick: (page: number) => void; // 페이지 클릭 이벤트
+  children?: ReactNode;
 }
 
 /*
@@ -12,68 +15,56 @@ floor 내림
 round 반올림
 ceil 올림
 */
-
 const Pagination = (props: any) => {
-  const { style, totalCount, nowPage, onClick } = props;
+  const { style, totalCount, pageSize, currentPage, onClick, children } = props;
 
-  const [page, setPage] = useState<number[]>(
-    Array.from({ length: 10 }, (_, index) => index + 1),
-  );
+  const lastPage = Math.ceil(totalCount / pageSize);
+  const page = _.chunk(_.range(1, lastPage + 1), pageSize)
 
-  useEffect(() => {
-    // 11, 21, ...
-    if (nowPage % 10 === 1 && nowPage !== 1) {
-      setPage(
-        Array.from(
-          { length: 10 },
-          (_, index) => index + 1 + Math.floor(nowPage / 10) * 10,
-        ),
-      );
-    }
-
-    // 10, 20, ...
-    if (nowPage % 10 === 0 && nowPage !== 10) {
-      setPage(
-        Array.from(
-          { length: 10 },
-          (_, index) => Math.floor(nowPage / 10) * 10 - (index+1),
-        ),
-      );
-    }
-  }, [nowPage]);
-
-  // 이전 버튼
-  const prevBtnClick = () => {
-    onClick(nowPage - 1);
-    
-  }
 
   return (
     <div className="mt-10 is-pagination">
 
-      <span className="is-pagination-first" onClick={() => onClick(1)} />
-
+      {children}
+      
       <span
-        className="is-pagination-prev"
-        onClick={prevBtnClick}
+        className={`is-pagination-first ${currentPage === 1 ? 'disabled' : ''}`}
+        onClick={() => onClick(1)}
+        role='button'
+        aria-disabled={currentPage === 1}
       />
 
-      {page.map((v) => (
+      <span
+        className={`is-pagination-prev ${currentPage === 1 ? 'disabled' : ''}`}
+        onClick={() => onClick(currentPage - 1)}
+        role='button'
+        aria-disabled={currentPage === 1}
+      />
+
+      {page[(Math.ceil(currentPage / pageSize)) - 1].map((v) => (
         <span
           key={v}
-          className={
-            nowPage == v ? `is-pagination-num is-current` : 'is-pagination-num '
-          }
+          className={`is-pagination-num ${currentPage === v ? 'is-current' : ''}`}
           onClick={() => onClick(v)}
         >
           {v}
         </span>
       ))}
+
       <span
-        className="is-pagination-next"
-        onClick={() => onClick(nowPage + 1)}
+        className={`is-pagination-next ${currentPage === lastPage ? 'disabled' : ''}`}
+        onClick={() => onClick(currentPage + 1)}
+        role='button'
+        aria-disabled={currentPage === lastPage}
       />
-      <span className="is-pagination-last" onClick={() => onClick(10)} />
+
+      <span
+        className={`is-pagination-last ${currentPage === lastPage ? 'disabled' : ''}`}
+        onClick={() => onClick(lastPage)}
+        role='button'
+        aria-disabled={currentPage === lastPage}
+      />
+
     </div>
   );
 };

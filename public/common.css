@@ -22,6 +22,11 @@
 }
 
 
+/* border */
+.bd-t {
+  border-top: 1px solid black;
+}
+
 /* font */
 .fw-b {
   font-weight: bold;
@@ -87,7 +92,7 @@ ul.typ1 > li {
 
 /* table */
 table, th, td {
-  border: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 table {
@@ -97,10 +102,6 @@ table {
 th {
   background-color: #f9f9f9;
   text-align: left;
-  padding-left: 10px;
-}
-
-td {
   padding-left: 10px;
 }
 
@@ -117,4 +118,16 @@ textarea {
   resize: none;
   width: 390px;
   height: 300px;
+}
+
+/* event */
+.disabled {
+  color: gray;
+  pointer-events: none;
+  /* 기타 스타일링 */
+}
+
+
+.bd-t {
+  border-top: 1px solid black
 }

@@ -6,6 +6,7 @@ import MessageListTemplate from './template/message/MessageListTemplate';
 import MessageDetailTemplate from './template/message/MessageDetailTemplate';
 import MessageWriteTemplate from './template/message/MessageWrtieTemplate';
 import BoardListTemplate from './template/board/BoardListTemplate';
+import BoardDetailTemplate from './template/board/BoardDetailTemplate';
 
 interface IRoutes {
   path: string;
@@ -48,6 +49,10 @@ const RouteFactory = () => {
         {
           path: '',
           element: <BoardListTemplate />,
+        },
+        {
+          path: ':boardSrno',
+          element: <BoardDetailTemplate />,
         },
       ],
     },
