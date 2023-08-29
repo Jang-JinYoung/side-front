@@ -16,10 +16,15 @@
   display: block;
  }
 
+ .dsp-n {
+  display: none;
+ }
+
 /* text */
 .ta-c {
   text-align: center;
 }
+
 
 
 /* border */
@@ -130,4 +135,27 @@ textarea {
 
 .bd-t {
   border-top: 1px solid black
+}
+
+.test {
+  position: absolute;
+  /* border: 1px solid rgba(0, 0, 0, .06); */
+  width: 100px;
+  /* height: 100px; */
+  z-index: 10;
+  /* top: auto; */
+  /* background-color: ; */
+  background-color: wheat;
+  font-size: 13px;
+}
+
+.test > ul {
+  padding-left: 15px;
+  line-height: 20px;
+}
+
+.test > ul > li:hover {
+  text-decoration: underline;
+  text-underline-position: under;
+  cursor: pointer;
 }

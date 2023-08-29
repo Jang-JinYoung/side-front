@@ -1,14 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { _messagePopup, _popup } from './Popup';
 
-const Comment = () => {
+export interface IComment {
+    userNm: string; // 닉네임
+    writeTm: string; // 작성시간
+    comment: string; // 댓글
+}
+
+const Comment = ({ userNm, writeTm, comment }: IComment) => {
+
+    const [dsp, setDsp] = useState<boolean>(true);
+
     return (
         <div className="comment">
             <div className='pd-10'>
-                <span>작성자</span>
-                <span> 작성시간</span>
+                <span role='button' style={{ textDecoration: "underline", textUnderlinePosition: "under" }}
+                    onClick={() => setDsp(!dsp)}>{userNm}</span>
+                <span> {writeTm}</span>
+                <div className={`test ${dsp ? '' : 'dsp-n'}`}>
+                    <ul>
+                        <li onClick={() => { _messagePopup(); setDsp(false); }}>쪽지보내기</li>
+                    </ul>
+                </div>
             </div>
-            <div className='pd-10'>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Numquam deserunt doloremque perspiciatis at, enim corporis illo, molestias nostrum delectus esse veniam odit repudiandae eius, rem obcaecati. Sequi magnam vel laborum?
+            <div className='pl-10'>
+                {comment}
             </div>
         </div>
     )

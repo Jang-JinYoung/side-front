@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 
 // const options: ReactConfirmAlertProps = {
@@ -72,5 +72,54 @@ export const _popup = (
 ) => {
   Popup({ title, message, confirm });
 };
+
+export const MessagePopup = () => {
+
+  confirmAlert({
+    closeOnClickOutside: false,
+    overlayClassName: 'black_overlay dsp-b',
+    
+    customUI: ({ onClose }) => {
+      // const [text, setText] = useState("");
+      return (
+        <div className="popup_wrap comm align-c dsp-b">
+
+          <div className='fw-b' style={{ fontSize: "12px" }}>
+            <div>
+              받는 사람
+              <span className="ml-10" style={{ fontWeight: 'lighter' }}>userNm</span>
+            </div>
+          </div>
+
+          <div className='mt-10' style={{ border: "1px solid #adafaa", width: "415px", height: "327px", backgroundColor: "" }}>
+            <textarea className='mg-10' value={""} onChange={(e) => console.log(e.target)} maxLength={100} />
+          </div>
+
+          <div className="Width-100 ta-c mt-30">
+            <button
+              className="bg-black font-white"
+              onClick={() => {
+                if (confirm) {
+                  confirm();
+                }
+                onClose();
+              }}
+            >
+              전송
+            </button>
+            <button className="ml-10 mt-10" onClick={() => onClose()}>
+              취소
+            </button>
+          </div>
+        </div>
+      );
+    },
+  });
+};
+
+export const _messagePopup = () => {
+  MessagePopup();
+}
+
 
 // export default Popup;
