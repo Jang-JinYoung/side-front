@@ -16,9 +16,9 @@ module.exports = (env, argv) => {
     output: {
       publicPath: "/",
 
+      path: path.join(__dirname, '/dist'),
       // 23.8.24 이게 뭘까요
-      // path: path.join(__dirname, '/dist'),
-      // filename: '[name].js',
+      filename: '[name].js',
     },
     devServer: {
       port: 3000,

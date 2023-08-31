@@ -9,7 +9,7 @@ export interface IComment {
 
 const Comment = ({ userNm, writeTm, comment }: IComment) => {
 
-    const [dsp, setDsp] = useState<boolean>(true);
+    const [dsp, setDsp] = useState<boolean>(false);
 
     return (
         <div className="comment">

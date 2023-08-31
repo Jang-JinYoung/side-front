@@ -1,3 +1,4 @@
+import Textarea from '@atoms/Textarea';
 import React, { useState } from 'react';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 
@@ -79,8 +80,8 @@ export const MessagePopup = () => {
     closeOnClickOutside: false,
     overlayClassName: 'black_overlay dsp-b',
     
+
     customUI: ({ onClose }) => {
-      // const [text, setText] = useState("");
       return (
         <div className="popup_wrap comm align-c dsp-b">
 
@@ -91,17 +92,21 @@ export const MessagePopup = () => {
             </div>
           </div>
 
-          <div className='mt-10' style={{ border: "1px solid #adafaa", width: "415px", height: "327px", backgroundColor: "" }}>
-            <textarea className='mg-10' value={""} onChange={(e) => console.log(e.target)} maxLength={100} />
-          </div>
+          <Textarea
+            name="msg"
+            value="123"
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => console.log(e.target)}
+            textareaSize={{ width: "213px", height: "200px" }}
+          />
 
-          <div className="Width-100 ta-c mt-30">
+          < div className="Width-100 ta-c mt-30" >
             <button
               className="bg-black font-white"
               onClick={() => {
-                if (confirm) {
-                  confirm();
-                }
+                // if (confirm) {
+                //   console.log(confirm)
+                //   confirm();
+                // }
                 onClose();
               }}
             >
@@ -110,8 +115,8 @@ export const MessagePopup = () => {
             <button className="ml-10 mt-10" onClick={() => onClose()}>
               취소
             </button>
-          </div>
-        </div>
+          </div >
+        </div >
       );
     },
   });
