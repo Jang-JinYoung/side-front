@@ -78,11 +78,13 @@
   justify-content: center;
 }
 
-.is-pagination-first, .is-pagination-last {
+.is-pagination-first,
+.is-pagination-last {
   background: url('/images/ico_pg_first.svg');
 }
 
-.is-pagination-prev, .is-pagination-next {
+.is-pagination-prev,
+.is-pagination-next {
   background: url('/images/ico_pg_pre.svg');
 }
 
@@ -114,11 +116,12 @@
 
 .is-pagination-num {
   border: 1px solid #ccc;
+  background-color: white;
 }
 .is-pagination-num:hover,
 .is-pagination-num.is-current {
-  color: #fff;
-  background: blue;
+  color: black;
+  background: #f2f2f2;
   border-color: #ccc;
 }
 .is-pagination-prev {
@@ -134,7 +137,6 @@
   justify-content: center;
   align-items: center;
 } */
-
 
 /* 댓글영역 */
 .comment-wrap {
@@ -153,7 +155,7 @@
   font-size: 12px;
 }
 
-.comment-write > textarea{
+.comment-write > textarea {
   /* background-color: white; */
   vertical-align: top;
   resize: none;
@@ -163,4 +165,8 @@
 
 .comment > div:nth-child(2) {
   line-height: 15px;
+}
+
+.search {
+  background-color: #f9f9f9;
 }

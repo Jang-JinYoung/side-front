@@ -1,6 +1,5 @@
 import React from 'react';
 import Header from '@components/Header';
-import SubNav from '@components/SubNav';
 import { Outlet } from 'react-router-dom';
 
 const BasicPage = () => {
@@ -8,8 +7,10 @@ const BasicPage = () => {
     <>
       <Header />
       <div className="container flex">
-        <SubNav />
-        <div className="contents pd-10">
+        <div
+          className="contents pd-10"
+          style={{ marginLeft: '25%', marginTop: '50px' }}
+        >
           <Outlet />
         </div>
       </div>

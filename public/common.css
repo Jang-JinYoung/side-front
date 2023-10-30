@@ -14,18 +14,16 @@
 
 .block {
   display: block;
- }
+}
 
- .dsp-n {
+.dsp-n {
   display: none;
- }
+}
 
 /* text */
 .ta-c {
   text-align: center;
 }
-
-
 
 /* border */
 .bd-t {
@@ -44,6 +42,10 @@
 
 .pl-10 {
   padding-left: 10px;
+}
+
+.pb-20 {
+  padding-bottom: 20px;
 }
 
 /* margin */
@@ -71,6 +73,10 @@
   margin-left: 250px;
 }
 
+.mb-10 {
+  margin-bottom: 10px;
+}
+
 /* border */
 .br-1 {
   border-right: 1px solid black;
@@ -81,7 +87,8 @@
 }
 
 /* ul */
-ul > li, ol > li {
+ul > li,
+ol > li {
   list-style: none;
 }
 
@@ -94,9 +101,18 @@ ul.typ1 > li {
   padding-left: 10px;
 }
 
-
 /* table */
-table, th, td {
+table,
+th,
+td {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+thead {
+  border-top: 1px solid black;
+}
+
+tbody {
   border-bottom: 1px solid black;
 }
 
@@ -105,9 +121,13 @@ table {
 }
 
 th {
+  /* background-color: #f9f9f9; */
+  text-align: center;
+  /* padding-left: 10px; */
+}
+
+tr.noti {
   background-color: #f9f9f9;
-  text-align: left;
-  padding-left: 10px;
 }
 
 /* color */
@@ -132,9 +152,8 @@ textarea {
   /* 기타 스타일링 */
 }
 
-
 .bd-t {
-  border-top: 1px solid black
+  border-top: 1px solid black;
 }
 
 .test {
