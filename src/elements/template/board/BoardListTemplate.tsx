@@ -115,6 +115,9 @@ const BoardListTemplate = () => {
             ))}
           </tbody>
         </table>
+        <div className="mt-10" style={{ float: 'right', marginRight: '10px' }}>
+          <button onClick={() => console.log('글쓰기')}>글쓰기</button>
+        </div>
       </div>
 
       {/* 페이지 영역 */}

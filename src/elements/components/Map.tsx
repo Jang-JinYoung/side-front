@@ -1,9 +1,20 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
+import React, { useCallback, useState } from 'react';
+import {
+  GoogleMap,
+  StandaloneSearchBox,
+  useLoadScript,
+  Libraries,
+  MarkerF,
+} from '@react-google-maps/api';
+
+interface IPosition {
+  lat: number;
+  lng: number;
+}
 
 const containerStyle = {
-  width: "400px",
-  height: "400px",
+  width: '800px',
+  height: '800px',
 };
 
 const options = {
@@ -16,30 +27,24 @@ const options = {
   fullscreenControl: false,
   // gestureHandling: 'greedy',
 };
+const libraries: Libraries = ['geometry', 'places'];
 
-const GOOGLE_MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY as string;
+// const GOOGLE_MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY as string;
 
-const Map = (props: any) => {
-  const [center, setCenter] = useState({
+const Map = () => {
+  const [center, setCenter] = useState<IPosition>({
     lat: 36.507757,
     lng: 127.766922,
   });
 
-  const { data } = props;
+  const [markerList, setMarkerList] = useState<IPosition[] | null>(null);
 
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-      setCenter({
-        lat: parseFloat(data.latitude),
-        lng: parseFloat(data.longitude),
-      });
-    }
-  }, []);
+  const [zoom, setZoom] = useState(11);
 
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
+  const { isLoaded } = useLoadScript({
+    id: 'map',
     googleMapsApiKey: GOOGLE_MAP_API_KEY,
+    libraries, // 장소검색
   });
 
   const [map, setMap] = useState(null);
@@ -53,21 +58,86 @@ const Map = (props: any) => {
     setMap(map);
   }, []);
 
-  const onUnmount = useCallback(function callback(map: any) {
+  const onUnmount = useCallback(function callback() {
     setMap(null);
   }, []);
 
-  return isLoaded ? (
+  const [searchBox, setSearchBox] = useState<any>(null);
+  const handleLoad = (ref: google.maps.places.SearchBox) => {
+    if (ref) {
+      // console.log(ref);
+      setSearchBox(ref);
+    }
+  };
+
+  const onPlacesChanged = () => {
+    if (searchBox) {
+      const place = searchBox.getPlaces()[0];
+      const lat = place.geometry.location.lat();
+      const lng = place.geometry.location.lng();
+      setCenter({ lat, lng });
+      setZoom(11);
+    }
+  };
+
+  const onClickMap = (e: google.maps.MapMouseEvent) => {
+    const lat = e.latLng?.lat();
+    const lng = e.latLng?.lng();
+
+    // const position = {lat: e.latLng?.lat(), lng: e.latLng?.lng()}
+
+    if (Array.isArray(markerList) && lat && lng) {
+      setMarkerList([...markerList, { lat, lng }]);
+    } else if (!Array.isArray(markerList) && lat && lng) {
+      setMarkerList([{ lat, lng }]);
+    }
+  };
+
+  if (!isLoaded) return <></>;
+
+  return (
     <GoogleMap
+      id="map"
       mapContainerStyle={containerStyle}
       center={center}
-      zoom={6}
+      zoom={zoom}
       onLoad={onLoad}
       onUnmount={onUnmount}
+      onClick={onClickMap}
       options={options}
-    ></GoogleMap>
-  ) : (
-    <></>
+    >
+      <StandaloneSearchBox
+        onLoad={handleLoad}
+        onPlacesChanged={onPlacesChanged}
+      >
+        <input
+          type="text"
+          // placeholder="Customized your placeholder"
+          style={{
+            boxSizing: `border-box`,
+            border: `1px solid transparent`,
+            width: `240px`,
+            height: `32px`,
+            padding: `0 12px`,
+            borderRadius: `3px`,
+            boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+            fontSize: `14px`,
+            outline: `none`,
+            textOverflow: `ellipses`,
+            position: 'absolute',
+            // left: '50%',
+            // marginLeft: '-120px',
+          }}
+        />
+      </StandaloneSearchBox>
+      {markerList?.map((marker: IPosition) => (
+        <MarkerF
+          key={marker.lat}
+          position={marker}
+          // icon={{ url: '/images/icons/map_marker.svg', scale: 5 }}
+        />
+      ))}
+    </GoogleMap>
   );
 };
 
