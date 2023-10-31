@@ -7,6 +7,7 @@ import MessageDetailTemplate from './template/message/MessageDetailTemplate';
 import MessageWriteTemplate from './template/message/MessageWrtieTemplate';
 import BoardListTemplate from './template/board/BoardListTemplate';
 import BoardDetailTemplate from './template/board/BoardDetailTemplate';
+import MapPage from '@pages/MapPage';
 
 interface IRoutes {
   path: string;
@@ -18,7 +19,6 @@ interface IRoutes {
 }
 
 const RouteFactory = () => {
-
   const routes: IRoutes[] = [
     {
       path: '/',
@@ -38,8 +38,8 @@ const RouteFactory = () => {
         },
         {
           path: 'write',
-          element: <MessageWriteTemplate />
-        }
+          element: <MessageWriteTemplate />,
+        },
       ],
     },
     {
@@ -55,6 +55,11 @@ const RouteFactory = () => {
           element: <BoardDetailTemplate />,
         },
       ],
+    },
+    {
+      path: '/map',
+      element: <MapPage />,
+      children: [],
     },
   ];
 
