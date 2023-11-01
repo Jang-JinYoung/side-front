@@ -8,6 +8,7 @@ import MessageWriteTemplate from './template/message/MessageWrtieTemplate';
 import BoardListTemplate from './template/board/BoardListTemplate';
 import BoardDetailTemplate from './template/board/BoardDetailTemplate';
 import MapPage from '@pages/MapPage';
+import PlanTemplate from './template/plan/PlanTemplate';
 
 interface IRoutes {
   path: string;
@@ -59,7 +60,12 @@ const RouteFactory = () => {
     {
       path: '/map',
       element: <MapPage />,
-      children: [],
+      children: [
+        {
+          path: '',
+          element: <PlanTemplate />,
+        },
+      ],
     },
   ];
 
