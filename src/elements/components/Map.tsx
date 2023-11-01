@@ -23,7 +23,6 @@ interface IProps extends PropsWithChildren {
 }
 
 // const GOOGLE_MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY as string;
-const GOOGLE_MAP_API_KEY = 'AIzaSyDOccRDVRUqa-sPgTXqYkOZaXhWUabFwsk';
 
 const Map = ({ containerStyle, center, zoom, children, onClick }: IProps) => {
   const { isLoaded } = useLoadScript({
