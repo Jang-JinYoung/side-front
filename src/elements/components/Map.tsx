@@ -1,10 +1,7 @@
 import React, { useCallback, useState, PropsWithChildren } from 'react';
 import { GoogleMap, useLoadScript, Libraries } from '@react-google-maps/api';
 
-export interface IPosition {
-  lat: number;
-  lng: number;
-}
+export interface IPosition extends google.maps.LatLngLiteral {}
 
 const options = {
   // 위성 버튼 안보이게
@@ -16,24 +13,19 @@ const options = {
   fullscreenControl: false,
   // gestureHandling: 'greedy',
 };
-const libraries: Libraries = ['geometry', 'places'];
+const libraries: Libraries = ['drawing', 'geometry', 'places'];
 
 interface IProps extends PropsWithChildren {
   containerStyle?: { width: string; height: string };
   center?: IPosition;
   zoom?: number;
-  onClickMap?: (e: google.maps.MapMouseEvent) => void;
+  onClick?: (e: google.maps.MapMouseEvent) => void;
 }
 
 // const GOOGLE_MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY as string;
+const GOOGLE_MAP_API_KEY = 'AIzaSyDOccRDVRUqa-sPgTXqYkOZaXhWUabFwsk';
 
-const Map = ({
-  containerStyle,
-  center,
-  zoom,
-  children,
-  onClickMap,
-}: IProps) => {
+const Map = ({ containerStyle, center, zoom, children, onClick }: IProps) => {
   const { isLoaded } = useLoadScript({
     id: 'map',
     googleMapsApiKey: GOOGLE_MAP_API_KEY,
@@ -55,12 +47,12 @@ const Map = ({
   return (
     <GoogleMap
       id="map"
-      mapContainerStyle={containerStyle ?? { width: '800px', height: '800px' }}
+      mapContainerStyle={containerStyle ?? { width: '800px', height: '100vh' }}
       center={center ?? { lat: 36.507757, lng: 127.766922 }}
       zoom={zoom ?? 7}
       onLoad={onLoad}
       onUnmount={onUnmount}
-      onClick={onClickMap}
+      onClick={onClick}
       options={options}
     >
       {children}
