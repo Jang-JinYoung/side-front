@@ -18,7 +18,9 @@ const PlanTemplate = () => {
   });
 
   const [zoom, setZoom] = useState(11);
-  const [markerList, setMarkerList] = useState<IMarker[]>([]);
+  const [markerList, setMarkerList] = useState<IMarker[]>([
+    { lat: 12, lng: 12, name: '123' },
+  ]);
 
   const [searchBox, setSearchBox] =
     useState<google.maps.places.SearchBox | null>(null);
@@ -65,6 +67,7 @@ const PlanTemplate = () => {
     const places = searchBox?.getPlaces();
 
     if (places) {
+      console.log(places[0]);
       const { geometry } = places[0];
 
       if (geometry) {
@@ -72,7 +75,7 @@ const PlanTemplate = () => {
         const lng = geometry.location?.lng();
         if (lat && lng) {
           setCenter({ lat, lng });
-          setZoom(11);
+          setZoom(10);
         }
       }
     }
@@ -83,7 +86,7 @@ const PlanTemplate = () => {
   };
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div>
       <div>
         <Map center={center} zoom={zoom} onClick={onClickMap}>
           <StandaloneSearchBox
@@ -115,7 +118,7 @@ const PlanTemplate = () => {
           ))}
         </Map>
       </div>
-      <div className="ml-10">
+      <div className="trip-plan-list" style={{ marginLeft: '10px' }}>
         {markerList?.map((marker: IMarker) => (
           <Box key={marker.lat} onClick={onBoxRemoveBtnClick} {...marker} />
         ))}

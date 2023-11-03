@@ -1,4 +1,4 @@
-import React, { useCallback, useState, PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { GoogleMap, useLoadScript, Libraries } from '@react-google-maps/api';
 
 export interface IPosition extends google.maps.LatLngLiteral {}
@@ -13,7 +13,7 @@ const options = {
   fullscreenControl: false,
   // gestureHandling: 'greedy',
 };
-const libraries: Libraries = ['drawing', 'geometry', 'places'];
+const libraries: Libraries = ['geometry', 'places'];
 
 interface IProps extends PropsWithChildren {
   containerStyle?: { width: string; height: string };
@@ -23,6 +23,7 @@ interface IProps extends PropsWithChildren {
 }
 
 // const GOOGLE_MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY as string;
+const GOOGLE_MAP_API_KEY = 'AIzaSyDOccRDVRUqa-sPgTXqYkOZaXhWUabFwsk';
 
 const Map = ({ containerStyle, center, zoom, children, onClick }: IProps) => {
   const { isLoaded } = useLoadScript({
@@ -30,16 +31,6 @@ const Map = ({ containerStyle, center, zoom, children, onClick }: IProps) => {
     googleMapsApiKey: GOOGLE_MAP_API_KEY,
     libraries, // 장소검색
   });
-
-  const [map, setMap] = useState(null);
-
-  const onLoad = useCallback((map: any) => {
-    setMap(map);
-  }, []);
-
-  const onUnmount = useCallback(() => {
-    setMap(null);
-  }, []);
 
   if (!isLoaded) return <></>;
 
@@ -49,8 +40,6 @@ const Map = ({ containerStyle, center, zoom, children, onClick }: IProps) => {
       mapContainerStyle={containerStyle ?? { width: '800px', height: '100vh' }}
       center={center ?? { lat: 36.507757, lng: 127.766922 }}
       zoom={zoom ?? 7}
-      onLoad={onLoad}
-      onUnmount={onUnmount}
       onClick={onClick}
       options={options}
     >

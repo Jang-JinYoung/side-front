@@ -126,7 +126,10 @@ const BoardListTemplate = () => {
           currentPage={Number(currentPage)}
           totalCount={13}
           pageSize={pageSize}
-          onClick={(page: string) => setSearchParams({ code, page })}
+          onClick={(page: number) => {
+            const ps = page.toString();
+            setSearchParams({ code, ps });
+          }}
         />
         {/* 검색 영역 */}
         <Search
