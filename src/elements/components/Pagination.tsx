@@ -15,36 +15,34 @@ floor 내림
 round 반올림
 ceil 올림
 */
-const Pagination = (props: any) => {
-  const { style, totalCount, pageSize, currentPage, onClick, children } = props;
+const Pagination = (props: IPagination) => {
+  const { style, totalCount, pageSize, currentPage, onClick } = props;
 
   const lastPage = Math.ceil(totalCount / pageSize);
-  const page = _.chunk(_.range(1, lastPage + 1), pageSize)
-
+  const page = _.chunk(_.range(1, lastPage + 1), pageSize);
 
   return (
     <div className="mt-10 is-pagination">
-
-      {children}
-      
       <span
         className={`is-pagination-first ${currentPage === 1 ? 'disabled' : ''}`}
         onClick={() => onClick(1)}
-        role='button'
+        role="button"
         aria-disabled={currentPage === 1}
       />
 
       <span
         className={`is-pagination-prev ${currentPage === 1 ? 'disabled' : ''}`}
         onClick={() => onClick(currentPage - 1)}
-        role='button'
+        role="button"
         aria-disabled={currentPage === 1}
       />
 
-      {page[(Math.ceil(currentPage / pageSize)) - 1].map((v) => (
+      {page[Math.ceil(currentPage / pageSize) - 1].map((v) => (
         <span
           key={v}
-          className={`is-pagination-num ${currentPage === v ? 'is-current' : ''}`}
+          className={`is-pagination-num ${
+            currentPage === v ? 'is-current' : ''
+          }`}
           onClick={() => onClick(v)}
         >
           {v}
@@ -52,19 +50,22 @@ const Pagination = (props: any) => {
       ))}
 
       <span
-        className={`is-pagination-next ${currentPage === lastPage ? 'disabled' : ''}`}
+        className={`is-pagination-next ${
+          currentPage === lastPage ? 'disabled' : ''
+        }`}
         onClick={() => onClick(currentPage + 1)}
-        role='button'
+        role="button"
         aria-disabled={currentPage === lastPage}
       />
 
       <span
-        className={`is-pagination-last ${currentPage === lastPage ? 'disabled' : ''}`}
+        className={`is-pagination-last ${
+          currentPage === lastPage ? 'disabled' : ''
+        }`}
         onClick={() => onClick(lastPage)}
-        role='button'
+        role="button"
         aria-disabled={currentPage === lastPage}
       />
-
     </div>
   );
 };
