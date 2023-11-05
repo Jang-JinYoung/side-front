@@ -171,21 +171,23 @@
   background-color: #f9f9f9;
 }
 
-.trip-plan {
-  display: block;
-  /* justify-content: ; */
-}
 
 .trip-plan {
-  width: 230px;
+  width: 350px;
   height: 50px;
   border: 1px solid black;
 }
 
-.btn_trash {
+.btn-trash {
   width: 30px;
   height: 30px;
   float: right;
   background: url('/images/ico_trash.svg') no-repeat;
   cursor: pointer;
+}
+
+.trip-plan-txt {
+  position: absolute;
+  padding-top: 15px;
+  padding-left: 10px;
 }

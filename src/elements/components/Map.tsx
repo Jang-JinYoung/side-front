@@ -37,7 +37,7 @@ const Map = ({ containerStyle, center, zoom, children, onClick }: IProps) => {
   return (
     <GoogleMap
       id="map"
-      mapContainerStyle={containerStyle ?? { width: '800px', height: '100vh' }}
+      mapContainerStyle={containerStyle ?? { width: '1200px', height: '100vh', marginLeft: "15px" }}
       center={center ?? { lat: 36.507757, lng: 127.766922 }}
       zoom={zoom ?? 7}
       onClick={onClick}

@@ -20,6 +20,11 @@ const PlanTemplate = () => {
   const [zoom, setZoom] = useState(11);
   const [markerList, setMarkerList] = useState<IMarker[]>([
     { lat: 12, lng: 12, name: '123' },
+    { lat: 13, lng: 13, name: '123' },
+    { lat: 14, lng: 14 },
+    { lat: 15, lng: 15, name: '123' },
+    { lat: 16, lng: 16, name: '123' },
+    { lat: 17, lng: 17 },
   ]);
 
   const [searchBox, setSearchBox] =
@@ -81,13 +86,34 @@ const PlanTemplate = () => {
     }
   };
 
-  const onBoxRemoveBtnClick = () => {
-    console.log('A');
+  /* 여행 계획 삭제 */
+  const onPlanRemoveBtnClick = ({ lat, lng }: IMarker) => {
+    const newMarkerList = markerList.filter((marker) => {
+      if (!(marker.lat === lat && marker.lng === lng)) return marker;
+    });
+
+    setMarkerList(newMarkerList);
+  };
+
+  /* 이름 없는 장소 이름 저장 */
+  const onSetPlaceNameBtnAction = ({ lat, lng, name }: IMarker) => {
+    const newMarkerList = markerList.map((marker) => {
+      if (marker.lat === lat && marker.lng === lng) {
+        return { ...marker, name: name };
+      }
+
+      return marker;
+    });
+
+    setMarkerList(newMarkerList);
   };
 
   return (
-    <div>
-      <div>
+    <div style={{ display: 'flex' }}>
+      <div
+        style={{ width: '1230px', height: '100vh' }}
+      >
+
         <Map center={center} zoom={zoom} onClick={onClickMap}>
           <StandaloneSearchBox
             onLoad={handleLoad}
@@ -117,10 +143,16 @@ const PlanTemplate = () => {
             <MarkerF key={marker.lat} position={marker} />
           ))}
         </Map>
+        
       </div>
-      <div className="trip-plan-list" style={{ marginLeft: '10px' }}>
+      <div className="trip-plan-list ml-10">
         {markerList?.map((marker: IMarker) => (
-          <Box key={marker.lat} onClick={onBoxRemoveBtnClick} {...marker} />
+          <Box
+            key={`${marker.lat},${marker.lng}`}
+            onPlanRemoveBtnClick={onPlanRemoveBtnClick}
+            onSetPlaceNameBtnAction={onSetPlaceNameBtnAction}
+            {...marker}
+          />
         ))}
       </div>
     </div>
