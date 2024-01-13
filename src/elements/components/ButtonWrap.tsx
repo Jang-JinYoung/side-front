@@ -10,7 +10,7 @@ const ButtonWrap = ({
   onCancel
 }: IProps) => {
   return (
-    <div>
+    <div style={{marginTop: 20}}>
       <Button
         text="취소"
         onClick={onCancel}

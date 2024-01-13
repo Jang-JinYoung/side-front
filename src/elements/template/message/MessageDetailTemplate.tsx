@@ -1,4 +1,4 @@
-import { _popup } from '@components/Popup';
+import { _popup } from '@components/popup/Popup';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 

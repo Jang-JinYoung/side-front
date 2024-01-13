@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import useUserStore from '@store/user';
 import { useStore } from 'zustand';
-import { _popup } from './Popup';
+import { _popup } from './popup/Popup';
 
 const Header = () => {
   const navigate = useNavigate();

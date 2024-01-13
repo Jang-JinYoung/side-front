@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { _popup } from '@components/Popup';
+import { _popup } from '@components/popup/Popup';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const MessageWriteTemplate = () => {

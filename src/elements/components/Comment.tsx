@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { _messagePopup, _popup } from './Popup';
+import { _messagePopup, _popup } from './popup/Popup';
 
 export interface IComment {
     userNm: string; // 닉네임

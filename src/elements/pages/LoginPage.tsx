@@ -1,7 +1,7 @@
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IUser } from 'src/service/api/user';
-import { Popup } from '@components/Popup';
+import { Popup } from '@components/popup/Popup';
 import { useNavigate } from 'react-router-dom';
 import useUserStore from '@store/user';
 import { useStore } from 'zustand';

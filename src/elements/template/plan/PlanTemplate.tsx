@@ -19,12 +19,12 @@ const PlanTemplate = () => {
 
   const [zoom, setZoom] = useState(11);
   const [markerList, setMarkerList] = useState<IMarker[]>([
-    { lat: 12, lng: 12, name: '123' },
-    { lat: 13, lng: 13, name: '123' },
-    { lat: 14, lng: 14 },
-    { lat: 15, lng: 15, name: '123' },
-    { lat: 16, lng: 16, name: '123' },
-    { lat: 17, lng: 17 },
+    // { lat: 12, lng: 12, name: '123' },
+    // { lat: 13, lng: 13, name: '123' },
+    // { lat: 14, lng: 14 },
+    // { lat: 15, lng: 15, name: '123' },
+    // { lat: 16, lng: 16, name: '123' },
+    // { lat: 17, lng: 17 },
   ]);
 
   const [searchBox, setSearchBox] =

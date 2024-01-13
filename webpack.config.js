@@ -3,6 +3,9 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 const dotenv = require('dotenv');
 const webpack = require('webpack');
+const {
+  VanillaExtractPlugin
+} = require('@vanilla-extract/webpack-plugin');
 
 dotenv.config();
 
@@ -93,6 +96,8 @@ module.exports = (env, argv) => {
         'process.env': JSON.stringify(process.env),
       }),
       new CleanWebpackPlugin(),
+      new VanillaExtractPlugin(),
     ],
+    
   };
 };
