@@ -9,6 +9,7 @@ import BoardListTemplate from './template/board/BoardListTemplate';
 import BoardDetailTemplate from './template/board/BoardDetailTemplate';
 import MapPage from '@pages/MapPage';
 import PlanTemplate from './template/plan/PlanTemplate';
+import SheetPage from '@pages/sheet/SheetPage';
 
 interface IRoutes {
   path: string;
@@ -67,6 +68,10 @@ const RouteFactory = () => {
         },
       ],
     },
+    {
+      path: '/sheet',
+      element: <SheetPage />
+    }
   ];
 
   // return useRoutes([...basicRoutes, ...authRoutes]);
