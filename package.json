@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env webpack-dev-server --mode=development --open --hot --progress",
-    "build": "webpack --mode=production  --progress",
-    "start": "webpack serve --mode development"
+    "build": "cross-env NODE_ENV=production --mode=production  --progress",
+    "start": "cross-env NODE_ENV=development BUILD_ENV=local webpack-dev-server --hot --progress"
   },
   "keywords": [],
   "author": "",
