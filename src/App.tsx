@@ -1,6 +1,5 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import RouteFactory from './elements/RouteFactory';
 import { BrowserRouter } from 'react-router-dom';
 
 /*
@@ -27,19 +26,15 @@ const queryClient = new QueryClient({
 });
 
 const App: React.FC = () => {
+
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/message" element={<MessagePage />} />
-          <Route path="/css" element={<CssPage />} />
-        </Routes>
-      </BrowserRouter> */}
-      <BrowserRouter>
-        <RouteFactory />
-      </BrowserRouter>
+      {/* <BrowserRouter> */}
+        <div className="bg-blue-500 text-white text-center p-10">
+          <h1 className="text-4xl font-bold">Hello, Tailwind with React!</h1>
+          <p className="mt-4">This is a React app styled with Tailwind CSS.</p>
+        </div>
+      {/* </BrowserRouter> */}
     </QueryClientProvider>
   );
 };

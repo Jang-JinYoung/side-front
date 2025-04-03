@@ -1,103 +1,40 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
-const dotenv = require('dotenv');
-const webpack = require('webpack');
-const {
-  VanillaExtractPlugin
-} = require('@vanilla-extract/webpack-plugin');
 
-dotenv.config();
-
-module.exports = (env, argv) => {
-  const prod = argv.mode === 'production';
-
-  return {
-    mode: prod ? 'production' : 'development',
-    devtool: false,
-    entry: './src/index.tsx',
-    output: {
-      publicPath: "/",
-
-      // 23.8.24 이게 뭘까요
-      // path: path.join(__dirname, '/dist'),
-      // filename: '[name].js',
+module.exports = {
+  mode: 'development', // 개발 모드
+  entry: './src/index.tsx', // React 진입점 파일 경로
+  output: {
+    path: path.resolve(__dirname, 'dist'), // 출력 디렉토리
+    filename: 'bundle.js', // 번들 파일 이름
+  },
+  devServer: {
+    static: {
+      directory: path.resolve(__dirname, 'dist'), // 정적 파일 제공 디렉토리
     },
-    devServer: {
-      port: 3000,
-      hot: true,
-    },
-    resolve: {
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      alias: {
-        '@public': path.resolve(__dirname, 'public'),
-        '@atoms': path.resolve(__dirname, 'src/elements/atoms/'),
-        '@components': path.resolve(__dirname, 'src/elements/components/'),
-        '@pages': path.resolve(__dirname, 'src/elements/pages/'),
-        '@store': path.resolve(__dirname, 'src/store/'),
-        '@service': path.resolve(__dirname, 'src/service/'),
-        '@lib': path.resolve(__dirname, 'src/lib/'),
-        '@interface': path.resolve(__dirname, 'src/interface/'),
-        '@api': path.resolve(__dirname, 'src/service/api/'),
+    port: 3000,
+    open: true, // 브라우저 자동 열기
+    hot: true, // HMR 활성화
+    compress: true,
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader', 'postcss-loader'], // CSS 처리 로더 설정
       },
-    },
-    module: {
-      rules: [
-        {
-          test: /\.tsx?$/,
-          exclude: /node_modules/,
-          use: ['babel-loader', 'ts-loader'],
+      {
+        test: /\.(js|jsx|ts|tsx)$/, // JavaScript 및 TypeScript 처리
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
+          },
         },
-        {
-          test: /\.css$/i,
-          use: ['style-loader', 'css-loader'],
-        },
-        {
-          test: /\.(png|jpg|gif)$/,
-          use: [
-            {
-              loader: 'file-loader',
-              options: {
-                name: '[name].[ext]',
-                outputPath: 'images/',
-                publicPath: '/images/',
-              },
-            },
-          ],
-        },
-      ],
-    },
-    devServer: {
-      static: {
-        directory: path.resolve(__dirname, 'public'),
       },
-      compress: true,
-      port: 3000,
-      hot: true,
-      open: true,
-      historyApiFallback: true,
-    },
-    plugins: [
-      new webpack.ProvidePlugin({
-        React: 'react',
-      }),
-      // new Dotenv(),
-      new HtmlWebpackPlugin({
-        template: './public/index.html',
-        minify:
-          process.env.NODE_ENV === 'production'
-            ? {
-                collapseWhitespace: true, // 빈칸 제거
-                removeComments: true, // 주석 제거
-              }
-            : false,
-      }),
-      new webpack.DefinePlugin({
-        'process.env': JSON.stringify(process.env),
-      }),
-      new CleanWebpackPlugin(),
-      new VanillaExtractPlugin(),
     ],
-    
-  };
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx'], // 확장자 생략 허용
+  },
 };
