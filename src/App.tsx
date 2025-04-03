@@ -1,6 +1,5 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { BrowserRouter } from 'react-router-dom';
 
 /*
 staleTime은 데이터가 최신 상태인지 확인하기 위해 캐시된 데이터를 얼마나 오래 사용할 수 있는지를 나타내는 시간(밀리초)입니다.
@@ -16,7 +15,6 @@ const queryClient = new QueryClient({
     queries: {
       // 쿼리에 적용되는 전역 옵션
       staleTime: 300000, // 5분 간격으로 refetch -> 5 * 100 * 60
-      cacheTime: 600000, // 10분 동안 캐시 유지 -> 10 * 100 * 60
     },
     mutations: {
       // 변이에 적용되는 전역 옵션
@@ -32,7 +30,7 @@ const App: React.FC = () => {
       {/* <BrowserRouter> */}
         <div className="bg-blue-500 text-white text-center p-10">
           <h1 className="text-4xl font-bold">Hello, Tailwind with React!</h1>
-          <p className="mt-4">This is a React app styled with Tailwind CSS.</p>
+          {/* <p className="mt-21">This is a React app styled with Tailwind CSS.</p> */}
         </div>
       {/* </BrowserRouter> */}
     </QueryClientProvider>
