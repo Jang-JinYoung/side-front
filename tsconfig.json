@@ -32,7 +32,7 @@
         "src/store/*"
       ],
       "@atoms/*": [
-        "src/elements/atoms/*"
+        "src/atoms/*"
       ],
       "@components/*": [
         "src/elements/components/*"

@@ -28,7 +28,7 @@ module.exports = {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
         alias: {
             '@public': path.resolve(__dirname, 'public'),
-            '@atoms': path.resolve(__dirname, 'src/elements/atoms/'),
+            '@atoms': path.resolve(__dirname, 'src/atoms/'),
             '@components': path.resolve(__dirname, 'src/elements/components/'),
             '@pages': path.resolve(__dirname, 'src/elements/pages/'),
             '@store': path.resolve(__dirname, 'src/store/'),
