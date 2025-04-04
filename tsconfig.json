@@ -30,12 +30,12 @@
         "paths": {
             /* Specify a set of entries that re-map imports to additional lookup locations. */
             "@store/*": ["src/store/*"],
-            "@atoms/*": ["src/atoms/*"],
+            "@atom/*": ["src/atom/*"],
             "@components/*": ["src/elements/components/*"],
             "@pages/*": ["src/elements/pages/*"],
             "@service/*": ["src/service/*"],
             "@lib/*": ["src/lib/*"],
-            "@interface/*": ["src/interface/*"],
+            "@type/*": ["src/type/*"],
             "@api/*": ["src/service/api/*"]
         },
         // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
