@@ -1,5 +1,7 @@
+type TonClick = () => void;
+
 interface IButton {
-    onClick: () => void;
+    onClick: TonClick;
     text: string;
     className?: string;
 }
@@ -9,19 +11,18 @@ const Button = ({ onClick, text, className }: IButton) => {
         <button
             type="button"
             onClick={onClick}
-            className={className}
+            className={`text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${className}`}
         >
             {text}
         </button>
     );
 };
 
-const Cancel = ({ onClick }: { onClick: () => void } ) => {
+const Cancel = ({ onClick }: { onClick: TonClick } ) => {
     return (
-
         <Button
             onClick={onClick}
-            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-gray-500 hover:bg-gray-700"
             text="취소" 
         />
     );
@@ -29,11 +30,11 @@ const Cancel = ({ onClick }: { onClick: () => void } ) => {
 Button.Cancel = Cancel;
 
 
-const Save = ({ onClick }: { onClick: () => void } ) => {
+const Save = ({ onClick }: { onClick: TonClick } ) => {
     return (
         <Button
             onClick={onClick}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-blue-500 hover:bg-blue-700"
             text="저장"
         />
     );
