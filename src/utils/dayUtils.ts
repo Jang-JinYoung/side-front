@@ -1,12 +1,12 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 /**
- * 
+ *
  * @param date 날짜 @default today
  * @param template 날짜포맷 @default current date in ISO8601, without fraction seconds e.g. '2020-04-02T08:02:17-05:00'
- * @returns 
+ * @returns
  */
 export const formatDay = (date?: string, template?: string) => {
     return dayjs(date).format(template);
@@ -25,11 +25,11 @@ export const formatDay = (date?: string, template?: string) => {
  * 2023-12-01T10:59:00  // false
  * 20231241 false
  * 20231231 true
- * @returns 
+ * @returns
  */
 export const isValidDay = (date: string, format?: string) => {
     dayjs.extend(customParseFormat);
-    return dayjs(date, format ?? "YYYY-MM-DDTHH:mm:ss", true).isValid();
+    return dayjs(date, format ?? 'YYYY-MM-DDTHH:mm:ss', true).isValid();
 };
 
 /**
@@ -38,7 +38,7 @@ export const isValidDay = (date: string, format?: string) => {
  * @example
  * isBeforeDay("2025-01-01", "2024-01-02")); // false
  * isBeforeDay("2025-03-28 15:55")); // true
- * @returns 
+ * @returns
  * true 날짜 안지남
  * false 날짜 지남
  */
@@ -53,7 +53,7 @@ export const isBeforeDay = (nowDate: string, beforeDate?: string) => {
  * @example
  * isAfterDay("2025-01-01", "2024-01-02") // true
  * isAfterDay("2025-03-29") // true
- * @returns 
+ * @returns
  * true 날짜 지남
  * false 날짜 안지남
  */
@@ -71,17 +71,17 @@ export const isAfterDay = (nowDate: string, afterDate?: string) => {
  * '[]' 시작, 종료 포함 O
  * '[)' 시작 포함 O, 종료 포함 X (기본값)
  * @example
- * isBetweenDay("20250331", "20250330", "20250410") // true 
+ * isBetweenDay("20250331", "20250330", "20250410") // true
  * isBetweenDay("20250331", "20250401", "20250410") // false
- * @returns 
+ * @returns
  */
 export const isBetweenDay = (
     nowDate: string,
     startDate: string,
     endDate: string,
-    range?: "[]" | "[)" | "(]" | "()"
+    range?: '[]' | '[)' | '(]' | '()',
 ) => {
     dayjs.extend(isBetween);
 
-    return dayjs(nowDate).isBetween(startDate, endDate, "day", range ?? "[)");
+    return dayjs(nowDate).isBetween(startDate, endDate, 'day', range ?? '[)');
 };

@@ -1,30 +1,29 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState } from 'react';
+import Button from './Button';
 
-const Modal = ({
-    onClose
-}: { onClose: any}) => {
-
-
+const Modal = ({ onClose }: { onClose: any }) => {
     const [data, setData] = useState({
         date: new Date().toISOString().split('T')[0],
         type: '지출',
         category: '식비',
         amount: '',
-        description: ''
+        description: '',
     });
     const [formData, setFormData] = useState({
         date: new Date().toISOString().split('T')[0],
         type: '지출',
         category: '식비',
         amount: '',
-        description: ''
+        description: '',
     });
 
-    const handleInputChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+    const handleInputChange = (
+        e: ChangeEvent<HTMLSelectElement | HTMLInputElement>,
+    ) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
-            [name]: value
+            [name]: value,
         });
     };
 
@@ -37,8 +36,11 @@ const Modal = ({
             date: formData.date,
             type: formData.type === '지출' ? '신용카드' : '입금',
             category: formData.category,
-            amount: formData.type === '지출' ? -Math.abs(Number(formData.amount)) : Math.abs(Number(formData.amount)),
-            description: formData.description
+            amount:
+                formData.type === '지출'
+                    ? -Math.abs(Number(formData.amount))
+                    : Math.abs(Number(formData.amount)),
+            description: formData.description,
         };
 
         // 데이터 업데이트
@@ -51,18 +53,20 @@ const Modal = ({
             type: '지출',
             category: '식비',
             amount: '',
-            description: ''
+            description: '',
         });
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
-            <div className="bg-white rounded-lg p-6 w-full max-w-md">
+        <div className="fixed inset-0 bg-black opacity-90 backdrop-filter backdrop-blur-sm flex items-center justify-center z-20 transition-all duration-300">
+            <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-xl transform transition-all duration-300">
                 <h2 className="text-xl font-bold mb-4">새 항목 추가</h2>
-
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="date">
+                        <label
+                            className="block text-gray-700 text-sm font-bold mb-2"
+                            htmlFor="date"
+                        >
                             날짜
                         </label>
                         <input
@@ -107,7 +111,10 @@ const Modal = ({
                     </div>
 
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="category">
+                        <label
+                            className="block text-gray-700 text-sm font-bold mb-2"
+                            htmlFor="category"
+                        >
                             분류
                         </label>
                         <select
@@ -139,7 +146,10 @@ const Modal = ({
                     </div>
 
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="amount">
+                        <label
+                            className="block text-gray-700 text-sm font-bold mb-2"
+                            htmlFor="amount"
+                        >
                             금액
                         </label>
                         <input
@@ -155,7 +165,10 @@ const Modal = ({
                     </div>
 
                     <div className="mb-6">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
+                        <label
+                            className="block text-gray-700 text-sm font-bold mb-2"
+                            htmlFor="description"
+                        >
                             내용
                         </label>
                         <input
@@ -171,19 +184,8 @@ const Modal = ({
                     </div>
 
                     <div className="flex items-center justify-between">
-                        <button
-                            type="button"
-                            onClick={onClose}
-                            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        >
-                            취소
-                        </button>
-                        <button
-                            type="submit"
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        >
-                            추가
-                        </button>
+                        <Button.Cancel onClick={onClose} />
+                        <Button.Save onClick={onClose} />
                     </div>
                 </form>
             </div>

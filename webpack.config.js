@@ -2,19 +2,17 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
-const {
-    VanillaExtractPlugin
-} = require('@vanilla-extract/webpack-plugin');
+const { VanillaExtractPlugin } = require('@vanilla-extract/webpack-plugin');
 
 const env = require('./env/local.env.js');
-console.log("DEVTOOL >>> ", env.DEVTOOL);
+console.log('DEVTOOL >>> ', env.DEVTOOL);
 
 module.exports = {
     mode: process.env.NODE_ENV,
     devtool: false,
     entry: './src/index.tsx',
     output: {
-        publicPath: "/",
+        publicPath: '/',
 
         // 23.8.24 이게 뭘까요
         // path: path.join(__dirname, '/dist'),
@@ -78,7 +76,7 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            'process.env': env
+            'process.env': env,
         }),
         new webpack.ProvidePlugin({
             React: 'react',
@@ -89,13 +87,12 @@ module.exports = {
             minify:
                 process.env.NODE_ENV === 'production'
                     ? {
-                        collapseWhitespace: true, // 빈칸 제거
-                        removeComments: true, // 주석 제거
-                    }
+                          collapseWhitespace: true, // 빈칸 제거
+                          removeComments: true, // 주석 제거
+                      }
                     : false,
         }),
         new CleanWebpackPlugin(),
         new VanillaExtractPlugin(),
     ],
-
 };

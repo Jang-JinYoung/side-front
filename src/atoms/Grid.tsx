@@ -1,16 +1,21 @@
-import { AgGridReact } from "ag-grid-react";
+import { AgGridReact } from 'ag-grid-react';
 
-import { ColDef, ModuleRegistry, ClientSideRowModelModule, GridOptions, FirstDataRenderedEvent, ColumnAutoSizeModule } from 'ag-grid-community';
+import {
+    ColDef,
+    ModuleRegistry,
+    ClientSideRowModelModule,
+    GridOptions,
+    FirstDataRenderedEvent,
+    ColumnAutoSizeModule,
+} from 'ag-grid-community';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 ModuleRegistry.registerModules([ColumnAutoSizeModule]);
-
 
 const style = {
     height: '500px',
     width: '100%',
 };
-
 
 const columnDefs: ColDef[] = [
     {
@@ -32,34 +37,27 @@ const columnDefs: ColDef[] = [
     {
         headerName: '내용',
         field: 'description',
-    }
-]
+    },
+];
 
-const Grid = ({ rowData} : {rowData: any[]}) => {
-
+const Grid = ({ rowData }: { rowData: any[] }) => {
     // Grid 만들어지고 호출
     const onFirstDataRendered = (event: FirstDataRenderedEvent) => {
         const { api } = event;
         console.log(api);
 
         api.sizeColumnsToFit();
-
     };
-
 
     const gridOption: GridOptions = {
         defaultColDef: {
             // cellClass: 'text-center flex items-center justify-center h-full'
         },
-        onFirstDataRendered: onFirstDataRendered
-    }
+        onFirstDataRendered: onFirstDataRendered,
+    };
 
     return (
-        <div
-            className="ag-theme-alpine"
-            style={style}
-        >
-
+        <div className="ag-theme-alpine" style={style}>
             <AgGridReact
                 gridOptions={gridOption}
                 // className="ag-theme-alpine h-full w-full"
@@ -68,7 +66,7 @@ const Grid = ({ rowData} : {rowData: any[]}) => {
                 animateRows
             />
         </div>
-    )
+    );
 };
 
 export default Grid;

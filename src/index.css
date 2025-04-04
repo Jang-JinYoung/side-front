@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 .ag-header-cell-label {
     justify-content: center !important;
