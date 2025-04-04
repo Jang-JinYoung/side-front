@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Grid from '@atoms/Grid';
-import ExpensePieChart from '@atoms/Chart';
-import Modal from '@atoms/Modal';
+import Grid from '@atom/Grid';
+import ExpensePieChart from '@atom/Chart';
+import Modal from '@atom/Modal';
 
 export interface TransactionData {
     id: number;
@@ -112,7 +112,13 @@ const Test = () => {
                 </svg>
             </button>
 
-            {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
+            {
+                isModalOpen &&
+                    <Modal
+                        onClose={() => setIsModalOpen(false)}
+                        onSave={() => console.log("onSave")}
+                    />
+            }
         </div>
     );
 };
