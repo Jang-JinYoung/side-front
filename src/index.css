@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+.ag-header-cell-label {
+    justify-content: center !important;
+}
+
+.ag-cell {
+    justify-content: center !important;
+    text-align: center !important;
+}
