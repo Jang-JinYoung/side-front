@@ -45,11 +45,7 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
         }
 
         onSave(newItem);
-        // 데이터 업데이트
-        // setFormData(newItem);
-
-        // 모달 닫기 및 폼 초기화
-        // onClose();
+        
     };
 
     return (
