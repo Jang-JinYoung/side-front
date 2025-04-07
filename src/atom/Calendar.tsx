@@ -4,10 +4,14 @@ import { RecordTransactionSchema, TRecordTransaction } from "@type/RecordTransac
 import { z } from "zod";
 import dayjs from "dayjs";
 
+interface IProps {
+    data: any;
+    onClick: (date: number) => void;
+}
 
-const Calendar = ({ data }: { data: any }) => {
 
 
+const Calendar = ({ data, onClick }: IProps) => {
     // 현재날짜
     const currentDate = dayjs(formatDay({}));
 
@@ -27,6 +31,7 @@ const Calendar = ({ data }: { data: any }) => {
         const newDate = calendarDate.add(offset, "month"); // 현재 날짜에서 월을 더하거나 뺌
         setCalendarDate(newDate); // 상태 업데이트
     };
+
 
 
     return (
@@ -68,16 +73,20 @@ const Calendar = ({ data }: { data: any }) => {
                                 const isToday = isDateToday(year, month, date) ? 'bg-yellow-200 font-bold' : 'bg-gray-100';
                                 const expense = 'text-red-500';
                                 const income = 'text-green-500';
+                                const isValidDate = date > 0 && date <= daysInMonth;
+                                const cursor  = isValidDate ? "cursor-pointer" : ""
 
-                                // const item = data[date];
-                                // console.log(data);
                                 return (
                                     <td
                                         key={dateIndex}
-                                        className={`h-30 w-30  border text-center bg-gray-100 cursor-pointer relative ${isToday}`}
-                                        onClick={() => console.log(date)}
+                                        className={`h-30 w-30  border text-center bg-gray-100 ${cursor} relative ${isToday}`}
+                                        onClick={() => {
+                                            if (isValidDate) {
+                                                onClick(date);
+                                            }
+                                        }}
                                     >
-                                        {date > 0 && date <= daysInMonth ? (
+                                        {isValidDate ? (
                                             <>
                                                 <span className="absolute top-1 left-1 text-sm font-bold">{date}</span>
 
@@ -92,7 +101,6 @@ const Calendar = ({ data }: { data: any }) => {
                                                     </div>
                                                 }
                                             </>
-
                                         ) : null}
                                     </td>
                                 );

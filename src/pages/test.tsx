@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import Grid from '@atom/Grid';
-import ExpensePieChart from '@atom/Chart';
-import Modal from '@atom/Modal';
+import { useEffect, useState } from 'react';
 import { TRecordTransaction } from '@type/RecordTransaction';
 import { formatDay } from '@util/dayUtils';
 import Calendar from '@atom/Calendar';
 import dayjs from 'dayjs';
+import SlidingPanel from '@atom/SlidePanel';
 
 export interface TransactionData {
     id: number;
@@ -86,7 +84,8 @@ const data: TRecordTransaction[] = [
         description: '경조사비',
     },
 ];
-type GroupedData = {
+
+export type GroupedData = {
     [yearMonth: string]: TRecordTransaction[];
 };
 
@@ -96,14 +95,16 @@ const Test = () => {
 
     const [rowData, setRowData] = useState<TRecordTransaction[]>(data);
 
-    const [groupedData, setGroupData] = useState<GroupedData>();
+    const [groupedData, setGroupData] = useState<GroupedData>({});
+
+    const [isSlideOpen, setSlideOpen] = useState<boolean>(false);
+    const [clickedDate, setClickedDate] = useState<number>();
 
 
     useEffect(() => {
         const groupedData = rowData.reduce<GroupedData>((acc, record) => {
-            const date = dayjs(formatDay({date: record.date})).date(); // 'YYYY-MM-DD' 형식의 날짜를 키로 사용
+            const date = dayjs(formatDay({ date: record.date })).date(); // 'YYYY-MM-DD' 형식의 날짜를 키로 사용
 
-            console.log("day >> ", date);
 
             if (!acc[date]) {
                 acc[date] = [];
@@ -113,12 +114,10 @@ const Test = () => {
 
             return acc;
         }, {});
+
         setGroupData(groupedData);
 
-        console.log(groupedData);
     }, [rowData]);
-
-    // console.log(rowData);
 
     return (
         <div className="h-screen flex flex-col">
@@ -128,7 +127,7 @@ const Test = () => {
                 </div>
             </div> */}
 
-            {
+            {/* {
                 isModalOpen &&
                 <Modal
                     onClose={() => setIsModalOpen(false)}
@@ -137,17 +136,23 @@ const Test = () => {
                         setIsModalOpen(false);
                     }}
                 />
-            }
+            } */}
 
-            <Calendar data={groupedData} />
+            <Calendar
+                data={groupedData}
+                onClick={(date: number) => {
+                    setClickedDate(date);
+                    setSlideOpen(true);
+                }} 
+            />
 
-            <div className="h-1/2 p-4 ">
+            {/* <div className="h-1/2 p-4 ">
                 <div className="w-full h-full bg-white rounded-lg shadow-md">
                     <Grid rowData={rowData} />
                 </div>
-            </div>
+            </div> */}
 
-            <button
+            {/* <button
                 className="absolute bottom-15 right-6 w-14 h-14 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
                 onClick={() => setIsModalOpen(true)}
             >
@@ -165,7 +170,12 @@ const Test = () => {
                         d="M12 4v16m8-8H4"
                     />
                 </svg>
-            </button>
+            </button> */}
+            <SlidingPanel 
+                isOpen={isSlideOpen} 
+                setOpen={() => setSlideOpen(false)}
+                data={clickedDate ? groupedData[clickedDate] : null}
+            />
         </div>
     );
 };
