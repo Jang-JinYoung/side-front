@@ -9,7 +9,8 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
  * @returns
  */
 export const formatDay = (date?: string, template?: string) => {
-    return dayjs(date).format(template);
+    // dayjs.extend(isToday);
+    return dayjs(dayjs(date ?? new Date()).format(template));
 };
 
 /**
@@ -84,4 +85,10 @@ export const isBetweenDay = (
     dayjs.extend(isBetween);
 
     return dayjs(nowDate).isBetween(startDate, endDate, 'day', range ?? '[)');
+};
+
+export const isDateToday = (year: number, month: number, date: number) => {
+
+    const today = formatDay();
+    return today.year() === year && today.month() === month && today.date() === date;
 };
