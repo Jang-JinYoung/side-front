@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { formatDay, isDateToday } from "@util/dayUtils";
-import { TRecordTransaction } from "@type/RecordTransaction";
+import { RecordTransactionSchema, TRecordTransaction } from "@type/RecordTransaction";
+import { z } from "zod";
+import dayjs from "dayjs";
 
 
-const Calendar = ({data} : { data: any}) => {
+const Calendar = ({ data }: { data: any }) => {
 
 
     // 현재날짜
-    const currentDate = formatDay();
+    const currentDate = dayjs(formatDay({}));
 
     const [calendarDate, setCalendarDate] = useState(currentDate);
 
@@ -25,6 +27,7 @@ const Calendar = ({data} : { data: any}) => {
         const newDate = calendarDate.add(offset, "month"); // 현재 날짜에서 월을 더하거나 뺌
         setCalendarDate(newDate); // 상태 업데이트
     };
+
 
     return (
         <div className="w-full max-w-4xl mx-auto border rounded-lg shadow-lg">
@@ -66,7 +69,8 @@ const Calendar = ({data} : { data: any}) => {
                                 const expense = 'text-red-500';
                                 const income = 'text-green-500';
 
-                                const item = data[date];
+                                // const item = data[date];
+                                // console.log(data);
                                 return (
                                     <td
                                         key={dateIndex}
@@ -75,20 +79,20 @@ const Calendar = ({data} : { data: any}) => {
                                     >
                                         {date > 0 && date <= daysInMonth ? (
                                             <>
-                                            <span className="absolute top-1 left-1 text-sm font-bold">{date}</span>
+                                                <span className="absolute top-1 left-1 text-sm font-bold">{date}</span>
 
-                                            {
-                                                item && 
-                                                <div className="flex flex-col items-center justify-center h-full">
-                                                    {
-                                                        item.map((t: TRecordTransaction) => 
-                                                            <div key={t.id} className={`text-base ${t.type === "Expense" ? `${expense}` : `${income}` }`}>{(t.amount).toLocaleString()} </div>
-                                                        )
-                                                    }
-                                                </div>
-                                            }
+                                                {
+                                                    data &&
+                                                    <div className="flex flex-col items-center justify-center h-full">
+                                                        {
+                                                            data[date]?.map((t: TRecordTransaction) =>
+                                                                <div key={t.id} className={`text-base ${t.type === "Expense" ? `${expense}` : `${income}`}`}>{(t.amount).toLocaleString()} </div>
+                                                            )
+                                                        }
+                                                    </div>
+                                                }
                                             </>
-                                            
+
                                         ) : null}
                                     </td>
                                 );

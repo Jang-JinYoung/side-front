@@ -8,9 +8,11 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
  * @param template 날짜포맷 @default current date in ISO8601, without fraction seconds e.g. '2020-04-02T08:02:17-05:00'
  * @returns
  */
-export const formatDay = (date?: string, template?: string) => {
+interface IformatDay { date?: string, template?: string }
+export const formatDay = ({date, template} : { date?: string, template?: string }) => {
+    
     // dayjs.extend(isToday);
-    return dayjs(dayjs(date ?? new Date()).format(template));
+    return dayjs(date ?? new Date()).format(template);
 };
 
 /**
@@ -45,7 +47,7 @@ export const isValidDay = (date: string, format?: string) => {
  */
 
 export const isBeforeDay = (nowDate: string, beforeDate?: string) => {
-    return dayjs(nowDate).isBefore(beforeDate ?? formatDay());
+    return dayjs(nowDate).isBefore(beforeDate ?? formatDay({}));
 };
 
 /**
@@ -59,7 +61,7 @@ export const isBeforeDay = (nowDate: string, beforeDate?: string) => {
  * false 날짜 안지남
  */
 export const isAfterDay = (nowDate: string, afterDate?: string) => {
-    return dayjs(nowDate).isAfter(afterDate ?? formatDay());
+    return dayjs(nowDate).isAfter(afterDate ?? dayjs(formatDay({})));
 };
 
 /**
@@ -89,6 +91,6 @@ export const isBetweenDay = (
 
 export const isDateToday = (year: number, month: number, date: number) => {
 
-    const today = formatDay();
+    const today = dayjs(formatDay({}));
     return today.year() === year && today.month() === month && today.date() === date;
 };

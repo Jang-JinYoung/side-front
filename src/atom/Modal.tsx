@@ -1,13 +1,16 @@
 import { ChangeEvent, useState } from 'react';
 import Button, { TonClick } from './Button';
-import { RecordTransactionSchema, TRecordTransaction } from '@type/RecordTransaction';
+import { RecordTransactionSchema, TRecordTransaction, TRecordTransactionRegist } from '@type/RecordTransaction';
+import dayjs from 'dayjs';
+import { formatDay } from '@util/dayUtils';
 
 type TonSave = (item: TRecordTransaction) => void;
 
+
 const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
 
-    const [formData, setFormData] = useState<TRecordTransaction>({
-        date: new Date().toISOString().split('T')[0],
+    const [formData, setFormData] = useState<TRecordTransactionRegist>({
+        date: formatDay({}),
         type: 'Expense',
         category: '식비',
         amount: 0,
@@ -32,10 +35,7 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
             date: formData.date,
             type: 'Expense',
             category: formData.category,
-            amount:
-                formData.type === 'Expense'
-                    ? -Math.abs(Number(formData.amount))
-                    : Math.abs(Number(formData.amount)),
+            amount: Math.abs(Number(formData.amount)),
             description: formData.description,
         };
 

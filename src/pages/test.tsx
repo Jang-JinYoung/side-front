@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Grid from '@atom/Grid';
 import ExpensePieChart from '@atom/Chart';
 import Modal from '@atom/Modal';
 import { TRecordTransaction } from '@type/RecordTransaction';
+import { formatDay } from '@util/dayUtils';
+import Calendar from '@atom/Calendar';
+import dayjs from 'dayjs';
 
 export interface TransactionData {
     id: number;
@@ -23,7 +26,7 @@ const data: TRecordTransaction[] = [
         date: '2025-04-01',
         type: 'Expense',
         category: '식비',
-        amount: -35000,
+        amount: 35000,
         description: '점심 식사',
     },
     {
@@ -31,7 +34,7 @@ const data: TRecordTransaction[] = [
         date: '2025-04-01',
         type: 'Expense',
         category: '교통비',
-        amount: -4500,
+        amount: 4500,
         description: '버스 요금',
     },
     {
@@ -39,7 +42,7 @@ const data: TRecordTransaction[] = [
         date: '2025-04-02',
         type: 'Expense',
         category: '쇼핑',
-        amount: -68000,
+        amount: 68000,
         description: '의류 구매',
     },
     {
@@ -55,7 +58,7 @@ const data: TRecordTransaction[] = [
         date: '2025-04-03',
         type: 'Expense',
         category: '생활비',
-        amount: -42000,
+        amount: 42000,
         description: '마트 장보기',
     },
     {
@@ -63,7 +66,7 @@ const data: TRecordTransaction[] = [
         date: '2025-04-03',
         type: 'Expense',
         category: '여가',
-        amount: -15000,
+        amount: 15000,
         description: '영화 관람',
     },
     {
@@ -71,32 +74,81 @@ const data: TRecordTransaction[] = [
         date: '2025-04-03',
         type: 'Expense',
         category: '기타',
-        amount: -10000,
+        amount: 10000,
+        description: '경조사비',
+    },
+    {
+        id: 8,
+        date: '2025-04-07',
+        type: 'Expense',
+        category: '기타',
+        amount: 10000,
         description: '경조사비',
     },
 ];
+type GroupedData = {
+    [yearMonth: string]: TRecordTransaction[];
+};
+
 
 const Test = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [rowData, setRowData] = useState<TRecordTransaction[]>(data);
 
+    const [groupedData, setGroupData] = useState<GroupedData>();
+
+
+    useEffect(() => {
+        const groupedData = rowData.reduce<GroupedData>((acc, record) => {
+            const date = dayjs(formatDay({date: record.date})).date(); // 'YYYY-MM-DD' 형식의 날짜를 키로 사용
+
+            console.log("day >> ", date);
+
+            if (!acc[date]) {
+                acc[date] = [];
+            }
+
+            acc[date].push(record);
+
+            return acc;
+        }, {});
+        setGroupData(groupedData);
+
+        console.log(groupedData);
+    }, [rowData]);
+
+    // console.log(rowData);
+
     return (
         <div className="h-screen flex flex-col">
-            <div className="h-1/2 p-4 bg-gray-100">
+            {/* <div className="h-1/2 p-4 bg-gray-100">
                 <div className="w-full h-full bg-white rounded-lg shadow-md p-4">
                     <ExpensePieChart data={rowData} />
                 </div>
-            </div>
+            </div> */}
 
-            <div className="h-1/2 p-4 bg-gray-200">
+            {
+                isModalOpen &&
+                <Modal
+                    onClose={() => setIsModalOpen(false)}
+                    onSave={(item: TRecordTransaction) => {
+                        setRowData([...rowData, item])
+                        setIsModalOpen(false);
+                    }}
+                />
+            }
+
+            <Calendar data={groupedData} />
+
+            <div className="h-1/2 p-4 ">
                 <div className="w-full h-full bg-white rounded-lg shadow-md">
                     <Grid rowData={rowData} />
                 </div>
             </div>
 
             <button
-                className="absolute bottom-6 right-6 w-14 h-14 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
+                className="absolute bottom-15 right-6 w-14 h-14 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
                 onClick={() => setIsModalOpen(true)}
             >
                 <svg
@@ -114,17 +166,6 @@ const Test = () => {
                     />
                 </svg>
             </button>
-
-            {
-                isModalOpen &&
-                    <Modal
-                        onClose={() => setIsModalOpen(false)}
-                        onSave={(item: TRecordTransaction) => {
-                            setRowData([...rowData, item])
-                            setIsModalOpen(false);
-                        }}
-                    />
-            }
         </div>
     );
 };
