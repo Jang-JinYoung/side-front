@@ -33,6 +33,7 @@ module.exports = {
             '@service': path.resolve(__dirname, 'src/service/'),
             '@lib': path.resolve(__dirname, 'src/lib/'),
             '@type': path.resolve(__dirname, 'src/type/'),
+            '@util': path.resolve(__dirname, 'src/util/'),
             '@api': path.resolve(__dirname, 'src/service/api/'),
         },
     },

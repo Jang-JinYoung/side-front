@@ -36,6 +36,7 @@
             "@service/*": ["src/service/*"],
             "@lib/*": ["src/lib/*"],
             "@type/*": ["src/type/*"],
+            "@util/*": ["src/util/*"],
             "@api/*": ["src/service/api/*"]
         },
         // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
