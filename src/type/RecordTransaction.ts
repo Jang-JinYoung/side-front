@@ -2,6 +2,9 @@ import { z } from "zod";
 
 const TypeSchema = z.enum(["Expense", "Income"]);
 
+/**
+ * 기본
+ */
 export const RecordTransactionSchema = z.object({
     // 번호
     id: z.number().optional(), 
@@ -17,5 +20,13 @@ export const RecordTransactionSchema = z.object({
     description: z.string().optional(),
 });
 
-
 export type TRecordTransaction = z.infer<typeof RecordTransactionSchema>;
+
+/**
+ * 등록/수정
+ */
+const RecordTransactionRegistSchema = RecordTransactionSchema.extend({
+    amount: z.number().optional(),
+});
+
+export type TRecordTransactionRegist = z.infer<typeof RecordTransactionRegistSchema>;
