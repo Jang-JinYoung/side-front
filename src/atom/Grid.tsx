@@ -44,7 +44,6 @@ const Grid = ({ rowData }: { rowData: any[] }) => {
     // Grid 만들어지고 호출
     const onFirstDataRendered = (event: FirstDataRenderedEvent) => {
         const { api } = event;
-        console.log(api);
 
         api.sizeColumnsToFit();
     };
