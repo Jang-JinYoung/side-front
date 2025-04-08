@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import SlidingPanel from '@atom/SlidePanel';
 import Modal from '@atom/Modal';
 import Button from '@atom/Button';
+import SummaryInformation from '@component/SummaryInformation';
 
 export interface TransactionData {
     id: number;
@@ -122,12 +123,7 @@ const Test = () => {
     }, [rowData]);
 
     return (
-        <div className="h-screen flex flex-col">
-            {/* <div className="h-1/2 p-4 bg-gray-100">
-                <div className="w-full h-full bg-white rounded-lg shadow-md p-4">
-                    <지출PieChart data={rowData} />
-                </div>
-            </div> */}
+        <div className="h-screen flex">
 
             {
                 isModalOpen &&
@@ -139,6 +135,33 @@ const Test = () => {
                     }}
                 />
             }
+
+            {/* 좌측 여백: 총입금/총지출/잔액 및 필터 */}
+            <div className="w-1/4 bg-gray-50 p-4 border-r shadow-md">
+                {/* 총입금/총지출/잔액 */}
+                <SummaryInformation />
+
+                {/* 필터 */}
+                <div>
+                    <h2 className="text-lg font-bold mb-4">필터</h2>
+                    <select
+                        className="w-full p-2 border rounded-lg mb-4"
+                        onChange={(e) => console.log(e.target.value)}
+                    >
+                        <option value="">전체 보기</option>
+                        <option value="income">입금만 보기</option>
+                        <option value="expense">지출만 보기</option>
+                    </select>
+
+                    {/* 날짜 필터 */}
+                    <input
+                        type="date"
+                        className="w-full p-2 border rounded-lg"
+                        onChange={(e) => console.log(e.target.value)}
+                    />
+                </div>
+            </div>
+
 
             <Calendar
                 data={groupedData}
