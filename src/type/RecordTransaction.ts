@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const TypeSchema = z.enum(["Expense", "Income"]);
+const TypeSchema = z.enum(["지출", "입금"]);
 
 /**
  * 기본
@@ -21,6 +21,7 @@ export const RecordTransactionSchema = z.object({
 });
 
 export type TRecordTransaction = z.infer<typeof RecordTransactionSchema>;
+
 
 /**
  * 등록/수정

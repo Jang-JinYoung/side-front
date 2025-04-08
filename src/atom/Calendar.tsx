@@ -71,8 +71,8 @@ const Calendar = ({ data, onClick }: IProps) => {
                                 const date = weekIndex * 7 + dateIndex - firstDay + 1;
 
                                 const isToday = isDateToday(year, month, date) ? 'bg-yellow-200 font-bold' : 'bg-gray-100';
-                                const expense = 'text-red-500';
-                                const income = 'text-green-500';
+                                const 지출 = 'text-red-500';
+                                const 입금 = 'text-green-500';
                                 const isValidDate = date > 0 && date <= daysInMonth;
                                 const cursor  = isValidDate ? "cursor-pointer" : ""
 
@@ -95,7 +95,7 @@ const Calendar = ({ data, onClick }: IProps) => {
                                                     <div className="flex flex-col items-center justify-center h-full">
                                                         {
                                                             data[date]?.map((t: TRecordTransaction) =>
-                                                                <div key={t.id} className={`text-base ${t.type === "Expense" ? `${expense}` : `${income}`}`}>{(t.amount).toLocaleString()} </div>
+                                                                <div key={t.id} className={`text-base ${t.type === "지출" ? `${지출}` : `${입금}`}`}>{(t.amount).toLocaleString()} </div>
                                                             )
                                                         }
                                                     </div>
@@ -112,5 +112,7 @@ const Calendar = ({ data, onClick }: IProps) => {
         </div>
     );
 };
+
+
 
 export default Calendar;

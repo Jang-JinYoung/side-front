@@ -22,7 +22,7 @@ const data: TRecordTransaction[] = [
     {
         id: 1,
         date: '2025-04-01',
-        type: 'Expense',
+        type: '지출',
         category: '식비',
         amount: 35000,
         description: '점심 식사',
@@ -30,7 +30,7 @@ const data: TRecordTransaction[] = [
     {
         id: 2,
         date: '2025-04-01',
-        type: 'Expense',
+        type: '지출',
         category: '교통비',
         amount: 4500,
         description: '버스 요금',
@@ -38,7 +38,7 @@ const data: TRecordTransaction[] = [
     {
         id: 3,
         date: '2025-04-02',
-        type: 'Expense',
+        type: '지출',
         category: '쇼핑',
         amount: 68000,
         description: '의류 구매',
@@ -46,7 +46,7 @@ const data: TRecordTransaction[] = [
     {
         id: 4,
         date: '2025-04-02',
-        type: 'Income',
+        type: '입금',
         category: '급여',
         amount: 2500000,
         description: '4월 급여',
@@ -54,7 +54,7 @@ const data: TRecordTransaction[] = [
     {
         id: 5,
         date: '2025-04-03',
-        type: 'Expense',
+        type: '지출',
         category: '생활비',
         amount: 42000,
         description: '마트 장보기',
@@ -62,7 +62,7 @@ const data: TRecordTransaction[] = [
     {
         id: 6,
         date: '2025-04-03',
-        type: 'Expense',
+        type: '지출',
         category: '여가',
         amount: 15000,
         description: '영화 관람',
@@ -70,7 +70,7 @@ const data: TRecordTransaction[] = [
     {
         id: 7,
         date: '2025-04-03',
-        type: 'Expense',
+        type: '지출',
         category: '기타',
         amount: 10000,
         description: '경조사비',
@@ -78,7 +78,7 @@ const data: TRecordTransaction[] = [
     {
         id: 8,
         date: '2025-04-07',
-        type: 'Expense',
+        type: '지출',
         category: '기타',
         amount: 10000,
         description: '경조사비',
@@ -123,7 +123,7 @@ const Test = () => {
         <div className="h-screen flex flex-col">
             {/* <div className="h-1/2 p-4 bg-gray-100">
                 <div className="w-full h-full bg-white rounded-lg shadow-md p-4">
-                    <ExpensePieChart data={rowData} />
+                    <지출PieChart data={rowData} />
                 </div>
             </div> */}
 

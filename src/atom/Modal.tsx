@@ -11,7 +11,7 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
 
     const [formData, setFormData] = useState<TRecordTransactionRegist>({
         date: formatDay({}),
-        type: 'Expense',
+        type: '지출',
         category: '식비',
         amount: 0,
         description: '',
@@ -33,7 +33,7 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
         const newItem: TRecordTransaction = {
             id: Date.now(), // 임시 ID
             date: formData.date,
-            type: 'Expense',
+            type: '지출',
             category: formData.category,
             amount: Math.abs(Number(formData.amount)),
             description: formData.description,
@@ -80,7 +80,7 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
                                 type="radio"
                                 name="type"
                                 value="지출"
-                                checked={formData.type === 'Expense'}
+                                checked={formData.type === '지출'}
                                 onChange={onChange}
                                 className="form-radio"
                             />
@@ -91,7 +91,7 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
                                 type="radio"
                                 name="type"
                                 value="입금"
-                                checked={formData.type === 'Expense'}
+                                checked={formData.type === '지출'}
                                 onChange={onChange}
                                 className="form-radio"
                             />
@@ -115,7 +115,7 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         required
                     >
-                        {formData.type === 'Expense' ? (
+                        {formData.type === '지출' ? (
                             <>
                                 <option value="식비">식비</option>
                                 <option value="교통비">교통비</option>
