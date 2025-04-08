@@ -27,8 +27,10 @@ const SlidingPanel = ({ isOpen, setOpen, data }: IProps) => {
 
                 <div className="overflow-y-scroll h-full  p-4 mt-15">
                     {
-                        data && data.map((t: TRecordTransaction) =>
-                            <Card data={t} />
+                        data ? data.map((t: TRecordTransaction, index) =>
+                            <Card key={index} data={t} />
+                        ) : (
+                            <div>내용을 추가해보세요!</div>
                         )
                     }
                 </div>
@@ -46,8 +48,7 @@ const Card = ({ data }: {data:TRecordTransaction}) => {
             <div>
                 {/* 지출/입금 카테고리 */}
                 <span
-                    className={`block text-sm font-bold ${type === "지출" ? "text-red-500" : "text-green-500"
-                        }`}
+                    className={`block text-sm font-bold ${type === "EXPENSE" ? "text-red-500" : "text-green-500"}`}
                 >
                     {type} - {category}
                 </span>
@@ -58,8 +59,7 @@ const Card = ({ data }: {data:TRecordTransaction}) => {
             {/* 우측 금액 */}
             <div className="text-right">
                 <span
-                    className={`text-lg font-bold ${type === "지출" ? "text-red-500" : "text-green-500"
-                        }`}
+                    className={`text-lg font-bold ${type === "EXPENSE" ? "text-red-500" : "text-green-500"}`}
                 >
                     {amount.toLocaleString()} 원
                 </span>

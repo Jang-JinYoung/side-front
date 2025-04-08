@@ -1,6 +1,9 @@
 import { z } from "zod";
 
-const TypeSchema = z.enum(["지출", "입금"]);
+const TypeSchema = z.enum(["EXPENSE", "INCOME"]);
+
+export const EXPENSE = "지출";
+export const INCOME = "입금";
 
 /**
  * 기본
