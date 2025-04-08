@@ -31,8 +31,8 @@
             /* Specify a set of entries that re-map imports to additional lookup locations. */
             "@store/*": ["src/store/*"],
             "@atom/*": ["src/atom/*"],
-            "@components/*": ["src/elements/components/*"],
-            "@pages/*": ["src/elements/pages/*"],
+            "@component/*": ["src/component/*"],
+            "@pages/*": ["src/page/*"],
             "@service/*": ["src/service/*"],
             "@lib/*": ["src/lib/*"],
             "@type/*": ["src/type/*"],
