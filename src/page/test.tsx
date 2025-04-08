@@ -7,6 +7,7 @@ import SlidingPanel from '@atom/SlidePanel';
 import Modal from '@atom/Modal';
 import Button from '@atom/Button';
 import SummaryInformation from '@component/SummaryInformation';
+import Input from '@atom/Input';
 
 export interface TransactionData {
     id: number;
@@ -143,22 +144,30 @@ const Test = () => {
 
                 {/* 필터 */}
                 <div>
-                    <h2 className="text-lg font-bold mb-4">필터</h2>
-                    <select
+                    {/* <select
                         className="w-full p-2 border rounded-lg mb-4"
                         onChange={(e) => console.log(e.target.value)}
                     >
                         <option value="">전체 보기</option>
                         <option value="income">입금만 보기</option>
                         <option value="expense">지출만 보기</option>
-                    </select>
+                    </select> */}
 
                     {/* 날짜 필터 */}
-                    <input
-                        type="date"
-                        className="w-full p-2 border rounded-lg"
-                        onChange={(e) => console.log(e.target.value)}
-                    />
+                    <label
+                        className="block text-gray-700 text-sm font-bold mb-2"
+                        htmlFor="date"
+                    >
+                        시작
+                    </label>
+                    <Input.Date value="1" onChange={() => console.log("A")} />
+                    <label
+                        className="block text-gray-700 text-sm font-bold mb-2 mt-5"
+                        htmlFor="date"
+                    >
+                        종료
+                    </label>
+                    <Input.Date value="1" onChange={() => console.log("A")} />
                 </div>
             </div>
 
