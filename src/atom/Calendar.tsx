@@ -2,6 +2,7 @@ import { useState } from "react";
 import { formatDay, isDateToday } from "@util/dayUtils";
 import { TRecordTransaction } from "@type/RecordTransaction";
 import dayjs from "dayjs";
+import { useParams } from "react-router-dom";
 
 interface IProps {
     data: any;
@@ -32,7 +33,6 @@ const Calendar = ({ data, onClick }: IProps) => {
     };
 
 
-
     return (
         <div className="w-full max-w-4xl mx-auto border rounded-lg shadow-lg">
             {/* 헤더 */}
@@ -56,11 +56,13 @@ const Calendar = ({ data, onClick }: IProps) => {
             <table className="table-fixed w-full border-collapse">
                 <thead>
                     <tr>
-                        {["일", "월", "화", "수", "목", "금", "토"].map((day) => (
-                            <th key={day} className="p-2 text-sm font-medium text-gray-600">
-                                {day}
-                            </th>
-                        ))}
+                        {
+                            ["일", "월", "화", "수", "목", "금", "토"].map((day) => (
+                                <th key={day} className="p-2 text-sm font-medium text-gray-600">
+                                    {day}
+                                </th>
+                            ))
+                        }
                     </tr>
                 </thead>
                 <tbody>
@@ -70,10 +72,21 @@ const Calendar = ({ data, onClick }: IProps) => {
                                 const date = weekIndex * 7 + dateIndex - firstDay + 1;
 
                                 const isToday = isDateToday(year, month, date) ? 'bg-yellow-200 font-bold' : 'bg-gray-100';
+
                                 const ExpenseStyle = 'text-red-500';
                                 const IncomeStyle = 'text-green-500';
                                 const isValidDate = date > 0 && date <= daysInMonth;
-                                const cursor  = isValidDate ? "cursor-pointer" : ""
+                                const cursor = isValidDate ? "cursor-pointer" : ""
+
+                                const day = new Date(year, month, date).getDay();
+
+
+                                let dayStyle = "";
+                                if (day === 6) {
+                                    dayStyle = "text-blue-500";
+                                } else if (day === 0) {
+                                    dayStyle = "text-red-500";
+                                }
 
                                 return (
                                     <td
@@ -87,7 +100,9 @@ const Calendar = ({ data, onClick }: IProps) => {
                                     >
                                         {isValidDate ? (
                                             <>
-                                                <span className="absolute top-1 left-1 text-sm font-bold">{date}</span>
+                                                <span className={`absolute top-1 left-1 text-sm font-bold ${dayStyle}`}>
+                                                    {date}
+                                                </span>
 
                                                 {
                                                     data &&

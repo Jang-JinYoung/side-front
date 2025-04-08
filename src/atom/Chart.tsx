@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-import { CategoryTotal, TransactionData } from 'src/pages/test';
+import { CategoryTotal, TransactionData } from 'src/page/test';
 
 // Chart.js 컴포넌트 등록
 ChartJS.register(ArcElement, Tooltip, Legend);
