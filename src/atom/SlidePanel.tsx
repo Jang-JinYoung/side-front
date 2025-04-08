@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button, { TonClick } from "./Button";
-import { GroupedData } from "src/pages/test";
+import { GroupedData } from "src/page/test";
 import { TRecordTransaction } from "@type/RecordTransaction";
 
 interface IProps {
@@ -50,7 +50,7 @@ const Card = ({ data }: {data:TRecordTransaction}) => {
                 <span
                     className={`block text-sm font-bold ${type === "EXPENSE" ? "text-red-500" : "text-green-500"}`}
                 >
-                    {type} - {category}
+                    {type === "EXPENSE" ? "출금" : "입금"} - {category}
                 </span>
                 {/* 설명 */}
                 <p className="text-gray-700 text-sm mt-1">{description}</p>
