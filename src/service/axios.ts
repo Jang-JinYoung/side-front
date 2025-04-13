@@ -1,7 +1,7 @@
 import axios, { InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 // import { InternalAxiosRequestConfig } from "axios-hooks";
 
-const host = 'http://localhost:8104/admin/v1';
+const host = 'http://localhost:4000';
 
 axios.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
@@ -11,9 +11,6 @@ axios.interceptors.request.use(
         // API
         config.url = `${host}${config.url}`;
 
-        console.log(config);
-
-        // console.log(config.url);
 
         return config;
     },
