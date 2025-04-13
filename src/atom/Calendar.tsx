@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { formatDay, isDateToday } from "@util/dayUtils";
-import { RecordTransactionSchema, TRecordTransaction } from "@type/RecordTransaction";
-import { z } from "zod";
+import { TRecordTransaction } from "@type/RecordTransaction";
 import dayjs from "dayjs";
 
 
 const Calendar = ({ data }: { data: any }) => {
 
+    console.log(data);
 
     // 현재날짜
     const currentDate = dayjs(formatDay({}));
@@ -69,8 +69,9 @@ const Calendar = ({ data }: { data: any }) => {
                                 const expense = 'text-red-500';
                                 const income = 'text-green-500';
 
-                                // const item = data[date];
-                                // console.log(data);
+                                const key = `${year}-${(month+1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`
+                                const transactions = data[key];
+
                                 return (
                                     <td
                                         key={dateIndex}
@@ -82,11 +83,15 @@ const Calendar = ({ data }: { data: any }) => {
                                                 <span className="absolute top-1 left-1 text-sm font-bold">{date}</span>
 
                                                 {
-                                                    data &&
+                                                    transactions &&
                                                     <div className="flex flex-col items-center justify-center h-full">
                                                         {
-                                                            data[date]?.map((t: TRecordTransaction) =>
-                                                                <div key={t.id} className={`text-base ${t.type === "Expense" ? `${expense}` : `${income}`}`}>{(t.amount).toLocaleString()} </div>
+                                                            transactions.map((t: TRecordTransaction) =>
+                                                                <div
+                                                                    key={t.id}
+                                                                    className={`text-base ${t.type === "Expense" ? `${expense}` : `${income}`}`}>
+                                                                    {(t.amount).toLocaleString()}
+                                                                </div>
                                                             )
                                                         }
                                                     </div>

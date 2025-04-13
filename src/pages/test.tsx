@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import Grid from '@atom/Grid';
-import ExpensePieChart from '@atom/Chart';
+import { useState } from 'react';
 import Modal from '@atom/Modal';
 import { TRecordTransaction } from '@type/RecordTransaction';
-import { formatDay } from '@util/dayUtils';
 import Calendar from '@atom/Calendar';
-import dayjs from 'dayjs';
+import { useQuery } from '@tanstack/react-query';
+import { getTransactionList } from '@service/api/transactionApi';
+import { groupBy } from 'lodash';
 
 export interface TransactionData {
     id: number;
@@ -20,105 +19,14 @@ export interface CategoryTotal {
     [category: string]: number;
 }
 
-const data: TRecordTransaction[] = [
-    {
-        id: 1,
-        date: '2025-04-01',
-        type: 'Expense',
-        category: '식비',
-        amount: 35000,
-        description: '점심 식사',
-    },
-    {
-        id: 2,
-        date: '2025-04-01',
-        type: 'Expense',
-        category: '교통비',
-        amount: 4500,
-        description: '버스 요금',
-    },
-    {
-        id: 3,
-        date: '2025-04-02',
-        type: 'Expense',
-        category: '쇼핑',
-        amount: 68000,
-        description: '의류 구매',
-    },
-    {
-        id: 4,
-        date: '2025-04-02',
-        type: 'Income',
-        category: '급여',
-        amount: 2500000,
-        description: '4월 급여',
-    },
-    {
-        id: 5,
-        date: '2025-04-03',
-        type: 'Expense',
-        category: '생활비',
-        amount: 42000,
-        description: '마트 장보기',
-    },
-    {
-        id: 6,
-        date: '2025-04-03',
-        type: 'Expense',
-        category: '여가',
-        amount: 15000,
-        description: '영화 관람',
-    },
-    {
-        id: 7,
-        date: '2025-04-03',
-        type: 'Expense',
-        category: '기타',
-        amount: 10000,
-        description: '경조사비',
-    },
-    {
-        id: 8,
-        date: '2025-04-07',
-        type: 'Expense',
-        category: '기타',
-        amount: 10000,
-        description: '경조사비',
-    },
-];
-type GroupedData = {
-    [yearMonth: string]: TRecordTransaction[];
-};
-
-
 const Test = () => {
+
+    const { isLoading, data } = useQuery({
+        queryKey: ['transacion', 'list'],
+        queryFn: () => getTransactionList(),
+    });
+
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const [rowData, setRowData] = useState<TRecordTransaction[]>(data);
-
-    const [groupedData, setGroupData] = useState<GroupedData>();
-
-
-    useEffect(() => {
-        const groupedData = rowData.reduce<GroupedData>((acc, record) => {
-            const date = dayjs(formatDay({date: record.date})).date(); // 'YYYY-MM-DD' 형식의 날짜를 키로 사용
-
-            console.log("day >> ", date);
-
-            if (!acc[date]) {
-                acc[date] = [];
-            }
-
-            acc[date].push(record);
-
-            return acc;
-        }, {});
-        setGroupData(groupedData);
-
-        console.log(groupedData);
-    }, [rowData]);
-
-    // console.log(rowData);
 
     return (
         <div className="h-screen flex flex-col">
@@ -133,19 +41,19 @@ const Test = () => {
                 <Modal
                     onClose={() => setIsModalOpen(false)}
                     onSave={(item: TRecordTransaction) => {
-                        setRowData([...rowData, item])
+                        // setRowData([...rowData, item])
                         setIsModalOpen(false);
                     }}
                 />
             }
 
-            <Calendar data={groupedData} />
+            {!isLoading && <Calendar data={groupBy(data, "date")} />}
 
-            <div className="h-1/2 p-4 ">
+            {/* <div className="h-1/2 p-4 ">
                 <div className="w-full h-full bg-white rounded-lg shadow-md">
                     <Grid rowData={rowData} />
                 </div>
-            </div>
+            </div> */}
 
             <button
                 className="absolute bottom-15 right-6 w-14 h-14 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
