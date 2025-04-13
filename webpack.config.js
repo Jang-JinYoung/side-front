@@ -9,8 +9,8 @@ console.log('DEVTOOL >>> ', env.DEVTOOL);
 
 module.exports = {
     mode: process.env.NODE_ENV,
-    devtool: false,
-    entry: './src/index.tsx',
+    devtool: 'source-map',
+    entry: './src/index.tsx', // 소스맵 생성
     output: {
         publicPath: '/',
 
