@@ -9,6 +9,7 @@ axios.interceptors.request.use(
         // config 객체를 변경하여 요청을 수정할 수 있습니다.
 
         // API
+        config.headers['Content-Type'] = 'application/json';
         config.url = `${host}${config.url}`;
 
 
