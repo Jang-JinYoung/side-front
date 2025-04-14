@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import Button, { TonClick } from './Button';
-import { RecordTransactionSchema, TRecordTransaction, TRecordTransactionRegist } from '@type/RecordTransaction';
+import { EXPENSE, RecordTransactionSchema, TRecordTransaction, TRecordTransactionRegist } from '@type/RecordTransaction';
 import dayjs from 'dayjs';
 import { formatDay } from '@util/dayUtils';
 
@@ -10,10 +10,9 @@ type TonSave = (item: TRecordTransaction) => void;
 const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
 
     const [formData, setFormData] = useState<TRecordTransactionRegist>({
-        date: formatDay({}),
-        type: 'Expense',
+        date: formatDay({template: "YYYY-MM-DD"}),
+        type: "INCOME",
         category: '식비',
-        amount: 0,
         description: '',
     });
 
@@ -21,6 +20,7 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
         e: ChangeEvent<HTMLSelectElement | HTMLInputElement>,
     ) => {
         const { name, value } = e.target;
+        console.log(name, value);
         setFormData({
             ...formData,
             [name]: value,
@@ -33,7 +33,7 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
         const newItem: TRecordTransaction = {
             id: Date.now(), // 임시 ID
             date: formData.date,
-            type: 'Expense',
+            type: formData.type,
             category: formData.category,
             amount: Math.abs(Number(formData.amount)),
             description: formData.description,
@@ -79,23 +79,23 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
                             <input
                                 type="radio"
                                 name="type"
-                                value="지출"
-                                checked={formData.type === 'Expense'}
+                                value="INCOME"
+                                checked={formData.type === 'INCOME'}
                                 onChange={onChange}
                                 className="form-radio"
                             />
-                            <span className="ml-2">지출</span>
+                            <span className="ml-2">입금</span>
                         </label>
                         <label className="inline-flex items-center">
                             <input
                                 type="radio"
                                 name="type"
-                                value="입금"
-                                checked={formData.type === 'Expense'}
+                                value="EXPENSE"
+                                checked={formData.type === 'EXPENSE'}
                                 onChange={onChange}
                                 className="form-radio"
                             />
-                            <span className="ml-2">입금</span>
+                            <span className="ml-2">지출</span>
                         </label>
                     </div>
                 </div>
@@ -115,7 +115,7 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         required
                     >
-                        {formData.type === 'Expense' ? (
+                        {formData.type === "EXPENSE" ? (
                             <>
                                 <option value="식비">식비</option>
                                 <option value="교통비">교통비</option>
@@ -148,7 +148,7 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
                         name="amount"
                         value={formData.amount}
                         onChange={onChange}
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline [appearance:none] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                         placeholder="금액을 입력하세요"
                         required
                     />

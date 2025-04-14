@@ -2,12 +2,14 @@ import { useState } from "react";
 import { formatDay, isDateToday } from "@util/dayUtils";
 import { TRecordTransaction } from "@type/RecordTransaction";
 import dayjs from "dayjs";
+import { useParams } from "react-router-dom";
 
+interface IProps {
+    data: any;
+    onClick: (date: number) => void;
+}
 
-const Calendar = ({ data }: { data: any }) => {
-
-    console.log(data);
-
+const Calendar = ({ data, onClick }: IProps) => {
     // 현재날짜
     const currentDate = dayjs(formatDay({}));
 
@@ -52,11 +54,13 @@ const Calendar = ({ data }: { data: any }) => {
             <table className="table-fixed w-full border-collapse">
                 <thead>
                     <tr>
-                        {["일", "월", "화", "수", "목", "금", "토"].map((day) => (
-                            <th key={day} className="p-2 text-sm font-medium text-gray-600">
-                                {day}
-                            </th>
-                        ))}
+                        {
+                            ["일", "월", "화", "수", "목", "금", "토"].map((day) => (
+                                <th key={day} className="p-2 text-sm font-medium text-gray-600">
+                                    {day}
+                                </th>
+                            ))
+                        }
                     </tr>
                 </thead>
                 <tbody>
@@ -66,21 +70,41 @@ const Calendar = ({ data }: { data: any }) => {
                                 const date = weekIndex * 7 + dateIndex - firstDay + 1;
 
                                 const isToday = isDateToday(year, month, date) ? 'bg-yellow-200 font-bold' : 'bg-gray-100';
-                                const expense = 'text-red-500';
-                                const income = 'text-green-500';
 
-                                const key = `${year}-${(month+1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`
+                                const key = `${year}-${(month + 1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`
                                 const transactions = data[key];
+                                const expenseStyle = 'text-red-500';
+                                const incomeStyle = 'text-green-500';
+                                const isValidDate = date > 0 && date <= daysInMonth;
+                                const cursor = isValidDate ? "cursor-pointer" : ""
+
+                                const day = new Date(year, month, date).getDay();
+
+
+
+
+                                let dayStyle = "";
+                                if (day === 6) {
+                                    dayStyle = "text-blue-500";
+                                } else if (day === 0) {
+                                    dayStyle = "text-red-500";
+                                }
 
                                 return (
                                     <td
                                         key={dateIndex}
-                                        className={`h-30 w-30  border text-center bg-gray-100 cursor-pointer relative ${isToday}`}
-                                        onClick={() => console.log(date)}
+                                        className={`h-30 w-30  border text-center bg-gray-100 ${cursor} relative ${isToday}`}
+                                        onClick={() => {
+                                            if (isValidDate) {
+                                                onClick(date);
+                                            }
+                                        }}
                                     >
-                                        {date > 0 && date <= daysInMonth ? (
+                                        {isValidDate ? (
                                             <>
-                                                <span className="absolute top-1 left-1 text-sm font-bold">{date}</span>
+                                                <span className={`absolute top-1 left-1 text-sm font-bold ${dayStyle}`}>
+                                                    {date}
+                                                </span>
 
                                                 {
                                                     transactions &&
@@ -89,7 +113,7 @@ const Calendar = ({ data }: { data: any }) => {
                                                             transactions.map((t: TRecordTransaction) =>
                                                                 <div
                                                                     key={t.id}
-                                                                    className={`text-base ${t.type === "Expense" ? `${expense}` : `${income}`}`}>
+                                                                    className={`text-base ${t.type === "EXPENSE" ? `${expenseStyle}` : `${incomeStyle}`}`}>
                                                                     {(t.amount).toLocaleString()}
                                                                 </div>
                                                             )
@@ -97,7 +121,6 @@ const Calendar = ({ data }: { data: any }) => {
                                                     </div>
                                                 }
                                             </>
-
                                         ) : null}
                                     </td>
                                 );
@@ -109,5 +132,7 @@ const Calendar = ({ data }: { data: any }) => {
         </div>
     );
 };
+
+
 
 export default Calendar;

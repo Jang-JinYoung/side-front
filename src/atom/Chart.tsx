@@ -1,19 +1,19 @@
 import React, { useMemo } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-import { CategoryTotal, TransactionData } from 'src/pages/test';
+import { CategoryTotal, TransactionData } from 'src/page/test';
 
 // Chart.js 컴포넌트 등록
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const ExpensePieChart = ({ data }: { data: any[] }) => {
+const 지출PieChart = ({ data }: { data: any[] }) => {
     // useMemo를 사용하여 데이터 계산 최적화
-    const { chartData, totalExpense } = useMemo(() => {
+    const { chartData, total지출 } = useMemo(() => {
         // 지출 데이터만 필터링 (음수 금액)
-        const expenseData = data.filter((item) => item.amount < 0);
+        const 지출Data = data.filter((item) => item.amount < 0);
 
         // 카테고리별 지출 합계 계산
-        const categoryTotals: CategoryTotal = expenseData.reduce(
+        const categoryTotals: CategoryTotal = 지출Data.reduce(
             (acc: CategoryTotal, item) => {
                 acc[item.category] =
                     (acc[item.category] || 0) + Math.abs(item.amount);
@@ -23,7 +23,7 @@ const ExpensePieChart = ({ data }: { data: any[] }) => {
         );
 
         // 총 지출 계산
-        const totalExpense = Object.values(categoryTotals).reduce(
+        const total지출 = Object.values(categoryTotals).reduce(
             (sum, amount) => sum + amount,
             0,
         );
@@ -56,7 +56,7 @@ const ExpensePieChart = ({ data }: { data: any[] }) => {
             ],
         };
 
-        return { chartData, totalExpense };
+        return { chartData, total지출 };
     }, [data]);
 
     const options = {
@@ -98,7 +98,7 @@ const ExpensePieChart = ({ data }: { data: any[] }) => {
                         const value = context.raw || 0;
                         // 전체 지출 중 해당 카테고리가 차지하는 비율 계산 (소수점 첫째 자리까지)
                         const percentage = (
-                            (value / totalExpense) *
+                            (value / total지출) *
                             100
                         ).toFixed(1);
                         // 툴팁에 표시될 텍스트 형식 지정: "카테고리명: 금액원 (비율%)"
@@ -118,13 +118,13 @@ const ExpensePieChart = ({ data }: { data: any[] }) => {
                 <Pie data={chartData} options={options} />
             </div>
             <div
-                className="total-expense"
+                className="total-지출"
                 style={{ textAlign: 'center', marginTop: '10px' }}
             >
-                <p>총 지출: {totalExpense.toLocaleString()}원</p>
+                <p>총 지출: {total지출.toLocaleString()}원</p>
             </div>
         </div>
     );
 };
 
-export default ExpensePieChart;
+export default 지출PieChart;
