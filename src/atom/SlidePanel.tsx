@@ -5,11 +5,10 @@ interface IProps {
     isOpen: boolean,
     setOpen: TonClick,
     data?: TRecordTransaction[] | null,
+    onDelete: (id: number) => void;
 };
 
-const SlidingPanel = ({ isOpen, setOpen, data }: IProps) => {
-
-    console.log(data);
+const SlidingPanel = ({ isOpen, setOpen, data, onDelete }: IProps) => {
 
 
     return (
@@ -28,7 +27,7 @@ const SlidingPanel = ({ isOpen, setOpen, data }: IProps) => {
                 <div className="overflow-y-scroll h-full  p-4 mt-15">
                     {
                         data ? data.map((t: TRecordTransaction, index) =>
-                            <Card key={index} data={t} />
+                            <Card key={index} data={t} onDelete={onDelete} />
                         ) : (
                             <div>내용을 추가해보세요!</div>
                         )
@@ -38,32 +37,62 @@ const SlidingPanel = ({ isOpen, setOpen, data }: IProps) => {
         </div>
     );
 };
-const Card = ({ data }: {data:TRecordTransaction}) => {
 
-    const { type, category, description, amount } = data;
-    
+const Card = ({ data, onDelete }: { data: TRecordTransaction, onDelete: any }) => {
+
+    const { type, category, description, amount, id } = data;
+
     return (
-        <div className="flex items-center justify-between p-4 bg-gray-100 border rounded-lg shadow-md mb-5">
-            {/* 좌측 영역 */}
-            <div>
-                {/* 지출/입금 카테고리 */}
-                <span
-                    className={`block text-sm font-bold ${type === "EXPENSE" ? "text-red-500" : "text-green-500"}`}
-                >
-                    {type === "EXPENSE" ? "출금" : "입금"} - {category}
-                </span>
-                {/* 설명 */}
-                <p className="text-gray-700 text-sm mt-1">{description}</p>
+        <div className="relative">
+
+            <div className="flex items-center justify-between p-4 bg-gray-100 border rounded-lg shadow-md mb-5">
+                {/* 좌측 영역 */}
+                <div>
+                    {/* 지출/입금 카테고리 */}
+                    <span
+                        className={`block text-sm font-bold ${type === "EXPENSE" ? "text-red-500" : "text-green-500"}`}
+                    >
+                        {type === "EXPENSE" ? "출금" : "입금"} - {category}
+                    </span>
+                    {/* 설명 */}
+                    <p className="text-gray-700 text-sm mt-1">{description}</p>
+                </div>
+
+                {/* 우측 금액 */}
+                <div className="text-right">
+                    <span
+                        className={`text-lg font-bold ${type === "EXPENSE" ? "text-red-500" : "text-green-500"}`}
+                    >
+                        {amount.toLocaleString()} 원
+                    </span>
+                </div>
+
+                <div className="absolute top-2 right-2 flex space-x-2">
+                    {/* 연필 아이콘 (수정 버튼) */}
+                    <button
+                        onClick={() => console.log("A")} // 수정 핸들러 함수
+                        className="text-gray-500 hover:text-gray-700 cursor-pointer"
+                        aria-label="Edit"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path d="M3 17.25V21h3.75l11-11.03L14 6.25l-11 11zM17.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a1 1 0 00-1.41 0L13 4l2.34 2.34c.39.39 1 .39 1.37-.3z" />
+                        </svg>
+                    </button>
+
+                    {/* X 아이콘 (삭제 버튼) */}
+                    <button
+                        onClick={() => onDelete(id)} // 삭제 핸들러 함수
+                        className="text-gray-500 hover:text-red-500 cursor-pointer"
+                        aria-label="Delete"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
             </div>
 
-            {/* 우측 금액 */}
-            <div className="text-right">
-                <span
-                    className={`text-lg font-bold ${type === "EXPENSE" ? "text-red-500" : "text-green-500"}`}
-                >
-                    {amount.toLocaleString()} 원
-                </span>
-            </div>
         </div>
     );
 };
