@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { formatDay, isDateToday } from "@util/dayUtils";
+import { formatDay, isDateToday, twoDigitFormat } from "@util/dayUtils";
 import { TRecordTransaction } from "@type/RecordTransaction";
 import dayjs from "dayjs";
-import { useParams } from "react-router-dom";
+import { formatCurrency } from "@util/numberUtils";
 
 interface IProps {
     data: any;
@@ -20,13 +20,14 @@ const Calendar = ({ data, onClick }: IProps) => {
     const month = calendarDate.month(); // 0부터 시작 (0 = 1월)
 
     // 해당 월의 일 수 계산
-    const daysInMonth = calendarDate.daysInMonth(); // 현재 월의 총 일 수
+    const daysInMonth = calendarDate.daysInMonth();
 
     // 해당 월의 첫 번째 날의 요일 계산 (0 = 일요일, 6 = 토요일)
     const firstDay = calendarDate.startOf("month").day();
 
     const changeMonth = (offset: number) => {
-        const newDate = calendarDate.add(offset, "month"); // 현재 날짜에서 월을 더하거나 뺌
+        // 현재 날짜에서 월을 더하거나 뺌
+        const newDate = calendarDate.add(offset, "month"); 
         setCalendarDate(newDate); // 상태 업데이트
     };
 
@@ -71,7 +72,9 @@ const Calendar = ({ data, onClick }: IProps) => {
 
                                 const isToday = isDateToday(year, month, date) ? 'bg-yellow-200 font-bold' : 'bg-gray-100';
 
-                                const key = `${year}-${(month + 1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`
+                                
+                                const key = twoDigitFormat(year, month+1, date);
+
                                 const transactions = data[key];
                                 const expenseStyle = 'text-red-500';
                                 const incomeStyle = 'text-green-500';
@@ -79,7 +82,6 @@ const Calendar = ({ data, onClick }: IProps) => {
                                 const cursor = isValidDate ? "cursor-pointer" : ""
 
                                 const day = new Date(year, month, date).getDay();
-
 
 
 
@@ -114,7 +116,7 @@ const Calendar = ({ data, onClick }: IProps) => {
                                                                 <div
                                                                     key={t.id}
                                                                     className={`text-base ${t.type === "EXPENSE" ? `${expenseStyle}` : `${incomeStyle}`}`}>
-                                                                    {(t.amount).toLocaleString()}
+                                                                    {formatCurrency(t.amount)}
                                                                 </div>
                                                             )
                                                         }

@@ -94,3 +94,8 @@ export const isDateToday = (year: number, month: number, date: number) => {
     const today = dayjs(formatDay({}));
     return today.year() === year && today.month() === month && today.date() === date;
 };
+
+
+export const twoDigitFormat = (year: number, month: number, date: number) => {
+    return `${year}-${(month).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
+}
