@@ -1,16 +1,14 @@
 import { useState } from 'react';
 import { TRecordTransaction } from '@type/RecordTransaction';
 import Calendar from '@atom/Calendar';
-import { useQuery } from '@tanstack/react-query';
-import { getTransactionList } from '@service/api/transactionApi';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { createTransaction, getTransactionList } from '@service/api/transactionApi';
 import SlidingPanel from '@atom/SlidePanel';
 import Modal from '@atom/Modal';
 import Button from '@atom/Button';
 import SummaryInformation from '@component/SummaryInformation';
-import Input from '@atom/Input';
 import { groupBy } from 'lodash';
-import dayjs from 'dayjs';
-import { formatDay } from '@util/dayUtils';
+import { twoDigitFormat } from '@util/dayUtils';
 
 export interface TransactionData {
     id: number;
@@ -26,27 +24,37 @@ export interface CategoryTotal {
 }
 
 
-export type GroupedData = {
-    [yearMonth: string]: TRecordTransaction[];
-};
 
 
 const Test = () => {
+    const queryClient = useQueryClient();
 
+
+    // 목록 조회
     const { isLoading, data } = useQuery({
         queryKey: ['transacion', 'list'],
         queryFn: () => getTransactionList(),
     });
 
     // 등록
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const { mutate } = useMutation({
+        mutationFn: createTransaction,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['transacion', 'list'] });
+        }
+    })
 
-    const [groupedData, setGroupData] = useState<GroupedData>({});
+    // 등록
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     // 상세
     const [isSlideOpen, setSlideOpen] = useState<boolean>(false);
     const [clickedDate, setClickedDate] = useState<number>();
 
+    const onSave = (item: TRecordTransaction) => {
+        mutate(item);
+        setIsModalOpen(false);
+    }
 
     return (
         <div className="h-screen flex">
@@ -55,10 +63,7 @@ const Test = () => {
                 isModalOpen &&
                 <Modal
                     onClose={() => setIsModalOpen(false)}
-                    onSave={(item: TRecordTransaction) => {
-                        // setRowData([...rowData, item])
-                        setIsModalOpen(false);
-                    }}
+                    onSave={onSave}
                 />
             }
 
@@ -99,20 +104,20 @@ const Test = () => {
 
             {
                 !isLoading &&
-                    <Calendar
-                        data={groupBy(data, 'date')}
-                        onClick={(date: number) => {
-                            setClickedDate(date);
-                            setSlideOpen(true);
-                        }}
-                    />
+                <Calendar
+                    data={groupBy(data, 'date')}
+                    onClick={(date: number) => {
+                        setClickedDate(date);
+                        setSlideOpen(true);
+                    }}
+                />
             }
 
             <Button.Floating onClick={() => setIsModalOpen(true)} />
             <SlidingPanel
                 isOpen={isSlideOpen}
                 setOpen={() => setSlideOpen(false)}
-                data={clickedDate ? groupBy(data, 'date')[clickedDate] : null}
+                data={clickedDate ? groupBy(data, 'date')[twoDigitFormat(2025, 4, clickedDate)] : null}
             />
         </div>
     );

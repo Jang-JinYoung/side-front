@@ -1,6 +1,4 @@
-import React, { useState } from "react";
 import Button, { TonClick } from "./Button";
-import { GroupedData } from "src/page/test";
 import { TRecordTransaction } from "@type/RecordTransaction";
 
 interface IProps {
