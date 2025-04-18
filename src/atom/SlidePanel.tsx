@@ -1,14 +1,15 @@
 import Button, { TonClick } from "./Button";
-import { TransactionCode, TRecordTransaction } from "@type/RecordTransaction";
+import { TransactionCode, TRecordTransaction, TRecordTransactionDetail } from "@type/RecordTransaction";
 
 interface IProps {
     isOpen: boolean,
     setOpen: TonClick,
-    data?: TRecordTransaction[] | null,
+    data?: TRecordTransactionDetail[] | null,
     onDelete: (id: number) => void;
+    onUpdate: (id: number) => void;
 };
 
-const SlidingPanel = ({ isOpen, setOpen, data, onDelete }: IProps) => {
+const SlidingPanel = ({ isOpen, setOpen, data, onDelete, onUpdate }: IProps) => {
 
 
     return (
@@ -26,8 +27,8 @@ const SlidingPanel = ({ isOpen, setOpen, data, onDelete }: IProps) => {
 
                 <div className="overflow-y-scroll h-full  p-4 mt-15">
                     {
-                        data ? data.map((t: TRecordTransaction, index) =>
-                            <Card key={index} data={t} onDelete={onDelete} />
+                        data ? data.map((t: TRecordTransactionDetail, index) =>
+                            <Card key={index} data={t} onDelete={onDelete} onUpdate={onUpdate} />
                         ) : (
                             <div>내용을 추가해보세요!</div>
                         )
@@ -38,7 +39,13 @@ const SlidingPanel = ({ isOpen, setOpen, data, onDelete }: IProps) => {
     );
 };
 
-const Card = ({ data, onDelete }: { data: TRecordTransaction, onDelete: any }) => {
+interface ICard { 
+    data: TRecordTransactionDetail, 
+    onDelete: (id: number) => void, 
+    onUpdate: (id: number) => void 
+}
+
+const Card = ({ data, onDelete, onUpdate }: ICard) => {
 
     const { transactionCode, categoryCode, description, amount, transactionId } = data;
 
@@ -70,7 +77,7 @@ const Card = ({ data, onDelete }: { data: TRecordTransaction, onDelete: any }) =
                 <div className="absolute top-2 right-2 flex space-x-2">
                     {/* 연필 아이콘 (수정 버튼) */}
                     <button
-                        onClick={() => console.log("A")} // 수정 핸들러 함수
+                        onClick={() => onUpdate(transactionId)} // 수정 핸들러 함수
                         className="text-gray-500 hover:text-gray-700 cursor-pointer"
                         aria-label="Edit"
                     >

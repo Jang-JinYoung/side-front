@@ -1,19 +1,28 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import Button, { TonClick } from './Button';
-import { RecordTransactionSchema, TransactionCode, TRecordTransaction, TRecordTransactionRegist } from '@type/RecordTransaction';
+import { RecordTransactionSchema, TransactionCode, TRecordTransaction, TRecordTransactionDetail, TRecordTransactionRegist } from '@type/RecordTransaction';
 import { formatDay } from '@util/dayUtils';
 
 type TonSave = (item: TRecordTransaction) => void;
+type TonUpdate = (item: TRecordTransactionDetail) => void;
 
-
-const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
+const Modal = ({ transaction, onClose, onSave, onUpdate }: { transaction: TRecordTransactionDetail, onClose: TonClick, onSave: TonSave, onUpdate: TonUpdate }) => {
 
     const [formData, setFormData] = useState<TRecordTransactionRegist>({
-        transactionDate: formatDay({template: "YYYY-MM-DD"}),
+        transactionDate: formatDay({ template: "YYYY-MM-DD" }),
         transactionCode: TransactionCode.INCOME,
         categoryCode: '식비',
         description: '',
     });
+
+    useEffect(() => {
+        console.log(transaction);
+        if(transaction) {
+            setFormData(transaction);
+            console.log(formData);
+        }
+    },[transaction]);
+
 
     const onChange = (
         e: ChangeEvent<HTMLSelectElement | HTMLInputElement>,
@@ -42,7 +51,7 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
         }
 
         onSave(newItem);
-        
+
     };
 
     return (
@@ -76,8 +85,8 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
                             <input
                                 type="radio"
                                 name="type"
-                                value="INCOME"
-                                checked={formData.transactionCode === 'INCOME'}
+                                value={TransactionCode.INCOME}
+                                checked={formData.transactionCode === TransactionCode.INCOME}
                                 onChange={onChange}
                                 className="form-radio"
                             />
@@ -87,8 +96,8 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
                             <input
                                 type="radio"
                                 name="type"
-                                value="EXPENSE"
-                                checked={formData.transactionCode === 'EXPENSE'}
+                                value={TransactionCode.EXPENSE}
+                                checked={formData.transactionCode === TransactionCode.EXPENSE}
                                 onChange={onChange}
                                 className="form-radio"
                             />

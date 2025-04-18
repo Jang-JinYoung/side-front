@@ -1,10 +1,9 @@
 import { z } from "zod";
 
 export const TransactionCode = {
-    "INCOME": "10000001",
-    "EXPENSE": "10000002"
+    INCOME: "10000001",
+    EXPENSE: "10000002"
 }
-export const INCOME_CODE = "10000001"
 
 /**
  * 기본
@@ -35,3 +34,13 @@ const RecordTransactionRegistSchema = RecordTransactionSchema.extend({
 });
 
 export type TRecordTransactionRegist = z.infer<typeof RecordTransactionRegistSchema>;
+
+/**
+ * 상세
+ */
+const RecordTransactionDetailSchema = RecordTransactionSchema.extend({
+    transactionId: z.number()
+});
+
+
+export type TRecordTransactionDetail = z.infer<typeof RecordTransactionDetailSchema>;

@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { TRecordTransaction } from '@type/RecordTransaction';
+import { TRecordTransaction, TRecordTransactionDetail, TRecordTransactionRegist } from '@type/RecordTransaction';
 import Calendar from '@atom/Calendar';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createTransaction, deleteTransaction, getTransactionList } from '@service/api/transactionApi';
+import { createTransaction, deleteTransaction, getTransaction, getTransactions, updateTransaction } from '@service/api/transactionApi';
 import SlidingPanel from '@atom/SlidePanel';
 import Modal from '@atom/Modal';
 import Button from '@atom/Button';
@@ -27,10 +27,19 @@ const Test = () => {
     const queryClient = useQueryClient();
 
 
+    const [transactionId, setTransactionId] = useState<number>();
+
     // 목록 조회
     const { isLoading, data } = useQuery({
         queryKey: ['transacion', 'list'],
-        queryFn: () => getTransactionList(),
+        queryFn: getTransactions,
+    });
+
+    // 상세 조회
+    const { data: transaction } = useQuery({
+        queryKey: ['transacion', transactionId],
+        queryFn: () => getTransaction({ transactionId }),
+        enabled: !!transactionId, // transactionId가 있을 때만 실행
     });
 
     // 등록
@@ -46,8 +55,17 @@ const Test = () => {
         mutationFn: deleteTransaction,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['transacion', 'list'] });
-        }
+            window.alert("삭제되었습니다.");
+        }  
     });
+
+    const { mutate: updateMutate } = useMutation({
+        mutationFn: updateTransaction,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['transacion', 'list'] });
+            window.alert("수정되었습니다.");
+        }  
+    })
 
     // 등록
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -56,22 +74,37 @@ const Test = () => {
     const [isSlideOpen, setSlideOpen] = useState<boolean>(false);
     const [clickedDate, setClickedDate] = useState<number>();
 
-    const onModalSave = (item: TRecordTransaction) => {
-        createMutate(item);
-        setIsModalOpen(false);
-    }
-
+    /* 달력 클릭 */
     const onCalendarClick = (date: number) => {
         setClickedDate(date);
         setSlideOpen(true);
     }
 
-    const onDelete = (id: number) => {
-        const isConfirmed = window.confirm("삭제하시겠습니까?");
-        if(isConfirmed) {
-            deleteMutate(id);
+    /* 슬라이드 버튼 클릭 */
+    const SlideButtonAction = {
+        // 수정버튼
+        onUpdate: (transactionId: number) => {
+            setTransactionId(transactionId);
+            setIsModalOpen(true);
+        },
+        // 삭제버튼
+        onDelete: (transactionId: number) => {
+            const isConfirmed = window.confirm("삭제하시겠습니까?");
+            if(isConfirmed) {
+                deleteMutate(transactionId);
+            }
         }
-    }
+    };
+
+    const ModalButtonAction = {
+        onSave: (item: TRecordTransaction) => {
+            createMutate(item);
+            setIsModalOpen(false);
+        },
+        onUpdate: (item: TRecordTransactionDetail) => {
+            updateMutate(item);
+        }
+    };
 
     return (
         <div className="h-screen flex">
@@ -80,7 +113,9 @@ const Test = () => {
                 isModalOpen &&
                 <Modal
                     onClose={() => setIsModalOpen(false)}
-                    onSave={onModalSave}
+                    transaction={transaction}
+                    onSave={ModalButtonAction.onSave}
+                    onUpdate={ModalButtonAction.onUpdate}
                 />
             }
 
@@ -101,7 +136,8 @@ const Test = () => {
                 isOpen={isSlideOpen}
                 setOpen={() => setSlideOpen(false)}
                 data={clickedDate ? groupBy(data, 'transactionDate')[twoDigitFormat(2025, 4, clickedDate)] : null}
-                onDelete={onDelete}
+                onUpdate={SlideButtonAction.onUpdate}
+                onDelete={SlideButtonAction.onDelete}
             />
         </div>
     );
