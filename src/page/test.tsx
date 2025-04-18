@@ -6,16 +6,15 @@ import { createTransaction, deleteTransaction, getTransactionList } from '@servi
 import SlidingPanel from '@atom/SlidePanel';
 import Modal from '@atom/Modal';
 import Button from '@atom/Button';
-import SummaryInformation from '@component/SummaryInformation';
 import { groupBy } from 'lodash';
 import { twoDigitFormat } from '@util/dayUtils';
 import Filter from '@component/Filter';
 
 export interface TransactionData {
-    id: number;
-    date: string;
-    type: string;
-    category: string;
+    transactionId: number;
+    transactionDate: string;
+    transactionCode: string;
+    categoryCode: string;
     amount: number;
     description: string;
 }
@@ -23,9 +22,6 @@ export interface TransactionData {
 export interface CategoryTotal {
     [category: string]: number;
 }
-
-
-
 
 const Test = () => {
     const queryClient = useQueryClient();
@@ -43,7 +39,7 @@ const Test = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['transacion', 'list'] });
         }
-    })
+    });
 
     // 삭제
     const { mutate: deleteMutate } = useMutation({
@@ -51,7 +47,8 @@ const Test = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['transacion', 'list'] });
         }
-    })
+    });
+
     // 등록
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -70,7 +67,10 @@ const Test = () => {
     }
 
     const onDelete = (id: number) => {
-        deleteMutate(id);
+        const isConfirmed = window.confirm("삭제하시겠습니까?");
+        if(isConfirmed) {
+            deleteMutate(id);
+        }
     }
 
     return (
@@ -90,7 +90,7 @@ const Test = () => {
             {
                 !isLoading &&
                 <Calendar
-                    data={groupBy(data, 'date')}
+                    data={groupBy(data, 'transactionDate')}
                     onClick={onCalendarClick}
                 />
             }
@@ -100,7 +100,7 @@ const Test = () => {
             <SlidingPanel
                 isOpen={isSlideOpen}
                 setOpen={() => setSlideOpen(false)}
-                data={clickedDate ? groupBy(data, 'date')[twoDigitFormat(2025, 4, clickedDate)] : null}
+                data={clickedDate ? groupBy(data, 'transactionDate')[twoDigitFormat(2025, 4, clickedDate)] : null}
                 onDelete={onDelete}
             />
         </div>

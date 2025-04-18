@@ -1,10 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import Button, { TonClick } from './Button';
-import { EXPENSE, RecordTransactionSchema, TRecordTransaction, TRecordTransactionRegist } from '@type/RecordTransaction';
-import dayjs from 'dayjs';
+import { RecordTransactionSchema, TransactionCode, TRecordTransaction, TRecordTransactionRegist } from '@type/RecordTransaction';
 import { formatDay } from '@util/dayUtils';
-import { useMutation } from '@tanstack/react-query';
-import { createTransaction } from '@service/api/transactionApi';
 
 type TonSave = (item: TRecordTransaction) => void;
 
@@ -12,13 +9,11 @@ type TonSave = (item: TRecordTransaction) => void;
 const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
 
     const [formData, setFormData] = useState<TRecordTransactionRegist>({
-        date: formatDay({template: "YYYY-MM-DD"}),
-        type: "INCOME",
-        category: '식비',
+        transactionDate: formatDay({template: "YYYY-MM-DD"}),
+        transactionCode: TransactionCode.INCOME,
+        categoryCode: '식비',
         description: '',
     });
-
-
 
     const onChange = (
         e: ChangeEvent<HTMLSelectElement | HTMLInputElement>,
@@ -34,9 +29,9 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
 
         // 새 항목 생성
         const newItem: TRecordTransaction = {
-            date: formData.date,
-            type: formData.type,
-            category: formData.category,
+            transactionDate: formData.transactionDate,
+            transactionCode: formData.transactionCode,
+            categoryCode: formData.categoryCode,
             amount: Math.abs(Number(formData.amount)),
             description: formData.description,
         };
@@ -65,7 +60,7 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
                         type="date"
                         id="date"
                         name="date"
-                        value={formData.date}
+                        value={formData.transactionDate}
                         onChange={onChange}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         required
@@ -82,7 +77,7 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
                                 type="radio"
                                 name="type"
                                 value="INCOME"
-                                checked={formData.type === 'INCOME'}
+                                checked={formData.transactionCode === 'INCOME'}
                                 onChange={onChange}
                                 className="form-radio"
                             />
@@ -93,7 +88,7 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
                                 type="radio"
                                 name="type"
                                 value="EXPENSE"
-                                checked={formData.type === 'EXPENSE'}
+                                checked={formData.transactionCode === 'EXPENSE'}
                                 onChange={onChange}
                                 className="form-radio"
                             />
@@ -112,12 +107,12 @@ const Modal = ({ onClose, onSave }: { onClose: TonClick, onSave: TonSave }) => {
                     <select
                         id="category"
                         name="category"
-                        value={formData.category}
+                        value={formData.categoryCode}
                         onChange={onChange}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         required
                     >
-                        {formData.type === "EXPENSE" ? (
+                        {formData.transactionCode === TransactionCode.EXPENSE ? (
                             <>
                                 <option value="식비">식비</option>
                                 <option value="교통비">교통비</option>

@@ -1,24 +1,25 @@
 import { z } from "zod";
 
-const TypeSchema = z.enum(["EXPENSE", "INCOME"]);
-
-export const EXPENSE = "지출";
-export const INCOME = "입금";
+export const TransactionCode = {
+    "INCOME": "10000001",
+    "EXPENSE": "10000002"
+}
+export const INCOME_CODE = "10000001"
 
 /**
  * 기본
  */
 export const RecordTransactionSchema = z.object({
     // 번호
-    id: z.number().optional(), 
+    transactionId: z.number().optional(), 
     // 일자
-    date: z.string().date(),
+    transactionDate: z.string().date(),
     // 지출/입금
-    type: TypeSchema,
+    transactionCode: z.string().max(8),
     // 금액
     amount: z.number(),
     // 카테고리
-    category: z.string(),
+    categoryCode: z.string().max(8),
     // 내용
     description: z.string().optional(),
 });

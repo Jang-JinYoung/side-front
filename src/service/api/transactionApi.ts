@@ -1,4 +1,5 @@
 import axios from "@service/axios";
+import { TRecordTransactionRegist } from "@type/RecordTransaction";
 
 /**
  * 목록 조회
@@ -13,7 +14,12 @@ export const getTransactionList = async () => {
     });
 };
 
-export const createTransaction = async (params: any) => {
+/**
+ * 생성
+ * @param params 
+ * @returns 
+ */
+export const createTransaction = async (params: TRecordTransactionRegist) => {
 
     return axios({
         method: 'post',
@@ -24,12 +30,16 @@ export const createTransaction = async (params: any) => {
     });
 };
 
-
-export const deleteTransaction = async (id: number) => {
+/**
+ * 삭제
+ * @param id 
+ * @returns 
+ */
+export const deleteTransaction = async (transactionId: number) => {
 
     return axios({
         method: 'delete',
-        url: `/transaction/${id}`,
+        url: `/transaction/${transactionId}`,
     }).then((res: any) => {
         return res.data;
     });

@@ -1,5 +1,5 @@
 import Button, { TonClick } from "./Button";
-import { TRecordTransaction } from "@type/RecordTransaction";
+import { TransactionCode, TRecordTransaction } from "@type/RecordTransaction";
 
 interface IProps {
     isOpen: boolean,
@@ -40,7 +40,7 @@ const SlidingPanel = ({ isOpen, setOpen, data, onDelete }: IProps) => {
 
 const Card = ({ data, onDelete }: { data: TRecordTransaction, onDelete: any }) => {
 
-    const { type, category, description, amount, id } = data;
+    const { transactionCode, categoryCode, description, amount, transactionId } = data;
 
     return (
         <div className="relative">
@@ -50,9 +50,9 @@ const Card = ({ data, onDelete }: { data: TRecordTransaction, onDelete: any }) =
                 <div>
                     {/* 지출/입금 카테고리 */}
                     <span
-                        className={`block text-sm font-bold ${type === "EXPENSE" ? "text-red-500" : "text-green-500"}`}
+                        className={`block text-sm font-bold ${transactionCode === TransactionCode.EXPENSE ? "text-red-500" : "text-green-500"}`}
                     >
-                        {type === "EXPENSE" ? "출금" : "입금"} - {category}
+                        {transactionCode === "EXPENSE" ? "출금" : "입금"} - {categoryCode}
                     </span>
                     {/* 설명 */}
                     <p className="text-gray-700 text-sm mt-1">{description}</p>
@@ -61,7 +61,7 @@ const Card = ({ data, onDelete }: { data: TRecordTransaction, onDelete: any }) =
                 {/* 우측 금액 */}
                 <div className="text-right">
                     <span
-                        className={`text-lg font-bold ${type === "EXPENSE" ? "text-red-500" : "text-green-500"}`}
+                        className={`text-lg font-bold ${transactionCode === TransactionCode.EXPENSE ? "text-red-500" : "text-green-500"}`}
                     >
                         {amount.toLocaleString()} 원
                     </span>
@@ -81,7 +81,7 @@ const Card = ({ data, onDelete }: { data: TRecordTransaction, onDelete: any }) =
 
                     {/* X 아이콘 (삭제 버튼) */}
                     <button
-                        onClick={() => onDelete(id)} // 삭제 핸들러 함수
+                        onClick={() => onDelete(transactionId)} // 삭제 핸들러 함수
                         className="text-gray-500 hover:text-red-500 cursor-pointer"
                         aria-label="Delete"
                     >

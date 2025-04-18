@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { formatDay, isDateToday, twoDigitFormat } from "@util/dayUtils";
-import { TRecordTransaction } from "@type/RecordTransaction";
+import { TransactionCode, TRecordTransaction } from "@type/RecordTransaction";
 import dayjs from "dayjs";
 import { formatCurrency } from "@util/numberUtils";
 
@@ -114,8 +114,8 @@ const Calendar = ({ data, onClick }: IProps) => {
                                                         {
                                                             transactions.map((t: TRecordTransaction) =>
                                                                 <div
-                                                                    key={t.id}
-                                                                    className={`text-base ${t.type === "EXPENSE" ? `${expenseStyle}` : `${incomeStyle}`}`}>
+                                                                    key={t.transactionId}
+                                                                    className={`text-base ${t.transactionCode === TransactionCode.EXPENSE ? `${expenseStyle}` : `${incomeStyle}`}`}>
                                                                     {formatCurrency(t.amount)}
                                                                 </div>
                                                             )
