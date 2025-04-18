@@ -3,6 +3,7 @@ import { formatDay, isDateToday, twoDigitFormat } from "@util/dayUtils";
 import { TransactionCode, TRecordTransaction } from "@type/RecordTransaction";
 import dayjs from "dayjs";
 import { formatCurrency } from "@util/numberUtils";
+import { TextColor } from "@util/textColorUtil";
 
 interface IProps {
     data: any;
@@ -70,26 +71,22 @@ const Calendar = ({ data, onClick }: IProps) => {
                             {Array.from({ length: 7 }, (_, dateIndex) => {
                                 const date = weekIndex * 7 + dateIndex - firstDay + 1;
 
-                                const isToday = isDateToday(year, month, date) ? 'bg-yellow-200 font-bold' : 'bg-gray-100';
+                                const isToday = isDateToday(year, month, date) ? 'bg-yellow-200' : 'bg-gray-100';
 
-                                
                                 const key = twoDigitFormat(year, month+1, date);
 
                                 const transactions = data[key];
-                                const expenseStyle = 'text-red-500';
-                                const incomeStyle = 'text-green-500';
                                 const isValidDate = date > 0 && date <= daysInMonth;
+
                                 const cursor = isValidDate ? "cursor-pointer" : ""
 
                                 const day = new Date(year, month, date).getDay();
 
-
-
                                 let dayStyle = "";
-                                if (day === 6) {
-                                    dayStyle = "text-blue-500";
-                                } else if (day === 0) {
-                                    dayStyle = "text-red-500";
+                                if (day === 6) { // 토요일
+                                    dayStyle = TextColor.BLUE;
+                                } else if (day === 0) { // 일요일
+                                    dayStyle = TextColor.RED;
                                 }
 
                                 return (
@@ -115,7 +112,7 @@ const Calendar = ({ data, onClick }: IProps) => {
                                                             transactions.map((t: TRecordTransaction) =>
                                                                 <div
                                                                     key={t.transactionId}
-                                                                    className={`text-base ${t.transactionCode === TransactionCode.EXPENSE ? `${expenseStyle}` : `${incomeStyle}`}`}>
+                                                                    className={`text-base ${t.transactionCode === TransactionCode.EXPENSE ? `${TextColor.RED}` : `${TextColor.GREEN}`}`}>
                                                                     {formatCurrency(t.amount)}
                                                                 </div>
                                                             )
