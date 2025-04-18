@@ -62,8 +62,10 @@ const Test = () => {
     const { mutate: updateMutate } = useMutation({
         mutationFn: updateTransaction,
         onSuccess: () => {
+            setIsModalOpen(false);
             queryClient.invalidateQueries({ queryKey: ['transacion', 'list'] });
             window.alert("수정되었습니다.");
+            
         }  
     })
 
@@ -102,7 +104,10 @@ const Test = () => {
             setIsModalOpen(false);
         },
         onUpdate: (item: TRecordTransactionDetail) => {
-            updateMutate(item);
+            const isConfirmed = window.confirm("수정하시겠습니까??");
+            if(isConfirmed) {
+                updateMutate(item);
+            }
         }
     };
 

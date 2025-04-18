@@ -16,12 +16,10 @@ const Modal = ({ transaction, onClose, onSave, onUpdate }: { transaction: TRecor
     });
 
     useEffect(() => {
-        console.log(transaction);
-        if(transaction) {
+        if (transaction) {
             setFormData(transaction);
-            console.log(formData);
         }
-    },[transaction]);
+    }, [transaction]);
 
 
     const onChange = (
@@ -50,7 +48,7 @@ const Modal = ({ transaction, onClose, onSave, onUpdate }: { transaction: TRecor
             return;
         }
 
-        onSave(newItem);
+        transaction ? onUpdate({ transactionId: transaction.transactionId, ...newItem }) : onSave(newItem);
 
     };
 
