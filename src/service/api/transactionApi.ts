@@ -15,7 +15,7 @@ export const getTransactions = async () => {
 };
 
 /**
- * 목록 조회
+ * 상세 조회
  * @returns 
  */
 export const getTransaction = async ({transactionId}: {transactionId?: number}) => {
