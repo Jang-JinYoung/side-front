@@ -1,11 +1,11 @@
 import axios from "@service/axios";
-import { TRecordTransactionRegist } from "@type/RecordTransaction";
+import { TRecordTransactionDetail, TRecordTransactionRegist } from "@type/RecordTransaction";
 
 /**
  * 목록 조회
  * @returns 
  */
-export const getTransactionList = async () => {
+export const getTransactions = async () => {
     return axios({
         method: 'get',
         url: '/transaction',
@@ -15,16 +15,45 @@ export const getTransactionList = async () => {
 };
 
 /**
+ * 목록 조회
+ * @returns 
+ */
+export const getTransaction = async ({transactionId}: {transactionId?: number}) => {
+    return axios({
+        method: 'get',
+        url: `/transaction/${transactionId}`,
+    }).then((res: any) => {
+        return res.data;
+    });
+};
+
+
+
+/**
  * 생성
  * @param params 
  * @returns 
  */
-export const createTransaction = async (params: TRecordTransactionRegist) => {
-
+export const createTransaction = async (transaction: TRecordTransactionRegist) => {
     return axios({
         method: 'post',
         url: '/transaction',
-        data: params
+        data: transaction
+    }).then((res: any) => {
+        return res.data;
+    });
+};
+
+/**
+ * 수정
+ * @param id 
+ * @returns 
+ */
+export const updateTransaction = async (transaction: TRecordTransactionDetail) => {
+    return axios({
+        method: 'put',
+        url: `/transaction/update/${transaction.transactionId}`,
+        data: transaction,
     }).then((res: any) => {
         return res.data;
     });
@@ -36,10 +65,9 @@ export const createTransaction = async (params: TRecordTransactionRegist) => {
  * @returns 
  */
 export const deleteTransaction = async (transactionId: number) => {
-
     return axios({
-        method: 'delete',
-        url: `/transaction/${transactionId}`,
+        method: 'put',
+        url: `/transaction/delete/${transactionId}`,
     }).then((res: any) => {
         return res.data;
     });
