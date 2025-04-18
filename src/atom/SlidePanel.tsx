@@ -59,7 +59,7 @@ const Card = ({ data, onDelete, onUpdate }: ICard) => {
                     <span
                         className={`block text-sm font-bold ${transactionCode === TransactionCode.EXPENSE ? "text-red-500" : "text-green-500"}`}
                     >
-                        {transactionCode === "EXPENSE" ? "출금" : "입금"} - {categoryCode}
+                        {transactionCode === TransactionCode.EXPENSE ? "출금" : "입금"} - {categoryCode}
                     </span>
                     {/* 설명 */}
                     <p className="text-gray-700 text-sm mt-1">{description}</p>
