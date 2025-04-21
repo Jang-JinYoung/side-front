@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { TRecordTransaction, TRecordTransactionDetail, TRecordTransactionRegist } from '@type/RecordTransaction';
 import Calendar from '@atom/Calendar';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createTransaction, deleteTransaction, getTransaction, getTransactions, updateTransaction } from '@service/api/transactionApi';
 import SlidingPanel from '@atom/SlidePanel';
 import Modal from '@atom/Modal';
@@ -9,8 +9,9 @@ import Button from '@atom/Button';
 import { groupBy } from 'lodash';
 import { twoDigitFormat } from '@util/dayUtils';
 import Filter from '@component/Filter';
+import { getCodeByCodeName } from '@service/api/codeApi';
 
-export interface TransactionData {
+export interface TransactionData<T> {
     transactionId: number;
     transactionDate: string;
     transactionCode: string;
@@ -25,6 +26,7 @@ export interface CategoryTotal {
 
 const Test = () => {
     const queryClient = useQueryClient();
+
 
 
     const [transactionId, setTransactionId] = useState<number>();
@@ -56,18 +58,40 @@ const Test = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['transacion', 'list'] });
             window.alert("삭제되었습니다.");
-        }  
+        }
     });
 
+    // 수정
     const { mutate: updateMutate } = useMutation({
         mutationFn: updateTransaction,
         onSuccess: () => {
             setIsModalOpen(false);
             queryClient.invalidateQueries({ queryKey: ['transacion', 'list'] });
             window.alert("수정되었습니다.");
-            
-        }  
-    })
+
+        }
+    });
+
+    /**
+     * @field codes[0] 입금 카테고리 코드
+     * @field codes[1] 지출 카테고리 코드
+     */
+    const codes = useQueries({
+        queries: [
+            {
+                queryKey: ['code', 'list', "TransactionCode"],
+                queryFn: () => getCodeByCodeName("TransactionCode"),
+            },
+            {
+                queryKey: ['code', 'list', "IncomeCategoryCode"],
+                queryFn: () => getCodeByCodeName("IncomeCategoryCode"),
+            },
+            { 
+                queryKey: ['code', 'list', "ExpenseCategoryCode"],
+                queryFn: () => getCodeByCodeName("ExpenseCategoryCode"),
+            },
+        ],
+    });
 
     // 등록
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -92,7 +116,7 @@ const Test = () => {
         // 삭제버튼
         onDelete: (transactionId: number) => {
             const isConfirmed = window.confirm("삭제하시겠습니까?");
-            if(isConfirmed) {
+            if (isConfirmed) {
                 deleteMutate(transactionId);
             }
         }
@@ -105,7 +129,7 @@ const Test = () => {
         },
         onUpdate: (item: TRecordTransactionDetail) => {
             const isConfirmed = window.confirm("수정하시겠습니까??");
-            if(isConfirmed) {
+            if (isConfirmed) {
                 updateMutate(item);
             }
         }
@@ -117,6 +141,7 @@ const Test = () => {
             {
                 isModalOpen &&
                 <Modal
+                    codes={codes}
                     onClose={() => setIsModalOpen(false)}
                     transaction={transaction}
                     onSave={ModalButtonAction.onSave}

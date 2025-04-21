@@ -6,7 +6,15 @@ import { formatDay } from '@util/dayUtils';
 type TonSave = (item: TRecordTransaction) => void;
 type TonUpdate = (item: TRecordTransactionDetail) => void;
 
-const Modal = ({ transaction, onClose, onSave, onUpdate }: { transaction: TRecordTransactionDetail, onClose: TonClick, onSave: TonSave, onUpdate: TonUpdate }) => {
+interface IProps {
+    codes:any;
+    transaction: TRecordTransactionDetail;
+    onClose: TonClick;
+    onSave: TonSave;
+    onUpdate: TonUpdate;
+}
+
+const Modal = ({ codes, transaction, onClose, onSave, onUpdate }: IProps) => {
 
     const [formData, setFormData] = useState<TRecordTransactionRegist>({
         transactionDate: formatDay({ template: "YYYY-MM-DD" }),
@@ -79,28 +87,20 @@ const Modal = ({ transaction, onClose, onSave, onUpdate }: { transaction: TRecor
                         유형
                     </label>
                     <div className="flex space-x-4">
-                        <label className="inline-flex items-center">
-                            <input
-                                type="radio"
-                                name="type"
-                                value={TransactionCode.INCOME}
-                                checked={formData.transactionCode === TransactionCode.INCOME}
-                                onChange={onChange}
-                                className="form-radio"
-                            />
-                            <span className="ml-2">입금</span>
-                        </label>
-                        <label className="inline-flex items-center">
-                            <input
-                                type="radio"
-                                name="type"
-                                value={TransactionCode.EXPENSE}
-                                checked={formData.transactionCode === TransactionCode.EXPENSE}
-                                onChange={onChange}
-                                className="form-radio"
-                            />
-                            <span className="ml-2">지출</span>
-                        </label>
+                        {
+                            codes[0].data.map((code: any) => 
+                                <label className="inline-flex items-center">
+                                <input
+                                    type="radio"
+                                    name="transactionCode"
+                                    value={code.code}
+                                    checked={formData.transactionCode === code.code}
+                                    onChange={onChange}
+                                    className="form-radio"
+                                />
+                                <span className="ml-2">{code.codeKorName}</span>
+                            </label>
+                        )}
                     </div>
                 </div>
 
@@ -113,29 +113,19 @@ const Modal = ({ transaction, onClose, onSave, onUpdate }: { transaction: TRecor
                     </label>
                     <select
                         id="category"
-                        name="category"
+                        name="categoryCode"
                         value={formData.categoryCode}
                         onChange={onChange}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         required
                     >
-                        {formData.transactionCode === TransactionCode.EXPENSE ? (
-                            <>
-                                <option value="식비">식비</option>
-                                <option value="교통비">교통비</option>
-                                <option value="쇼핑">쇼핑</option>
-                                <option value="생활비">생활비</option>
-                                <option value="여가">여가</option>
-                                <option value="기타">기타</option>
-                            </>
-                        ) : (
-                            <>
-                                <option value="급여">급여</option>
-                                <option value="용돈">용돈</option>
-                                <option value="환불">환불</option>
-                                <option value="기타">기타</option>
-                            </>
-                        )}
+                        {
+                            formData.transactionCode === TransactionCode.INCOME ?
+
+                                codes[1].data.map((category: any) => <option key={category.code} value={category.code}>{category.codeKorName}</option>) :
+                                codes[2].data.map((category: any) => <option key={category.code} value={category.code}>{category.codeKorName}</option>)
+
+                        }
                     </select>
                 </div>
 
