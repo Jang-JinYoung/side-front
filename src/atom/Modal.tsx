@@ -2,12 +2,14 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import Button, { TonClick } from './Button';
 import { RecordTransactionSchema, TransactionCode, TRecordTransaction, TRecordTransactionDetail, TRecordTransactionRegist } from '@type/RecordTransaction';
 import { formatDay } from '@util/dayUtils';
+import { TCommonCode } from '@type/CommonCode';
+import { UseQueryResult } from '@tanstack/react-query';
 
 type TonSave = (item: TRecordTransaction) => void;
 type TonUpdate = (item: TRecordTransactionDetail) => void;
 
 interface IProps {
-    codes:any;
+    codes: UseQueryResult<any, Error>[];
     transaction: TRecordTransactionDetail;
     onClose: TonClick;
     onSave: TonSave;
@@ -19,7 +21,7 @@ const Modal = ({ codes, transaction, onClose, onSave, onUpdate }: IProps) => {
     const [formData, setFormData] = useState<TRecordTransactionRegist>({
         transactionDate: formatDay({ template: "YYYY-MM-DD" }),
         transactionCode: TransactionCode.INCOME,
-        categoryCode: '식비',
+        categoryCode: "10001001",
         description: '',
     });
 
@@ -56,9 +58,22 @@ const Modal = ({ codes, transaction, onClose, onSave, onUpdate }: IProps) => {
             return;
         }
 
-        transaction ? onUpdate({ transactionId: transaction.transactionId, ...newItem }) : onSave(newItem);
+        console.log(newItem);
+
+        transaction ? onUpdate({ ...transaction, ...newItem }) : onSave(newItem);
 
     };
+
+    const Options = () => {
+        const options = formData.transactionCode === TransactionCode.INCOME ? codes[1].data : codes[2].data;
+        return (
+            options.map((code: TCommonCode) =>
+                <option key={code.code} value={code.code}>
+                    {code.codeKorName}
+                </option>
+            )
+        );
+    }
 
     return (
         <div className="fixed inset-0 bg-black opacity-90 backdrop-filter backdrop-blur-sm flex items-center justify-center z-20 transition-all duration-300">
@@ -74,7 +89,7 @@ const Modal = ({ codes, transaction, onClose, onSave, onUpdate }: IProps) => {
                     <input
                         type="date"
                         id="date"
-                        name="date"
+                        name="transactionDate"
                         value={formData.transactionDate}
                         onChange={onChange}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -88,19 +103,20 @@ const Modal = ({ codes, transaction, onClose, onSave, onUpdate }: IProps) => {
                     </label>
                     <div className="flex space-x-4">
                         {
-                            codes[0].data.map((code: any) => 
+                            codes[0].data.map((code: TCommonCode) =>
                                 <label className="inline-flex items-center">
-                                <input
-                                    type="radio"
-                                    name="transactionCode"
-                                    value={code.code}
-                                    checked={formData.transactionCode === code.code}
-                                    onChange={onChange}
-                                    className="form-radio"
-                                />
-                                <span className="ml-2">{code.codeKorName}</span>
-                            </label>
-                        )}
+                                    <input
+                                        type="radio"
+                                        name="transactionCode"
+                                        value={code.code}
+                                        checked={formData.transactionCode === code.code}
+                                        onChange={onChange}
+                                        className="form-radio"
+                                    />
+                                    <span className="ml-2">{code.codeKorName}</span>
+                                </label>
+                            )
+                        }
                     </div>
                 </div>
 
@@ -119,13 +135,7 @@ const Modal = ({ codes, transaction, onClose, onSave, onUpdate }: IProps) => {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         required
                     >
-                        {
-                            formData.transactionCode === TransactionCode.INCOME ?
-
-                                codes[1].data.map((category: any) => <option key={category.code} value={category.code}>{category.codeKorName}</option>) :
-                                codes[2].data.map((category: any) => <option key={category.code} value={category.code}>{category.codeKorName}</option>)
-
-                        }
+                        <Options />
                     </select>
                 </div>
 
