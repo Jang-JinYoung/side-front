@@ -27,7 +27,14 @@ export const getTransaction = async ({transactionId}: {transactionId?: number}) 
     });
 };
 
-
+export const getStatistics = async () => {
+    return axios({
+        method: 'get',
+        url: `/transaction/statistics`
+    }).then((res: any) => {
+        return res.data
+    });
+};
 
 /**
  * 생성
