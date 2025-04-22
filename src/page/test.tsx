@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { TRecordTransaction, TRecordTransactionDetail, TRecordTransactionRegist } from '@type/RecordTransaction';
 import Calendar from '@atom/Calendar';
 import { useMutation, useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createTransaction, deleteTransaction, getTransaction, getTransactions, updateTransaction } from '@service/api/transactionApi';
+import { createTransaction, deleteTransaction, getStatistics, getTransaction, getTransactions, updateTransaction } from '@service/api/transactionApi';
 import SlidingPanel from '@atom/SlidePanel';
 import Modal from '@atom/Modal';
 import Button from '@atom/Button';
@@ -29,13 +29,7 @@ const Test = () => {
 
 
 
-    const [transactionId, setTransactionId] = useState<number>();
-
-    // 목록 조회
-    const { isLoading, data } = useQuery({
-        queryKey: ['transacion', 'list'],
-        queryFn: getTransactions,
-    });
+    const [transactionId, setTransactionId] = useState<number | undefined>();
 
     // 상세 조회
     const { data: transaction } = useQuery({
@@ -48,7 +42,7 @@ const Test = () => {
     const { mutate: createMutate } = useMutation({
         mutationFn: createTransaction,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['transacion', 'list'] });
+            queryClient.invalidateQueries({ queryKey: ['transacion'] });
         }
     });
 
@@ -56,7 +50,7 @@ const Test = () => {
     const { mutate: deleteMutate } = useMutation({
         mutationFn: deleteTransaction,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['transacion', 'list'] });
+            queryClient.invalidateQueries({ queryKey: ['transacion'] });
             window.alert("삭제되었습니다.");
         }
     });
@@ -66,17 +60,21 @@ const Test = () => {
         mutationFn: updateTransaction,
         onSuccess: () => {
             setIsModalOpen(false);
-            queryClient.invalidateQueries({ queryKey: ['transacion', 'list'] });
+            queryClient.invalidateQueries({ queryKey: ['transacion'] });
             window.alert("수정되었습니다.");
+            setTransactionId(undefined)
 
         }
     });
 
     /**
-     * @field codes[0] 입금 카테고리 코드
-     * @field codes[1] 지출 카테고리 코드
+     * @field result[0] 유형(입금/출금) 코드
+     * @field result[1] 입금 카테고리 코드
+     * @field result[2] 지출 카테고리 코드
+     * @field result[3] 데이터
+     * @field result[4] 통계값
      */
-    const codes = useQueries({
+    const result = useQueries({
         queries: [
             {
                 queryKey: ['code', 'list', "TransactionCode"],
@@ -90,6 +88,14 @@ const Test = () => {
                 queryKey: ['code', 'list', "ExpenseCategoryCode"],
                 queryFn: () => getCodeByCodeName("ExpenseCategoryCode"),
             },
+            {
+                queryKey: ['transacion', 'list'],
+                queryFn: getTransactions,
+            },
+            {
+                queryKey: ['transacion', 'statistics'],
+                queryFn: getStatistics
+            }
         ],
     });
 
@@ -141,7 +147,7 @@ const Test = () => {
             {
                 isModalOpen &&
                 <Modal
-                    codes={codes}
+                    codes={result}
                     onClose={() => setIsModalOpen(false)}
                     transaction={transaction}
                     onSave={ModalButtonAction.onSave}
@@ -150,12 +156,15 @@ const Test = () => {
             }
 
             {/* 좌측 여백: 총입금/총지출/잔액 및 필터 */}
-            <Filter />
+            <Filter 
+                statistics={result[4].data}
+                codes={result[0].data}
+            />
 
             {
-                !isLoading &&
+                !result[3].isLoading &&
                 <Calendar
-                    data={groupBy(data, 'transactionDate')}
+                    data={groupBy(result[3].data, 'transactionDate')}
                     onClick={onCalendarClick}
                 />
             }
@@ -165,7 +174,7 @@ const Test = () => {
             <SlidingPanel
                 isOpen={isSlideOpen}
                 setOpen={() => setSlideOpen(false)}
-                data={clickedDate ? groupBy(data, 'transactionDate')[twoDigitFormat(2025, 4, clickedDate)] : null}
+                data={clickedDate ? groupBy(result[3].data, 'transactionDate')[twoDigitFormat(2025, 4, clickedDate)] : null}
                 onUpdate={SlideButtonAction.onUpdate}
                 onDelete={SlideButtonAction.onDelete}
             />

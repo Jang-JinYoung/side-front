@@ -39,7 +39,8 @@ export type TRecordTransactionRegist = z.infer<typeof RecordTransactionRegistSch
  * 상세
  */
 const RecordTransactionDetailSchema = RecordTransactionSchema.extend({
-    transactionId: z.number()
+    transactionId: z.number(),
+    categoryCodeName: z.string()
 });
 
 

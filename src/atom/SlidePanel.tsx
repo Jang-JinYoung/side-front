@@ -47,8 +47,9 @@ interface ICard {
 
 const Card = ({ data, onDelete, onUpdate }: ICard) => {
 
-    const { transactionCode, categoryCode, description, amount, transactionId } = data;
+    const { transactionCode, categoryCodeName, description, amount, transactionId } = data;
 
+    console.log(data);
     return (
         <div className="relative">
 
@@ -59,7 +60,7 @@ const Card = ({ data, onDelete, onUpdate }: ICard) => {
                     <span
                         className={`block text-sm font-bold ${transactionCode === TransactionCode.EXPENSE ? "text-red-500" : "text-green-500"}`}
                     >
-                        {transactionCode === TransactionCode.EXPENSE ? "출금" : "입금"} - {categoryCode}
+                        {transactionCode === TransactionCode.EXPENSE ? "출금" : "입금"} - {categoryCodeName}
                     </span>
                     {/* 설명 */}
                     <p className="text-gray-700 text-sm mt-1">{description}</p>
