@@ -11,15 +11,16 @@ type TonUpdate = (item: TRecordTransactionDetail) => void;
 
 interface IProps {
     codes: UseQueryResult<any, Error>[];
+    transactionDate: string | null;
     transaction: TRecordTransactionDetail;
     onClose: TonClick;
     onSave: TonSave;
     onUpdate: TonUpdate;
 }
 
-const Modal = ({ codes, transaction, onClose, onSave, onUpdate }: IProps) => {
+const Modal = ({ codes, transactionDate, transaction, onClose, onSave, onUpdate }: IProps) => {
     const [formData, setFormData] = useState<TRecordTransactionRegist>({
-        transactionDate: formatDay({ template: "YYYY-MM-DD" }),
+        transactionDate: transactionDate ?? formatDay({ template: "YYYY-MM-DD" }),
         transactionCode: TransactionCode.INCOME,
         categoryCode: "10001001",
         description: '',
@@ -36,7 +37,6 @@ const Modal = ({ codes, transaction, onClose, onSave, onUpdate }: IProps) => {
         e: ChangeEvent<HTMLSelectElement | HTMLInputElement>,
     ) => {
         const { name, value } = e.target;
-        console.log(name, value)
         setFormData({
             ...formData,
             [name]: value,

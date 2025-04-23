@@ -3,29 +3,46 @@ import { TransactionCode, TRecordTransaction, TRecordTransactionDetail } from "@
 
 interface IProps {
     isOpen: boolean,
-    setOpen: TonClick,
+    title: string,
+    onAdd: TonClick,
+    onClose: TonClick,
     data?: TRecordTransactionDetail[] | null,
     onDelete: (id: number) => void;
     onUpdate: (id: number) => void;
 };
 
-const SlidingPanel = ({ isOpen, setOpen, data, onDelete, onUpdate }: IProps) => {
+const SlidingPanel = ({ isOpen, title, onAdd, onClose, data, onDelete, onUpdate }: IProps) => {
 
 
     return (
         <div className="relative">
-
-            {/* 슬라이드 패널 */}
             <div
                 className={`fixed top-0 right-0 h-full w-[20%] bg-gray-800 text-white transform transition-transform duration-500 ease-in-out overflow-y-auto ${isOpen ? "translate-x-0" : "translate-x-full"} `}
             >
-                <Button
-                    className="absolute top-4 right-4 bg-red-500"
-                    onClick={setOpen}
-                    text="X"
-                />
 
-                <div className="overflow-y-scroll h-full  p-4 mt-15">
+                <div className="flex items-center justify-center">
+                    {/* 날짜 */}
+                    <span className="text-lg font-bold">
+                        {title}
+                    </span>
+                    {/* 버튼 그룹 */}
+                    <div className="flex gap-2 ml-4">
+                        <Button
+                            className="w-8 h-8 bg-blue-500 hover:bg-blue-600 rounded-full flex items-center justify-center shadow-md transition"
+                            onClick={onAdd}
+                            text="+"
+                            aria-label="추가"
+                        />
+                        <Button
+                            className="w-8 h-8 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center shadow-md transition"
+                            onClick={onClose}
+                            text="×"
+                            aria-label="닫기"
+                        />
+                    </div>
+                </div>
+
+                <div className="overflow-y-scroll h-full p-4">
                     {
                         data ? data.map((t: TRecordTransactionDetail, index) =>
                             <Card key={index} data={t} onDelete={onDelete} onUpdate={onUpdate} />
@@ -39,17 +56,16 @@ const SlidingPanel = ({ isOpen, setOpen, data, onDelete, onUpdate }: IProps) => 
     );
 };
 
-interface ICard { 
-    data: TRecordTransactionDetail, 
-    onDelete: (id: number) => void, 
-    onUpdate: (id: number) => void 
+interface ICard {
+    data: TRecordTransactionDetail,
+    onDelete: (id: number) => void,
+    onUpdate: (id: number) => void
 }
 
 const Card = ({ data, onDelete, onUpdate }: ICard) => {
 
     const { transactionCode, categoryCodeName, description, amount, transactionId } = data;
 
-    console.log(data);
     return (
         <div className="relative">
 

@@ -5,10 +5,10 @@ import { TRecordTransactionDetail, TRecordTransactionRegist } from "@type/Record
  * 목록 조회
  * @returns 
  */
-export const getTransactions = async () => {
+export const getTransactions = async (year: number, month: number) => {
     return axios({
         method: 'get',
-        url: '/transaction',
+        url: `/transaction?year=${year}&month=${month}`,
     }).then((res: any) => {
         return res.data;
     });
