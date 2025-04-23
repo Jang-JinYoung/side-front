@@ -7,7 +7,7 @@ import { formatDay } from "@util/dayUtils";
 const Filter = ({ statistics, codes }: { statistics: any, codes: any }) => {
 
 
-    const [formData1, setFormData] = useState({
+    const [formData, setFormData] = useState({
         transactionCode: "10000000",
         startDate: formatDay({template: "YYYY-MM-DD"}),
         endDate: formatDay({template: "YYYY-MM-DD"}),
@@ -15,7 +15,7 @@ const Filter = ({ statistics, codes }: { statistics: any, codes: any }) => {
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setFormData({...formData1, [name]: value});
+        setFormData({...formData, [name]: value});
     }
 
 
@@ -28,7 +28,7 @@ const Filter = ({ statistics, codes }: { statistics: any, codes: any }) => {
                 key="fromFilter"
                 isSearch={true}
                 onChange={onChange}
-                checkedValue={formData1.transactionCode}
+                checkedValue={formData.transactionCode}
             />
 
             {/* 날짜 필터 */}
@@ -38,14 +38,14 @@ const Filter = ({ statistics, codes }: { statistics: any, codes: any }) => {
             >
                 시작
             </label>
-            <Input.Date value={formData1.startDate} onChange={onChange} name=" " />
+            <Input.Date value={formData.startDate} onChange={onChange} name=" " />
             <label
                 className="block text-gray-700 text-sm font-bold mb-2 mt-5"
                 htmlFor="date"
             >
                 종료
             </label>
-            <Input.Date value={formData1.endDate} onChange={onChange} />
+            <Input.Date value={formData.endDate} onChange={onChange} />
         </div>
     );
 }
