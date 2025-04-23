@@ -1,6 +1,6 @@
-import Test from '@page/test';
+import MainPage from '@page/MainPage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 /*
 staleTime은 데이터가 최신 상태인지 확인하기 위해 캐시된 데이터를 얼마나 오래 사용할 수 있는지를 나타내는 시간(밀리초)입니다.
@@ -27,8 +27,12 @@ const queryClient = new QueryClient({
 const App = () => {
     return (
         <QueryClientProvider client={queryClient}>
-            <Test />
-        </QueryClientProvider>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<MainPage />} />
+                </Routes>
+            </BrowserRouter>
+        </QueryClientProvider >
     );
 };
 
