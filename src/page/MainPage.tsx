@@ -7,9 +7,10 @@ import SlidingPanel from '@atom/SlidePanel';
 import Modal from '@atom/Modal';
 import Button from '@atom/Button';
 import { groupBy } from 'lodash';
-import { twoDigitFormat } from '@util/dayUtils';
+import { formatDay, twoDigitFormat } from '@util/dayUtils';
 import Filter from '@component/Filter';
 import { getCodeByCodeName } from '@service/api/codeApi';
+import { useSearchParams } from 'react-router-dom';
 
 export interface TransactionData {
     transactionId: number;
@@ -25,6 +26,13 @@ export interface CategoryTotal {
 }
 
 const Test = () => {
+
+    // 검색값
+    const [searchParams] = useSearchParams();
+    const year = searchParams.get('year') ? Number(searchParams.get('year')) :2025;
+    const month = searchParams.get('month') ? Number(searchParams.get('month')) : 4; 
+
+    
     const queryClient = useQueryClient();
 
     const [transactionId, setTransactionId] = useState<number | undefined>();
@@ -83,7 +91,7 @@ const Test = () => {
             },
             {
                 queryKey: ['transacion', 'list'],
-                queryFn: getTransactions,
+                queryFn: () => getTransactions(year, month),
             },
             {
                 queryKey: ['transacion', 'statistics'],
@@ -96,8 +104,9 @@ const Test = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     // 상세
-    const [isSlideOpen, setSlideOpen] = useState<boolean>(false);
-    const [clickedDate, setClickedDate] = useState<number>();
+    // const [isSlideOpen, setSlideOpen] = useState<boolean>(false);
+    const [isSlideOpen, setSlideOpen] = useState<boolean>(true);
+    const [clickedDate, setClickedDate] = useState<number>(14);
 
     /* 달력 클릭 */
     const onCalendarClick = (date: number) => {
@@ -134,15 +143,13 @@ const Test = () => {
         }
     };
 
-
-
     return (
         <div className="h-screen flex">
-
             {
                 isModalOpen ?
                     <Modal
                         codes={result}
+                        transactionDate={clickedDate ? formatDay({date: `${year}-${month}-${clickedDate}`, template: "YYYY-MM-DD"}) : null}
                         onClose={() => setIsModalOpen(false)}
                         transaction={transaction}
                         onSave={ModalButtonAction.onSave}
@@ -166,7 +173,9 @@ const Test = () => {
 
             <SlidingPanel
                 isOpen={isSlideOpen}
-                setOpen={() => setSlideOpen(false)}
+                title={`${year}년 ${month}월 ${clickedDate}일`}
+                onAdd={() => setIsModalOpen(true)}
+                onClose={() => setSlideOpen(false)}
                 data={clickedDate ? groupBy(result[2].data, 'transactionDate')[twoDigitFormat(2025, 4, clickedDate)] : null}
                 onUpdate={SlideButtonAction.onUpdate}
                 onDelete={SlideButtonAction.onDelete}
