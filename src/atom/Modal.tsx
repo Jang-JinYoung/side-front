@@ -4,6 +4,7 @@ import { RecordTransactionSchema, TransactionCode, TRecordTransaction, TRecordTr
 import { formatDay } from '@util/dayUtils';
 import { TCommonCode } from '@type/CommonCode';
 import { UseQueryResult } from '@tanstack/react-query';
+import TransactionRadio from '@component/TransactionRadio';
 
 type TonSave = (item: TRecordTransaction) => void;
 type TonUpdate = (item: TRecordTransactionDetail) => void;
@@ -17,7 +18,6 @@ interface IProps {
 }
 
 const Modal = ({ codes, transaction, onClose, onSave, onUpdate }: IProps) => {
-
     const [formData, setFormData] = useState<TRecordTransactionRegist>({
         transactionDate: formatDay({ template: "YYYY-MM-DD" }),
         transactionCode: TransactionCode.INCOME,
@@ -36,6 +36,7 @@ const Modal = ({ codes, transaction, onClose, onSave, onUpdate }: IProps) => {
         e: ChangeEvent<HTMLSelectElement | HTMLInputElement>,
     ) => {
         const { name, value } = e.target;
+        console.log(name, value)
         setFormData({
             ...formData,
             [name]: value,
@@ -58,14 +59,12 @@ const Modal = ({ codes, transaction, onClose, onSave, onUpdate }: IProps) => {
             return;
         }
 
-        console.log(newItem);
-
         transaction ? onUpdate({ ...transaction, ...newItem }) : onSave(newItem);
 
     };
 
     const Options = () => {
-        const options = formData.transactionCode === TransactionCode.INCOME ? codes[1].data : codes[2].data;
+        const options = formData.transactionCode === TransactionCode.INCOME ? codes[0].data : codes[1].data;
         return (
             options.map((code: TCommonCode) =>
                 <option key={code.code} value={code.code}>
@@ -76,7 +75,7 @@ const Modal = ({ codes, transaction, onClose, onSave, onUpdate }: IProps) => {
     }
 
     return (
-        <div className="fixed inset-0 bg-black opacity-90 backdrop-filter backdrop-blur-sm flex items-center justify-center z-20 transition-all duration-300">
+        <div className={`fixed inset-0 bg-black opacity-90 backdrop-filter backdrop-blur-sm flex items-center justify-center z-20 transition-all duration-300`} >
             <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-xl transform transition-all duration-300">
                 <h2 className="text-xl font-bold mb-4">새 항목 추가</h2>
                 <div className="mb-4">
@@ -97,28 +96,12 @@ const Modal = ({ codes, transaction, onClose, onSave, onUpdate }: IProps) => {
                     />
                 </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
-                        유형
-                    </label>
-                    <div className="flex space-x-4">
-                        {
-                            codes[0].data.map((code: TCommonCode) =>
-                                <label className="inline-flex items-center">
-                                    <input
-                                        type="radio"
-                                        name="transactionCode"
-                                        value={code.code}
-                                        checked={formData.transactionCode === code.code}
-                                        onChange={onChange}
-                                        className="form-radio"
-                                    />
-                                    <span className="ml-2">{code.codeKorName}</span>
-                                </label>
-                            )
-                        }
-                    </div>
-                </div>
+                <TransactionRadio
+                    key={"fromModal"}
+                    isSearch={false}
+                    onChange={onChange}
+                    checkedValue={formData.transactionCode}
+                />
 
                 <div className="mb-4">
                     <label

@@ -1,13 +1,14 @@
 import { getCodeByCodeName } from "@service/api/codeApi";
 import { useQuery } from "@tanstack/react-query";
 import { TCommonCode } from "@type/CommonCode";
+import { TransactionCode } from "@type/RecordTransaction";
 import { ChangeEvent } from "react";
 
 
 interface IProps {
     isSearch: boolean;
-    onChange: () => ChangeEvent<HTMLInputElement>;
-    checked: boolean;
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    checkedValue: string;
 }
 
 /**
@@ -17,8 +18,8 @@ interface IProps {
 const TransactionRadio = ({
     isSearch,
     onChange,
-    checked
-} : IProps ) => {
+    checkedValue
+}: IProps) => {
 
     const { isLoading, data: codes } = useQuery({
         queryKey: ['code', 'list', 'transactionCode'],
@@ -33,35 +34,37 @@ const TransactionRadio = ({
             <div className="flex space-x-4">
                 {
                     isSearch &&
-                        <label className="inline-flex items-center">
-                            <input
-                                type="radio"
-                                name="transactionCode"
-                                value="10000000"
-                                checked={checked}
-                                onChange={onChange}
-                                className="form-radio"
-                            />
-                            <span className="ml-2">전체</span>
-                        </label>
+                    <div className="inline-flex items-center">
+                        <input
+                            type="radio"
+                            name="transactionCode"
+                            value="10000000"
+                            checked={checkedValue === "10000000"}
+                            onChange={onChange}
+                            className="form-radio"
+                        />
+                        <span className="ml-2">전체</span>
+                    </div>
                 }
                 {
-                    codes &&
+                    !isLoading &&
                     codes.map((code: TCommonCode) =>
-                        <label className="inline-flex items-center">
+                        <div key={code.code} className="inline-flex items-center">
                             <input
                                 type="radio"
                                 name="transactionCode"
                                 value={code.code}
-                                checked={checked}
+                                checked={checkedValue === code.code}
                                 onChange={onChange}
                                 className="form-radio"
                             />
                             <span className="ml-2">{code.codeKorName}</span>
-                        </label>
+                        </div>
                     )
                 }
             </div>
         </div>
     );
 }
+
+export default TransactionRadio;

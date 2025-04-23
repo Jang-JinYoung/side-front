@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { TRecordTransaction, TRecordTransactionDetail, TRecordTransactionRegist } from '@type/RecordTransaction';
 import Calendar from '@atom/Calendar';
 import { useMutation, useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -11,7 +11,7 @@ import { twoDigitFormat } from '@util/dayUtils';
 import Filter from '@component/Filter';
 import { getCodeByCodeName } from '@service/api/codeApi';
 
-export interface TransactionData<T> {
+export interface TransactionData {
     transactionId: number;
     transactionDate: string;
     transactionCode: string;
@@ -26,8 +26,6 @@ export interface CategoryTotal {
 
 const Test = () => {
     const queryClient = useQueryClient();
-
-
 
     const [transactionId, setTransactionId] = useState<number | undefined>();
 
@@ -68,23 +66,18 @@ const Test = () => {
     });
 
     /**
-     * @field result[0] 유형(입금/출금) 코드
-     * @field result[1] 입금 카테고리 코드
-     * @field result[2] 지출 카테고리 코드
-     * @field result[3] 데이터
-     * @field result[4] 통계값
+     * @field result[0] 입금 카테고리 코드
+     * @field result[1] 지출 카테고리 코드
+     * @field result[2] 데이터
+     * @field result[3] 통계값
      */
     const result = useQueries({
         queries: [
             {
-                queryKey: ['code', 'list', "TransactionCode"],
-                queryFn: () => getCodeByCodeName("TransactionCode"),
-            },
-            {
                 queryKey: ['code', 'list', "IncomeCategoryCode"],
                 queryFn: () => getCodeByCodeName("IncomeCategoryCode"),
             },
-            { 
+            {
                 queryKey: ['code', 'list', "ExpenseCategoryCode"],
                 queryFn: () => getCodeByCodeName("ExpenseCategoryCode"),
             },
@@ -141,30 +134,30 @@ const Test = () => {
         }
     };
 
+
+
     return (
         <div className="h-screen flex">
 
             {
-                isModalOpen &&
-                <Modal
-                    codes={result}
-                    onClose={() => setIsModalOpen(false)}
-                    transaction={transaction}
-                    onSave={ModalButtonAction.onSave}
-                    onUpdate={ModalButtonAction.onUpdate}
-                />
+                isModalOpen ?
+                    <Modal
+                        codes={result}
+                        onClose={() => setIsModalOpen(false)}
+                        transaction={transaction}
+                        onSave={ModalButtonAction.onSave}
+                        onUpdate={ModalButtonAction.onUpdate}
+                    /> :
+                    <Filter
+                        statistics={result[3].data}
+                        codes={result[0].data}
+                    />
             }
-
-            {/* 좌측 여백: 총입금/총지출/잔액 및 필터 */}
-            <Filter 
-                statistics={result[4].data}
-                codes={result[0].data}
-            />
 
             {
                 !result[3].isLoading &&
                 <Calendar
-                    data={groupBy(result[3].data, 'transactionDate')}
+                    data={groupBy(result[2].data, 'transactionDate')}
                     onClick={onCalendarClick}
                 />
             }
@@ -174,7 +167,7 @@ const Test = () => {
             <SlidingPanel
                 isOpen={isSlideOpen}
                 setOpen={() => setSlideOpen(false)}
-                data={clickedDate ? groupBy(result[3].data, 'transactionDate')[twoDigitFormat(2025, 4, clickedDate)] : null}
+                data={clickedDate ? groupBy(result[2].data, 'transactionDate')[twoDigitFormat(2025, 4, clickedDate)] : null}
                 onUpdate={SlideButtonAction.onUpdate}
                 onDelete={SlideButtonAction.onDelete}
             />
