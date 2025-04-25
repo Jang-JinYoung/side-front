@@ -13,12 +13,14 @@ interface IProps {
     codes: UseQueryResult<any, Error>[];
     transactionDate: string | null;
     transaction: TRecordTransactionDetail;
-    onClose: TonClick;
-    onSave: TonSave;
-    onUpdate: TonUpdate;
+    buttonAction: {
+        onClose: TonClick;
+        onSave: TonSave;
+        onUpdate: TonUpdate;
+    }
 }
 
-const Modal = ({ codes, transactionDate, transaction, onClose, onSave, onUpdate }: IProps) => {
+const Modal = ({ codes, transactionDate, transaction, buttonAction }: IProps) => {
     const [formData, setFormData] = useState<TRecordTransactionRegist>({
         transactionDate: transactionDate ?? formatDay({ template: "YYYY-MM-DD" }),
         transactionCode: TransactionCode.INCOME,
@@ -59,7 +61,7 @@ const Modal = ({ codes, transactionDate, transaction, onClose, onSave, onUpdate 
             return;
         }
 
-        transaction ? onUpdate({ ...transaction, ...newItem }) : onSave(newItem);
+        transaction ? buttonAction.onUpdate({ ...transaction, ...newItem }) : buttonAction.onSave(newItem);
 
     };
 
@@ -161,7 +163,7 @@ const Modal = ({ codes, transactionDate, transaction, onClose, onSave, onUpdate 
                 </div>
 
                 <div className="flex items-center justify-between">
-                    <Button.Cancel onClick={onClose} />
+                    <Button.Cancel onClick={buttonAction.onClose} />
                     <Button.Save onClick={onSubmit} />
                 </div>
             </div>

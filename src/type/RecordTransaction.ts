@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const TransactionCode = {
+    ALL: "10000000",
     INCOME: "10000001",
     EXPENSE: "10000002"
 }

@@ -1,21 +1,22 @@
-import { TCommonCode } from "@type/CommonCode";
+
 import TransactionRadio from "./TransactionRadio";
 import { ChangeEvent, useState } from "react";
 import Input from "@atom/Input";
 import { formatDay } from "@util/dayUtils";
+import Button from "@atom/Button";
 
-const Filter = ({ statistics, codes }: { statistics: any, codes: any }) => {
+const Filter = ({ statistics }: { statistics: any }) => {
 
 
     const [formData, setFormData] = useState({
         transactionCode: "10000000",
-        startDate: formatDay({template: "YYYY-MM-DD"}),
-        endDate: formatDay({template: "YYYY-MM-DD"}),
+        startDate: formatDay({ template: "YYYY-MM-DD" }),
+        endDate: formatDay({ template: "YYYY-MM-DD" }),
     });
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setFormData({...formData, [name]: value});
+        setFormData({ ...formData, [name]: value });
     }
 
 
@@ -46,6 +47,19 @@ const Filter = ({ statistics, codes }: { statistics: any, codes: any }) => {
                 종료
             </label>
             <Input.Date value={formData.endDate} onChange={onChange} />
+
+            <div className="flex justify-center mt-10">
+                <Button
+                    className="bg-gray-500"
+                    onClick={() => console.log("A")}
+                    text="초기화"
+                />
+                <Button
+                    className="ml-5 bg-blue-500"
+                    onClick={() => console.log("A")}
+                    text="검색"
+                />
+            </div>
         </div>
     );
 }

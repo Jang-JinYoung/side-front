@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { TRecordTransaction, TRecordTransactionDetail, TRecordTransactionRegist } from '@type/RecordTransaction';
+import { TransactionCode, TRecordTransaction, TRecordTransactionDetail, TRecordTransactionRegist } from '@type/RecordTransaction';
 import Calendar from '@atom/Calendar';
 import { useMutation, useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createTransaction, deleteTransaction, getStatistics, getTransaction, getTransactions, updateTransaction } from '@service/api/transactionApi';
@@ -11,6 +11,7 @@ import { formatDay, twoDigitFormat } from '@util/dayUtils';
 import Filter from '@component/Filter';
 import { getCodeByCodeName } from '@service/api/codeApi';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import TransactionRadio from '@component/TransactionRadio';
 
 export interface TransactionData {
     transactionId: number;
@@ -31,6 +32,7 @@ const Test = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const year = searchParams.get('year') ? Number(searchParams.get('year')) : new Date().getFullYear();
     const month = searchParams.get('month') ? Number(searchParams.get('month')) : new Date().getMonth() + 1;
+    const transactionCode = searchParams.get('transactionCode') ?  searchParams.get('transactionCode') : TransactionCode.ALL
 
     const queryClient = useQueryClient();
 
@@ -94,7 +96,7 @@ const Test = () => {
             },
             {
                 queryKey: ['transacion', 'statistics', year, month],
-                queryFn: getStatistics
+                queryFn: () => getStatistics(year, month),
             }
         ],
     });
@@ -135,11 +137,16 @@ const Test = () => {
         }
     };
 
+    /* 모달 버튼 클릭 */
     const ModalButtonAction = {
+        // 닫기버튼
+        onClose: () => setIsModalOpen(false),
+        // 저장버튼
         onSave: (item: TRecordTransaction) => {
             createMutate(item);
             setIsModalOpen(false);
         },
+        // 수정버튼
         onUpdate: (item: TRecordTransactionDetail) => {
             const isConfirmed = window.confirm("수정하시겠습니까??");
             if (isConfirmed) {
@@ -155,14 +162,11 @@ const Test = () => {
                     <Modal
                         codes={result}
                         transactionDate={clickedDate ? formatDay({ date: `${year}-${month}-${clickedDate}`, template: "YYYY-MM-DD" }) : null}
-                        onClose={() => setIsModalOpen(false)}
                         transaction={transaction}
-                        onSave={ModalButtonAction.onSave}
-                        onUpdate={ModalButtonAction.onUpdate}
+                        buttonAction={ModalButtonAction}
                     /> :
                     <Filter
                         statistics={result[3].data}
-                        codes={result[0].data}
                     />
             }
 
@@ -176,7 +180,9 @@ const Test = () => {
                 />
             }
 
-            <Button.Floating onClick={() => setIsModalOpen(true)} />
+            <Button.Floating 
+                onClick={() => setIsModalOpen(true)} 
+            />
 
             <SlidingPanel
                 isOpen={isSlideOpen}
@@ -186,6 +192,7 @@ const Test = () => {
                 data={clickedDate ? groupBy(result[2].data, 'transactionDate')[twoDigitFormat(2025, 4, clickedDate)] : null}
                 onUpdate={SlideButtonAction.onUpdate}
                 onDelete={SlideButtonAction.onDelete}
+                
             />
         </div>
     );

@@ -27,10 +27,10 @@ export const getTransaction = async ({transactionId}: {transactionId?: number}) 
     });
 };
 
-export const getStatistics = async () => {
+export const getStatistics = async (year: number, month: number) => {
     return axios({
         method: 'get',
-        url: `/transaction/statistics`
+        url: `/transaction/statistics?year=${year}&month=${month}`
     }).then((res: any) => {
         return res.data
     });
