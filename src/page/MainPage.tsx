@@ -10,7 +10,7 @@ import { groupBy } from 'lodash';
 import { formatDay, twoDigitFormat } from '@util/dayUtils';
 import Filter from '@component/Filter';
 import { getCodeByCodeName } from '@service/api/codeApi';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export interface TransactionData {
     transactionId: number;
@@ -28,11 +28,10 @@ export interface CategoryTotal {
 const Test = () => {
 
     // 검색값
-    const [searchParams] = useSearchParams();
-    const year = searchParams.get('year') ? Number(searchParams.get('year')) :2025;
-    const month = searchParams.get('month') ? Number(searchParams.get('month')) : 4; 
+    const [searchParams, setSearchParams] = useSearchParams();
+    const year = searchParams.get('year') ? Number(searchParams.get('year')) : new Date().getFullYear();
+    const month = searchParams.get('month') ? Number(searchParams.get('month')) : new Date().getMonth() + 1;
 
-    
     const queryClient = useQueryClient();
 
     const [transactionId, setTransactionId] = useState<number | undefined>();
@@ -90,11 +89,11 @@ const Test = () => {
                 queryFn: () => getCodeByCodeName("ExpenseCategoryCode"),
             },
             {
-                queryKey: ['transacion', 'list'],
+                queryKey: ['transacion', 'list', year, month],
                 queryFn: () => getTransactions(year, month),
             },
             {
-                queryKey: ['transacion', 'statistics'],
+                queryKey: ['transacion', 'statistics', year, month],
                 queryFn: getStatistics
             }
         ],
@@ -104,14 +103,20 @@ const Test = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     // 상세
-    // const [isSlideOpen, setSlideOpen] = useState<boolean>(false);
-    const [isSlideOpen, setSlideOpen] = useState<boolean>(true);
-    const [clickedDate, setClickedDate] = useState<number>(14);
+    const [isSlideOpen, setSlideOpen] = useState<boolean>(false);
+    const [clickedDate, setClickedDate] = useState<number>();
 
-    /* 달력 클릭 */
-    const onCalendarClick = (date: number) => {
-        setClickedDate(date);
-        setSlideOpen(true);
+    const CalendarButtonAction = {
+        /* 달력 클릭 */
+        onDateClick: (date: number) => {
+            setClickedDate(date);
+            setSlideOpen(true);
+        },
+        // 페이지 이동
+        onNavigate: (year: number, month: number) => {
+            // navigate(url);
+            setSearchParams({year: year.toString(), month: month.toString()});
+        }
     }
 
     /* 슬라이드 버튼 클릭 */
@@ -149,7 +154,7 @@ const Test = () => {
                 isModalOpen ?
                     <Modal
                         codes={result}
-                        transactionDate={clickedDate ? formatDay({date: `${year}-${month}-${clickedDate}`, template: "YYYY-MM-DD"}) : null}
+                        transactionDate={clickedDate ? formatDay({ date: `${year}-${month}-${clickedDate}`, template: "YYYY-MM-DD" }) : null}
                         onClose={() => setIsModalOpen(false)}
                         transaction={transaction}
                         onSave={ModalButtonAction.onSave}
@@ -164,8 +169,10 @@ const Test = () => {
             {
                 !result[3].isLoading &&
                 <Calendar
+                    year={year}
+                    month={month}
+                    buttonAction={CalendarButtonAction}
                     data={groupBy(result[2].data, 'transactionDate')}
-                    onClick={onCalendarClick}
                 />
             }
 
