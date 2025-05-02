@@ -4,8 +4,9 @@ const path = require('path');
 const webpack = require('webpack');
 const { VanillaExtractPlugin } = require('@vanilla-extract/webpack-plugin');
 
-const env = require('./env/local.env.js');
+const env = process.env.NODE_ENV === "development" ? require('./env/local.env.js') : require('./env/prod.env.js') 
 console.log('DEVTOOL >>> ', env.DEVTOOL);
+console.log('NODE_ENV >>> ', process.env.NODE_ENV);
 
 module.exports = {
     mode: process.env.NODE_ENV,
@@ -14,7 +15,6 @@ module.exports = {
     output: {
         publicPath: '/',
 
-        // 23.8.24 이게 뭘까요
         // path: path.join(__dirname, '/dist'),
         // filename: '[name].js',
     },
