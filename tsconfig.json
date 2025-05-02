@@ -37,7 +37,8 @@
             "@lib/*": ["src/lib/*"],
             "@type/*": ["src/type/*"],
             "@util/*": ["src/util/*"],
-            "@api/*": ["src/service/api/*"]
+            "@api/*": ["src/service/api/*"],
+            "@image/*": ["src/asset/image/*"]
         },
         // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
         // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */

@@ -4,9 +4,8 @@ const path = require('path');
 const webpack = require('webpack');
 const { VanillaExtractPlugin } = require('@vanilla-extract/webpack-plugin');
 
-const env = process.env.NODE_ENV === "development" ? require('./env/local.env.js') : require('./env/prod.env.js') 
+const env = process.env.NODE_ENV === "development" ? require('./env/local.env.js') : require('./env/prod.env.js')
 console.log('DEVTOOL >>> ', env.DEVTOOL);
-console.log('NODE_ENV >>> ', process.env.NODE_ENV);
 
 module.exports = {
     mode: process.env.NODE_ENV,
@@ -35,6 +34,7 @@ module.exports = {
             '@type': path.resolve(__dirname, 'src/type/'),
             '@util': path.resolve(__dirname, 'src/util/'),
             '@api': path.resolve(__dirname, 'src/service/api/'),
+            '@image': path.resolve(__dirname, 'src/asset/image')
         },
     },
     module: {
@@ -50,18 +50,9 @@ module.exports = {
                 use: ['style-loader', 'css-loader', 'postcss-loader'],
             },
             {
-                test: /\.(png|jpg|gif)$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]',
-                            outputPath: 'images/',
-                            publicPath: '/images/',
-                        },
-                    },
-                ],
-            },
+                test: /\.(png|jpe?g|gif)$/i,
+                type: 'asset/resource'
+              }
         ],
     },
     devServer: {
@@ -88,9 +79,9 @@ module.exports = {
             minify:
                 process.env.NODE_ENV === 'production'
                     ? {
-                          collapseWhitespace: true, // 빈칸 제거
-                          removeComments: true, // 주석 제거
-                      }
+                        collapseWhitespace: true, // 빈칸 제거
+                        removeComments: true, // 주석 제거
+                    }
                     : false,
         }),
         new CleanWebpackPlugin(),
