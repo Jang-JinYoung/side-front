@@ -1,3 +1,4 @@
+import LoginPage from '@page/LoginPage';
 import MainPage from '@page/MainPage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -27,8 +28,9 @@ const queryClient = new QueryClient({
 const App = () => {
     return (
         <QueryClientProvider client={queryClient}>
-            <BrowserRouter>
-                <Routes>
+            <BrowserRouter >
+                <Routes >
+                    <Route path="/login" element={<LoginPage />} />
                     <Route path="/" element={<MainPage />} />
                 </Routes>
             </BrowserRouter>
