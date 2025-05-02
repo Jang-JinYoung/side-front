@@ -100,7 +100,7 @@ const Test = () => {
             }
         ],
     });
-
+    
     // 등록
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -189,7 +189,7 @@ const Test = () => {
                 title={`${year}년 ${month}월 ${clickedDate}일`}
                 onAdd={() => setIsModalOpen(true)}
                 onClose={() => setSlideOpen(false)}
-                data={clickedDate ? groupBy(result[2].data, 'transactionDate')[twoDigitFormat(2025, 4, clickedDate)] : null}
+                data={clickedDate ? groupBy(result[2].data, 'transactionDate')[twoDigitFormat(year, month, clickedDate)] : null}
                 onUpdate={SlideButtonAction.onUpdate}
                 onDelete={SlideButtonAction.onDelete}
                 
