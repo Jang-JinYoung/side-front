@@ -1,6 +1,42 @@
-import kakao from "@image/kakao.png";
+// import kakao from "@image/kakao.png";
+
+const sns = {
+    kakao: "https://kauth.kakao.com/oauth/authorize",
+    naver: "https://nid.naver.com/oauth2.0/authorize",
+};
+
+type Site = keyof typeof sns; // "kakao" | "naver"
+
+const kakao = {
+    response_type: "code",
+    client_id: "15859967b0580a93f6ddcd00d24f795c",
+    redirect_uri: "http://localhost:3000/callback/kakao",
+};
+
+const naver = {
+    response_type: "code",
+    client_id: "h9rA5YtXEZYFtXZ1pKKe",
+    redirect_uri: "http://localhost:3000/callback/naver",
+};
+
+
+
 
 const LoginPage = () => {
+
+    const login = (obj: any, type: Site) => {
+        const keys = Object.keys(obj);
+        const url = keys
+            .map((key) => {
+                return `${key}=${obj[key]}`;
+            })
+            .join("&");
+
+        window.location.href = `${sns[type]}?${url}`;
+    }
+
+
+
     return (
         <div className="flex min-h-screen items-center justify-center bg-gray-100">
             <div className="bg-white p-8 rounded-xl shadow-lg w-80 flex flex-col items-center">
@@ -19,11 +55,16 @@ const LoginPage = () => {
                 {/* 소셜 아이콘 */}
                 <div className="flex space-x-4 mb-6">
                     {/* 카카오 */}
-                    <button className="w-12 h-12 rounded-full bg-yellow-300 flex items-center justify-center shadow">
-                        <span className="text-black text-2xl font-bold">K</span>
+                    <button
+                        className="w-12 h-12 rounded-full bg-yellow-300 flex items-center justify-center shadow"
+                        onClick={() => login(kakao, "kakao")}
+                    >
+                        <span className="text-black text-2xl font-bold">k</span>
                     </button>
                     {/* 네이버 */}
-                    <button className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center shadow">
+                    <button 
+                    className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center shadow"
+                    onClick={() => login(naver, "naver")}>
                         <svg width="24" height="24" viewBox="0 0 24 24">
                             <rect width="24" height="24" rx="12" fill="#03C75A" />
                             <path d="M7 7h3.5l3.5 5V7H17v10h-3.5l-3.5-5v5H7V7z" fill="#fff" />

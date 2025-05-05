@@ -1,3 +1,4 @@
+import CallbackPage from '@page/CallbackPage';
 import LoginPage from '@page/LoginPage';
 import MainPage from '@page/MainPage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -31,7 +32,9 @@ const App = () => {
             <BrowserRouter >
                 <Routes >
                     <Route path="/login" element={<LoginPage />} />
-                    <Route path="/" element={<MainPage />} />
+                    <Route path="/" element={<LoginPage />} />
+                    <Route path="/callback/:sns" element={<CallbackPage />} />
+                    <Route path="/transaction" element={<MainPage />} />
                 </Routes>
             </BrowserRouter>
         </QueryClientProvider >
