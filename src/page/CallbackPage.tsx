@@ -10,13 +10,16 @@ const CallbackPage = () => {
 
     const navigate = useNavigate();
 
+    const onError = () => {
+        window.alert("잘못된 페이지입니다.");
+        navigate("/login");
+    }
+
 
     if(!sns || !code) {
-        console.log("a");
         
         useEffect(() => {
-            window.alert("잘못된 페이지입니다.");
-            navigate("/login")
+            onError();
         }, [])
 
         return <div></div>
@@ -32,21 +35,18 @@ const CallbackPage = () => {
         if(data) {
             // @todo
             // 어세스토큰 session
+            if(data.code === 200) {
 
-            // navigate("/transaction");
+                navigate("/transaction");
+            } else {
+                onError();
+            }
         }
     }, [data]);
 
 
-    // useEffect(() => {
-    //     const getData = async () => {
-    //         const callback = await service("GET", `/${sns}/callback?code=${code}`);
-    //     };
-    //     getData();
-    // }, []);
-
     return (
-        <div>callback</div>
+        <div></div>
     )
 };
 
