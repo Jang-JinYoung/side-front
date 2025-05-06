@@ -1,5 +1,5 @@
-import { useCallback, useMemo, useState } from 'react';
-import { TransactionCode, TRecordTransaction, TRecordTransactionDetail, TRecordTransactionRegist } from '@type/RecordTransaction';
+import { useState } from 'react';
+import { TransactionCode, TRecordTransaction, TRecordTransactionDetail, } from '@type/RecordTransaction';
 import Calendar from '@atom/Calendar';
 import { useMutation, useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createTransaction, deleteTransaction, getStatistics, getTransaction, getTransactions, updateTransaction } from '@service/api/transactionApi';
@@ -10,9 +10,7 @@ import { groupBy } from 'lodash';
 import { formatDay, twoDigitFormat } from '@util/dayUtils';
 import Filter from '@component/Filter';
 import { getCodeByCodeName } from '@service/api/codeApi';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import TransactionRadio from '@component/TransactionRadio';
-
+import { useSearchParams } from 'react-router-dom';
 export interface TransactionData {
     transactionId: number;
     transactionDate: string;
@@ -26,13 +24,13 @@ export interface CategoryTotal {
     [category: string]: number;
 }
 
-const Test = () => {
+const MainPage = () => {
 
     // 검색값
     const [searchParams, setSearchParams] = useSearchParams();
     const year = searchParams.get('year') ? Number(searchParams.get('year')) : new Date().getFullYear();
     const month = searchParams.get('month') ? Number(searchParams.get('month')) : new Date().getMonth() + 1;
-    const transactionCode = searchParams.get('transactionCode') ?  searchParams.get('transactionCode') : TransactionCode.ALL
+    const transactionCode = searchParams.get('transactionCode') ? searchParams.get('transactionCode') : TransactionCode.ALL
 
     const queryClient = useQueryClient();
 
@@ -100,7 +98,7 @@ const Test = () => {
             }
         ],
     });
-    
+
     // 등록
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -117,7 +115,7 @@ const Test = () => {
         // 페이지 이동
         onNavigate: (year: number, month: number) => {
             // navigate(url);
-            setSearchParams({year: year.toString(), month: month.toString()});
+            setSearchParams({ year: year.toString(), month: month.toString() });
         }
     }
 
@@ -155,6 +153,13 @@ const Test = () => {
         }
     };
 
+    const FilterButtonAction = {
+        // 검색
+        onSearch: () => {
+            //
+        }
+    }
+
     return (
         <div className="h-screen flex">
             {
@@ -167,6 +172,7 @@ const Test = () => {
                     /> :
                     <Filter
                         statistics={result[3].data}
+                        buttonAction={FilterButtonAction}
                     />
             }
 
@@ -180,8 +186,8 @@ const Test = () => {
                 />
             }
 
-            <Button.Floating 
-                onClick={() => setIsModalOpen(true)} 
+            <Button.Floating
+                onClick={() => setIsModalOpen(true)}
             />
 
             <SlidingPanel
@@ -192,10 +198,10 @@ const Test = () => {
                 data={clickedDate ? groupBy(result[2].data, 'transactionDate')[twoDigitFormat(year, month, clickedDate)] : null}
                 onUpdate={SlideButtonAction.onUpdate}
                 onDelete={SlideButtonAction.onDelete}
-                
+
             />
         </div>
     );
 };
 
-export default Test;
+export default MainPage;

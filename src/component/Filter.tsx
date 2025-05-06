@@ -5,17 +5,36 @@ import Input from "@atom/Input";
 import { formatDay } from "@util/dayUtils";
 import Button from "@atom/Button";
 
-const Filter = ({ statistics }: { statistics: any }) => {
+interface IProps {
+    statistics: {
+        income: number,
+        expense: number,
+        balance: number,
+    },
+    buttonAction: {
+        // 검색
+        onSearch: () => void;
+    }
+}
+
+const defaultValue = {
+    transactionCode: "10000000",
+    startDate: formatDay({ template: "YYYY-MM-01" }),
+    endDate: formatDay({ template: "YYYY-MM-DD" }),
+}
+
+const Filter = ({ statistics, buttonAction }: IProps) => {
 
 
-    const [formData, setFormData] = useState({
-        transactionCode: "10000000",
-        startDate: formatDay({ template: "YYYY-MM-DD" }),
-        endDate: formatDay({ template: "YYYY-MM-DD" }),
-    });
+    const [formData, setFormData] = useState(defaultValue);
 
+    const onReset = () => {
+        setFormData(defaultValue);
+
+    }
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+        console.log(name, value)
         setFormData({ ...formData, [name]: value });
     }
 
@@ -39,24 +58,24 @@ const Filter = ({ statistics }: { statistics: any }) => {
             >
                 시작
             </label>
-            <Input.Date value={formData.startDate} onChange={onChange} name=" " />
+            <Input.Date value={formData.startDate} onChange={onChange} name="startDate" />
             <label
                 className="block text-gray-700 text-sm font-bold mb-2 mt-5"
                 htmlFor="date"
             >
                 종료
             </label>
-            <Input.Date value={formData.endDate} onChange={onChange} />
+            <Input.Date value={formData.endDate} onChange={onChange} name="endDate" />
 
             <div className="flex justify-center mt-10">
                 <Button
                     className="bg-gray-500"
-                    onClick={() => console.log("A")}
+                    onClick={onReset}
                     text="초기화"
                 />
                 <Button
                     className="ml-5 bg-blue-500"
-                    onClick={() => console.log("A")}
+                    onClick={buttonAction.onSearch}
                     text="검색"
                 />
             </div>
