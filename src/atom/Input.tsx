@@ -5,12 +5,12 @@ const Input = ({ type, className, name, value, onChange }: any) => {
     )
 };
 
-const Date = ({ value, onChange }: any) => {
+const Date = ({ value, onChange, name }: any) => {
     return (
         <Input
             type="date"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            name="date"
+            name={name}
             value={value}
             onChange={onChange}
         />
