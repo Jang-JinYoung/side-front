@@ -33,9 +33,10 @@ const CallbackPage = () => {
 
     useEffect(() => {
         if(data) {
-            // @todo
-            // 어세스토큰 session
             if(data.code === 200) {
+                const accessToken = data.data.accessToken;
+                console.log(accessToken);
+                localStorage.setItem("accessToken", accessToken);
 
                 navigate("/transaction");
             } else {

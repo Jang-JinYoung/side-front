@@ -11,8 +11,9 @@ axios.interceptors.request.use(
         // config 객체를 변경하여 요청을 수정할 수 있습니다.
 
         // API
-        
+        const accessToken = localStorage.getItem("accessToken");
         config.headers['Content-Type'] = 'application/json';
+        config.headers.Authorization = `Bearer ${accessToken}`
         config.url = `${host}${config.url}`;
 
 
