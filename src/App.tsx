@@ -1,4 +1,5 @@
-import CallbackPage from '@page/CallbackPage';
+import CheckoutPage from '@page/CheckoutPage';
+import CallbackPage from '@page/LoginCallbackPage';
 import LoginPage from '@page/LoginPage';
 import MainPage from '@page/MainPage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -35,6 +36,8 @@ const App = () => {
                     <Route path="/" element={<LoginPage />} />
                     <Route path="/callback/:sns" element={<CallbackPage />} />
                     <Route path="/transaction" element={<MainPage />} />
+                    <Route path="/checkout" element={<CheckoutPage />} />
+                    <Route path="/checkout/callback" element={<CheckoutPage />} />
                 </Routes>
             </BrowserRouter>
         </QueryClientProvider >
