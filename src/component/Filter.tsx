@@ -88,15 +88,15 @@ const SummaryInformation = ({ statistics }: { statistics: any }) => {
         <div className="mb-6">
             <div className="mb-2">
                 <span className="block text-gray-600">수입</span>
-                <span className="text-green-500 font-bold text-xl">+{statistics?.income} 원</span>
+                <span className="text-green-500 font-bold text-xl">+{statistics?.income.toLocaleString()} 원</span>
             </div>
             <div className="mb-2">
                 <span className="block text-gray-600">지출</span>
-                <span className="text-red-500 font-bold text-xl">-{statistics?.expense} 원</span>
+                <span className="text-red-500 font-bold text-xl">-{statistics?.expense.toLocaleString()} 원</span>
             </div>
             <div className="mb-2">
                 <span className="block text-gray-600">잔액</span>
-                <span className="text-gray-500 font-bold text-xl">{statistics?.balance} 원</span>
+                <span className="text-gray-500 font-bold text-xl">{statistics?.balance.toLocaleString()} 원</span>
             </div>
         </div>
     );
