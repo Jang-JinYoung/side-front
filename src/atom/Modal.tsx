@@ -39,10 +39,27 @@ const Modal = ({ codes, transactionDate, transaction, buttonAction }: IProps) =>
         e: ChangeEvent<HTMLSelectElement | HTMLInputElement>,
     ) => {
         const { name, value } = e.target;
+
         setFormData({
             ...formData,
             [name]: value,
         });
+
+        if(name === "transactionCode") {
+            if(value == TransactionCode.INCOME) {
+                setFormData({
+                    ...formData,
+                    [name]: value,
+                    categoryCode: codes[0].data[0]
+                });
+            } else if(value == TransactionCode.EXPENSE) {
+                setFormData({
+                    ...formData,
+                    [name]: value,
+                    categoryCode: codes[1].data[0]
+                });
+            }
+        } 
     };
 
     const onSubmit = () => {
